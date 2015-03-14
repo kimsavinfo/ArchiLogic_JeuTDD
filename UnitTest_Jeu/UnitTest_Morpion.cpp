@@ -12,8 +12,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace UnitTest_Jeu
 {
 	static Joueur * joueurDeTest;
-	static ControleurGrilleMorpion * controleur;
-	static vector<ChoixDeplacement*> choix;
 	static int nPionsParJoueur = 5;
 	static int nbColonnes = 3;
 	static int nbLignes = 3;
@@ -26,18 +24,11 @@ namespace UnitTest_Jeu
 		{
 			joueurDeTest = new Joueur("Joueur Test", "000000");
 			joueurDeTest->attribuerPions(nPionsParJoueur, "X");
-			controleur  = new ControleurGrilleMorpion(nbColonnes, nbLignes);
-			choix = controleur->getChoix();
 		}
 
 		TEST_CLASS_CLEANUP(ClassCleanup)
 		{
 			delete joueurDeTest;
-			delete controleur;
-			for (auto it = choix.begin(); it != choix.end(); ++it){
-				delete *it;
-			}
-			choix.clear();
 		}
 
 		/* Inidices d'une grille 3x3 :
@@ -48,6 +39,8 @@ namespace UnitTest_Jeu
 
 		TEST_METHOD(Test_LigneGagnante)
 		{
+			ControleurGrilleMorpion * controleur  = new ControleurGrilleMorpion(nbColonnes, nbLignes);
+			vector<ChoixDeplacement*> choix = controleur->getChoix();
 			long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
 			long idCaseChoisie = choix[3]->getIdCase();
 			controleur->poserPion(idPionChoisi, idCaseChoisie);
