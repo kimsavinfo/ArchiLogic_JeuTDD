@@ -30,7 +30,7 @@ void Morpion::jouer()
 	Joueur * joueurDeTest = joueurs[iTour % joueurs.size()];
 	vector<ChoixDeplacement*> choix = controleur->getChoix();
 	long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	long idCaseChoisie = choix[3]->getIdCase();
+	long idCaseChoisie = choix[2]->getIdCase();
 	controleur->poserPion(idPionChoisi, idCaseChoisie);
 	joueurDeTest->poserPion(idPionChoisi);
 
@@ -40,7 +40,7 @@ void Morpion::jouer()
 	joueurDeTest->poserPion(idPionChoisi);
 
 	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[5]->getIdCase();
+	idCaseChoisie = choix[6]->getIdCase();
 	controleur->poserPion(idPionChoisi, idCaseChoisie);
 	joueurDeTest->poserPion(idPionChoisi);
 
