@@ -167,7 +167,7 @@ namespace UnitTest_Jeu
 			controleur->poserPion(idPionChoisi, idCaseChoisie);
 			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
 
-			controleur->checkPartieFinie(idCaseChoisie, joueurDeTest->getPions());
+			controleur->checkPartieFinie(idCaseChoisie, joueurDeTest2->getPions());
 
 			Assert::IsTrue(controleur->isPartieFinie());
 			Assert::IsTrue(controleur->isEgalite());

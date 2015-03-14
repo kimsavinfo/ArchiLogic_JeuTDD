@@ -66,6 +66,27 @@ void Grille::poserPion(long _idPion, long _idCase)
 	getCase(_idCase)->setIdOccupant(_idPion);
 }
 
+bool Grille::isGrilleRemplie()
+{
+	int nbCasesOccupees = 0;
+
+	for(int iLig = 0; iLig < nbLignes; iLig++)
+    {
+        for(int iCol = 0; iCol < nbColonnes; iCol++)
+        {
+			for (auto const& uneCase: cases[iLig][iCol])
+			{
+				if(uneCase.second->getIdOccupant() > 0)
+				{
+					nbCasesOccupees++;
+				}
+			}
+        }
+    }
+
+	return nbCasesOccupees == nbColonnes * nbLignes ? true : false;
+}
+
 Case * Grille::getCase(long _idCase)
 {
 	Case * laCase = NULL;

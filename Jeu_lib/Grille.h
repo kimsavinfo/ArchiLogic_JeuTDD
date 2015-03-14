@@ -14,6 +14,7 @@ class Grille
 		int getLargeur();
 		map<long, Case*> getCasesVides();
 		void poserPion(long _idPion, long _idCase);
+		bool isGrilleRemplie();
 
 		map<int, map<int,  map<long, Case*>>> getCases();
 		map<string, int> getCaseCoordonnees(long _idCase);

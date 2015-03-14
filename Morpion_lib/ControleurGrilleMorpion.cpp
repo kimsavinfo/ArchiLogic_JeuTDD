@@ -56,9 +56,10 @@ void ControleurGrilleMorpion::checkPartieFinie(long _idCase, map<long, Pion*> _p
 
 void ControleurGrilleMorpion::checkEgalite()
 {
-
-	
-	// setPartieFinieEgalite(true);
+	if(grille->isGrilleRemplie())
+	{
+		setPartieFinieEgalite(true);
+	}
 }
 
 void ControleurGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, Pion*> _pionsJoueur)
