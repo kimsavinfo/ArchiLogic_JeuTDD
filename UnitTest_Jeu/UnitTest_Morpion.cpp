@@ -105,17 +105,30 @@ namespace UnitTest_Jeu
 			Assert::IsTrue(controleur->isPartieFinie());
 			Assert::IsFalse(controleur->isEgalite());
 		}
-
-		/*
-		TEST_METHOD(Test_DiagoGagnanteDroiteGauche)
+		
+		TEST_METHOD(Test_DiagoGagnanteNESO)
 		{
-			controleur->placerJeton(choix.at(2), joueurDeTest->getSymbole());
-			controleur->placerJeton(choix.at(4), joueurDeTest->getSymbole());
-			controleur->placerJeton(choix.at(6), joueurDeTest->getSymbole());
+			ControleurGrilleMorpion * controleur  = new ControleurGrilleMorpion(nbColonnes, nbLignes);
+			vector<ChoixDeplacement*> choix = controleur->getChoix();
+			long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			long idCaseChoisie;
+				
+			idCaseChoisie = choix[2]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[4]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[6]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
 
-			Assert::IsTrue(controleur->isUnVainqueur());
+			controleur->checkPartieFinie(idCaseChoisie, joueurDeTest->getPions());
+
+			Assert::IsTrue(controleur->isPartieFinie());
+			Assert::IsFalse(controleur->isEgalite());
 		}
 
+		/*
 		TEST_METHOD(Test_PartieGagneeAuDernierTour)
 		{
 			controleur->placerJeton(choix.at(0), 'X');
