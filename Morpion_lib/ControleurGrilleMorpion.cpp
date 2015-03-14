@@ -49,7 +49,7 @@ void ControleurGrilleMorpion::checkPartieFinie(long _idCase, map<long, Pion*> _p
 
 	checkLigneGagnante(coordonnees["ligne"], _pionsJoueur);
 	if(!partieFinie) checkColonneGagnante(coordonnees["colonne"], _pionsJoueur);
-	
+	if(!partieFinie) checkDiagonaleNOSEGagnante(_pionsJoueur);
 }
 
 void ControleurGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, Pion*> _pionsJoueur)
@@ -97,6 +97,36 @@ void ControleurGrilleMorpion::checkColonneGagnante(int _iColonne, map<long, Pion
 	}while(iLigne < nbLignes && !isPionAdverse);
 
 	if(iLigne == nbLignes)
+	{
+		setPartieFinieEgalite(false);
+	}
+}
+
+/**
+*	Nord Ouest -> Sud Est
+*/
+void ControleurGrilleMorpion::checkDiagonaleNOSEGagnante(map<long, Pion*> _pionsJoueur)
+{
+	int iColonne = 0;
+	int iLigne = 0;
+	int nbColonnes = grille->getNbColonnes();
+	bool isPionAdverse = true;
+	long idOccupant;
+
+	do
+	{
+		isPionAdverse = true;
+
+		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
+		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		{
+			isPionAdverse = false;
+			iColonne++;
+			iLigne++;
+		}
+	}while(iColonne < nbColonnes && !isPionAdverse);
+
+	if(iColonne == nbColonnes)
 	{
 		setPartieFinieEgalite(false);
 	}

@@ -29,6 +29,7 @@ class ControleurGrilleMorpion
 		
 		void checkLigneGagnante(int _iLigne, map<long, Pion*> _pionsJoueur);
 		void checkColonneGagnante(int _iColonne, map<long, Pion*> _pionsJoueur);
+		void checkDiagonaleNOSEGagnante(map<long, Pion*> _pionsJoueur);
 		void setPartieFinieEgalite(bool _egalite);
 };
 
