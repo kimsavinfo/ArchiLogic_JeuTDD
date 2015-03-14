@@ -15,67 +15,25 @@ Morpion::Morpion()
 
 void Morpion::jouer()
 {
-	// TEMPO
-	/*
-	for(int iTempo = 0; iTempo < 3; iTempo++)
+	do
 	{
 		poserPion();
 
-		// system("cls");
+		system("cls");
 		afficherJeu();
 
-		// iTour++;
+		iTour++;
+	}while(!controleur->isPartieFinie());
+
+	if(controleur->isEgalite())
+	{
+		cout << " ====> EGALITE " << endl;
 	}
-	*/
-	Joueur * joueurDeTest = joueurs[iTour % joueurs.size()];
-	vector<ChoixDeplacement*> choix = controleur->getChoix();
-	long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	long idCaseChoisie = choix[2]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	joueurDeTest->poserPion(idPionChoisi);
-
-	Joueur * joueurDeTest2 =  joueurs[iTour +1 % joueurs.size()];
-
-	idCaseChoisie = choix[0]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[1]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[2]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[3]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[4]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[5]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[6]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[7]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
-	idCaseChoisie = choix[8]->getIdCase();
-	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
-
-	controleur->checkPartieFinie(idCaseChoisie, joueurDeTest2->getPions());
-
-	afficherJeu();
-
-	if(controleur->isPartieFinie())
-		cout << "Partie finie" << endl;
 	else
-		cout << "Partie continue" << endl;
-
-	cout << endl;
-
-		
+	{
+		cout << joueurs[ (iTour -1) % joueurs.size()]->getNom() 
+			<< " a gagne " << endl;
+	}
 }
 
 
@@ -111,8 +69,9 @@ long Morpion::askJoueurOuPoserPion()
 			cout << choixDeplacement[iChoix]->getLegende() << endl;
 		}
 
-		cout << "Ou souhaitez-vous poser un pion, "
-			<< joueurs[iTour % joueurs.size()]->getNom() + " ? " << endl;
+		cout << joueurs[iTour % joueurs.size()]->getNom()
+			<< ", ou souhaitez-vous poser un pion, " 
+			<< " ? " << endl;
 		cin >> choixJoueur;
 	}while(choixJoueur < 1 || choixJoueur > choixMax);
 

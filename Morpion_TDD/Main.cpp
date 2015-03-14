@@ -5,21 +5,14 @@ using namespace std;
 
 int main()
 {
-	string yorn = "Y";
-
 	Morpion * morpion = new Morpion();
 	morpion->afficherTitre();
 	morpion->afficherJeu();
-	
-	do
-	{
-		morpion->jouer();
+	morpion->jouer();
 
-		cout << "\n Rejouer ? (n/N pour quitter) : ";
-		cin >> yorn;
-	}while(yorn != "n" && yorn != "N");
+	string exit = "\n\n\n Insérer un caractère pour quitter";
+	cout << exit;
+	cin >> exit;
 
-
-	delete morpion;
 	return 0;
 }
