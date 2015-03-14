@@ -51,6 +51,14 @@ void ControleurGrilleMorpion::checkPartieFinie(long _idCase, map<long, Pion*> _p
 	if(!partieFinie) checkColonneGagnante(coordonnees["colonne"], _pionsJoueur);
 	if(!partieFinie) checkDiagonaleNOSEGagnante(_pionsJoueur);
 	if(!partieFinie) checkDiagonaleNESOGagnante(_pionsJoueur);
+	if(!partieFinie) checkEgalite();
+}
+
+void ControleurGrilleMorpion::checkEgalite()
+{
+
+	
+	// setPartieFinieEgalite(true);
 }
 
 void ControleurGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, Pion*> _pionsJoueur)

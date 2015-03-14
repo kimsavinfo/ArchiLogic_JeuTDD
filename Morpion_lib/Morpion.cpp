@@ -34,17 +34,37 @@ void Morpion::jouer()
 	controleur->poserPion(idPionChoisi, idCaseChoisie);
 	joueurDeTest->poserPion(idPionChoisi);
 
+	Joueur * joueurDeTest2 =  joueurs[iTour +1 % joueurs.size()];
+
+	idCaseChoisie = choix[0]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
+	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[1]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
+	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[2]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
+	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[3]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
 	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
 	idCaseChoisie = choix[4]->getIdCase();
 	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	joueurDeTest->poserPion(idPionChoisi);
-
+	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[5]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
 	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
 	idCaseChoisie = choix[6]->getIdCase();
 	controleur->poserPion(idPionChoisi, idCaseChoisie);
-	joueurDeTest->poserPion(idPionChoisi);
+	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[7]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
+	idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+	idCaseChoisie = choix[8]->getIdCase();
+	controleur->poserPion(idPionChoisi, idCaseChoisie);
+	idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
 
-	controleur->checkPartieFinie(idCaseChoisie, joueurDeTest->getPions());
+	controleur->checkPartieFinie(idCaseChoisie, joueurDeTest2->getPions());
 
 	afficherJeu();
 

@@ -128,36 +128,49 @@ namespace UnitTest_Jeu
 			Assert::IsFalse(controleur->isEgalite());
 		}
 
-		/*
-		TEST_METHOD(Test_PartieGagneeAuDernierTour)
-		{
-			controleur->placerJeton(choix.at(0), 'X');
-			controleur->placerJeton(choix.at(1), 'O');
-			controleur->placerJeton(choix.at(2), 'O');
-			controleur->placerJeton(choix.at(3), 'O');
-			controleur->placerJeton(choix.at(4), 'X');
-			controleur->placerJeton(choix.at(5), 'O');
-			controleur->placerJeton(choix.at(6), 'O');
-			controleur->placerJeton(choix.at(7), 'O');
-			controleur->placerJeton(choix.at(8), 'X');
-
-			Assert::IsTrue(controleur->isUnVainqueur());
-		}
-
+		
 		TEST_METHOD(Test_PartieEgalite)
 		{
-			controleur->placerJeton(choix.at(0), 'X');
-			controleur->placerJeton(choix.at(1), 'O');
-			controleur->placerJeton(choix.at(2), 'O');
-			controleur->placerJeton(choix.at(3), 'O');
-			controleur->placerJeton(choix.at(4), 'X');
-			controleur->placerJeton(choix.at(5), 'X');
-			controleur->placerJeton(choix.at(6), '0');
-			controleur->placerJeton(choix.at(7), 'X');
-			controleur->placerJeton(choix.at(8), 'O');
+			ControleurGrilleMorpion * controleur  = new ControleurGrilleMorpion(nbColonnes, nbLignes);
+			vector<ChoixDeplacement*> choix = controleur->getChoix();
+			long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			long idCaseChoisie;
+			
+			Joueur * joueurDeTest2 = new Joueur("Joueur Test", "000000");
+			joueurDeTest2->attribuerPions(nPionsParJoueur, "O");
 
-			Assert::IsFalse(controleur->isUnVainqueur());
+			idCaseChoisie = choix[0]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[1]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[2]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[3]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[4]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[5]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[6]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[7]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
+			idCaseChoisie = choix[8]->getIdCase();
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			idPionChoisi = joueurDeTest2->getNextPionNonSurGrille()->getId();
+
+			controleur->checkPartieFinie(idCaseChoisie, joueurDeTest->getPions());
+
+			Assert::IsTrue(controleur->isPartieFinie());
+			Assert::IsTrue(controleur->isEgalite());
 		}
-		*/
 	};
 }
