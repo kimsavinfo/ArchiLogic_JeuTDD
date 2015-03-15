@@ -26,3 +26,4 @@ Jeu_lib/Debug/Jeu_lib.lastbuildstate
 *.lastbuildstate
 *.ldf
 TestResults/ArchiLogic_JeuTDD.TE.Tests.mdf
+*.cache

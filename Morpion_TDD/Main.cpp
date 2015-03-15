@@ -10,7 +10,7 @@ int main()
 	morpion->afficherJeu();
 	morpion->jouer();
 
-	string exit = "\n\n\n Insérer un caractère pour quitter";
+	string exit = "\n\n\n Inserer un caractere pour quitter : ";
 	cout << exit;
 	cin >> exit;
 

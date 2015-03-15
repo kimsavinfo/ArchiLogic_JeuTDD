@@ -187,7 +187,12 @@ void Morpion::insererLignePleine(map<int, map<int, string>> & _jeuRepresentation
 {
 	int iLigneAInserer = _jeuRepresentation.size();
 	
-	for(int icol = 0; icol < _largeurLigne ; icol++)
+	for(int icol = 0; icol < 3 ; icol++)
+    {
+		_jeuRepresentation[iLigneAInserer][icol] = " ";
+	}
+
+	for(int icol = 3; icol < _largeurLigne ; icol++)
     {
 		_jeuRepresentation[iLigneAInserer][icol] = "_";
 	}
