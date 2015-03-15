@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Jeu.h"
-#include "Joueur.h"
+#include "JoueurMorpion.h"
 #include "ControleurGrilleMorpion.h"
 
 class Morpion : public Jeu
@@ -15,6 +15,7 @@ class Morpion : public Jeu
 		void jouer();
 
 	private:
+		vector<JoueurMorpion*> joueurs;
 		ControleurGrilleMorpion * controleur;
 
 		void creerJoueurs();

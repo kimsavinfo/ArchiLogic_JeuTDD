@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Morpion.h"
 
-
 Morpion::Morpion() 
 {
 	nbColonnes = 3;
@@ -70,7 +69,7 @@ long Morpion::askJoueurOuPoserPion()
 		}
 
 		cout << joueurs[iTour % joueurs.size()]->getNom()
-			<< ", ou souhaitez-vous poser un pion, " 
+			<< ", ou souhaitez-vous poser un pion : " 
 			<< " ? " << endl;
 		cin >> choixJoueur;
 	}while(choixJoueur < 1 || choixJoueur > choixMax);
@@ -226,7 +225,7 @@ void Morpion::creerJoueurs()
 
 	for(int iJoueur = 0; iJoueur < nbJoueurs; iJoueur++)
 	{
-		joueurs.push_back(new Joueur(noms[iJoueur], couleurs[iJoueur]));
+		joueurs.push_back(new JoueurMorpion(noms[iJoueur], couleurs[iJoueur]));
 		joueurs[iJoueur]->attribuerPions(nbPionsParJoueur, formePion[iJoueur]);
 	}
 }
@@ -235,5 +234,9 @@ void Morpion::creerJoueurs()
 
 Morpion::~Morpion(void)
 {
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		delete joueurs.at(iJoueur);
+	}
 	delete controleur;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Jeu.h"
-#include "Joueur.h"
+#include "JoueurDames.h"
 #include "ControleurGrilleDames.h"
 
 class Dames : public Jeu
@@ -14,6 +14,7 @@ class Dames : public Jeu
 		void afficherJeu();
 
 	private :
+		vector<JoueurDames*> joueurs;
 		ControleurGrilleDames * controleur;
 
 		void creerJoueurs();
@@ -25,6 +26,6 @@ class Dames : public Jeu
 		void initGrillePionsNoirs();
 		void poserPion();
 
-		map<long, Pion*> getJoueursPions();
+		map<long, PionDames*> getJoueursPions();
 };
 

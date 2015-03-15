@@ -55,7 +55,7 @@ map<int, map<int, string>> Dames::construireRepresentation()
 	string caseRepresentation;
 	long idOccupant = 0;
 
-	map<long, Pion*> pions = getJoueursPions();
+	map<long, PionDames*> pions = getJoueursPions();
 	map<int, map<int,  map<long, Case*>>> cases = controleur->getGrilleCases();
 
 	insererLigneLegendeColonnes(jeuRepresentation, largeurTotale);
@@ -150,13 +150,13 @@ void Dames::insererLignePleine(map<int, map<int, string>> & _jeuRepresentation, 
 /** ============================================================================================== */
 
 #pragma region GET
-map<long, Pion*> Dames::getJoueursPions()
+map<long, PionDames*> Dames::getJoueursPions()
 {
-	map<long, Pion*> pions;
+	map<long, PionDames*> pions;
 
 	for(int iJoueur = 0; iJoueur < nbJoueurs; iJoueur++)
 	{
-		map<long, Pion*> pionsJoueur = joueurs[iJoueur]->getPions();
+		map<long, PionDames*> pionsJoueur = joueurs[iJoueur]->getPions();
 		pions.insert(pionsJoueur.begin(), pionsJoueur.end());
 	}
 
@@ -177,14 +177,14 @@ void Dames::creerJoueurs()
 
 	for(int iJoueur = 0; iJoueur < nbJoueurs; iJoueur++)
 	{
-		joueurs.push_back(new Joueur(noms[iJoueur], couleurs[iJoueur]));
+		joueurs.push_back(new JoueurDames(noms[iJoueur], couleurs[iJoueur]));
 		joueurs[iJoueur]->attribuerPions(nbPionsParJoueur, formePion[iJoueur]);
 	}
 }
 
 void Dames::initGrillePionsNoirs()
 {
-	Joueur * joueurA = joueurs[0];
+	JoueurDames * joueurA = joueurs[0];
 	map<int, map<int,  map<long, Case*>>> cases = controleur->getGrilleCases();
 	int iCol = 0;
 	int iLig = 0;
@@ -217,7 +217,7 @@ void Dames::initGrillePionsNoirs()
 
 void Dames::initGrillePionsBlancs()
 {
-	Joueur * joueurB = joueurs[1];
+	JoueurDames * joueurB = joueurs[1];
 	map<int, map<int,  map<long, Case*>>> cases = controleur->getGrilleCases();
 	int iCol = nbColonnes -1;
 	int iLig = nbLignes -1;
@@ -251,5 +251,9 @@ void Dames::initGrillePionsBlancs()
 
 Dames::~Dames(void)
 {
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		delete joueurs.at(iJoueur);
+	}
 	delete controleur;
 }

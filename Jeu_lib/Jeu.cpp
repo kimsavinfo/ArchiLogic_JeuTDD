@@ -18,10 +18,7 @@ void Jeu::creerJoueurs()
 {
 }
 
+
 Jeu::~Jeu(void)
 {
-	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
-	{
-		delete joueurs.at(iJoueur);
-	}
 }

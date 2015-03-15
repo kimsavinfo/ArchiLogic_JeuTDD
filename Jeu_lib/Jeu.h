@@ -18,7 +18,6 @@ class Jeu
 		int nbLignes;
 		int nbJoueurs;
 		int nbPionsParJoueur;
-		vector<Joueur*> joueurs;
 		int iTour;
 
 	private:

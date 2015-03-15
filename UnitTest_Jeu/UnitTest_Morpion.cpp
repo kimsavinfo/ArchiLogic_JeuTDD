@@ -5,13 +5,13 @@
 using namespace std;
 
 #include "ControleurGrilleMorpion.h"
-#include "Joueur.h"
+#include "JoueurMorpion.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest_Jeu
 {
-	static Joueur * joueurDeTest;
+	static JoueurMorpion * joueurDeTest;
 	static int nPionsParJoueur = 5;
 	static int nbColonnes = 3;
 	static int nbLignes = 3;
@@ -22,7 +22,7 @@ namespace UnitTest_Jeu
 
 		TEST_CLASS_INITIALIZE(ClassInitialize) 
 		{
-			joueurDeTest = new Joueur("Joueur Test", "000000");
+			joueurDeTest = new JoueurMorpion("Joueur Test", "000000");
 			joueurDeTest->attribuerPions(nPionsParJoueur, "X");
 		}
 
@@ -136,7 +136,7 @@ namespace UnitTest_Jeu
 			long idPionChoisi = joueurDeTest->getNextPionNonSurGrille()->getId();
 			long idCaseChoisie;
 			
-			Joueur * joueurDeTest2 = new Joueur("Joueur Test", "000000");
+			JoueurMorpion * joueurDeTest2 = new JoueurMorpion("Joueur Test", "000000");
 			joueurDeTest2->attribuerPions(nPionsParJoueur, "O");
 
 			idCaseChoisie = choix[0]->getIdCase();
