@@ -21,6 +21,9 @@ class Dames : public Jeu
 		void insererLigneLegendeColonnes(map<int, map<int, string>> &_jeuRepresentation, int _largeurLigne);
 		void insererLigneVide(map<int, map<int, string>> &_jeuRepresentation, int _largeurLigne);
 		void insererLignePleine(map<int, map<int, string>> &_jeuRepresentation, int _largeurLigne);
+		void initGrillePionsBlancs();
+		void initGrillePionsNoirs();
+		void poserPion();
 
 		map<long, Pion*> getJoueursPions();
 };

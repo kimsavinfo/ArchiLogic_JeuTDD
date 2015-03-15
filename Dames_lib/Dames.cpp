@@ -11,6 +11,13 @@ Dames::Dames()
 	controleur = new ControleurGrilleDames(nbColonnes, nbLignes);
 
 	creerJoueurs();
+	initGrillePionsNoirs();
+	initGrillePionsBlancs();
+}
+
+void Dames::poserPion()
+{
+	// TODO
 }
 
 /** ============================================================================================== */
@@ -157,11 +164,16 @@ map<long, Pion*> Dames::getJoueursPions()
 }
 #pragma endregion GET
 
+/** ============================================================================================== */
+/**	Init */
+/** ============================================================================================== */
+
+#pragma region init
 void Dames::creerJoueurs()
 {
 	string noms[2] = {"Bob", "Alice"};
 	string couleurs[2] = {"000000", "FFFFFF"};
-	string formePion[2] = {"O", "O"};
+	string formePion[2] = {"X", "O"};
 
 	for(int iJoueur = 0; iJoueur < nbJoueurs; iJoueur++)
 	{
@@ -169,6 +181,73 @@ void Dames::creerJoueurs()
 		joueurs[iJoueur]->attribuerPions(nbPionsParJoueur, formePion[iJoueur]);
 	}
 }
+
+void Dames::initGrillePionsNoirs()
+{
+	Joueur * joueurA = joueurs[0];
+	map<int, map<int,  map<long, Case*>>> cases = controleur->getGrilleCases();
+	int iCol = 0;
+	int iLig = 0;
+	int iPionsPoses = 0;
+	long idPionChoisi;
+	long idCaseChoisie;
+
+	do
+	{
+		if( (iCol + iLig) % 2 == 1)
+		{
+			idPionChoisi = joueurA->getNextPionNonSurGrille()->getId();
+			for (auto const& uneCase: cases[iLig][iCol])
+			{
+				idCaseChoisie = uneCase.second->getId();
+			}
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			joueurA->poserPion(idPionChoisi);
+			iPionsPoses++;
+		}
+		
+		iCol++;
+		if(iCol == nbColonnes)
+		{
+			iCol = 0;
+			iLig++;
+		}
+	}while(iPionsPoses < nbPionsParJoueur);	
+}
+
+void Dames::initGrillePionsBlancs()
+{
+	Joueur * joueurB = joueurs[1];
+	map<int, map<int,  map<long, Case*>>> cases = controleur->getGrilleCases();
+	int iCol = nbColonnes -1;
+	int iLig = nbLignes -1;
+	int iPionsPoses = 0;
+	long idPionChoisi;
+	long idCaseChoisie;
+
+	do
+	{
+		if( (iCol + iLig) % 2 == 1)
+		{
+			idPionChoisi = joueurB->getNextPionNonSurGrille()->getId();
+			for (auto const& uneCase: cases[iLig][iCol])
+			{
+				idCaseChoisie = uneCase.second->getId();
+			}
+			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			joueurB->poserPion(idPionChoisi);
+			iPionsPoses++;
+		}
+
+		iCol--;
+		if(iCol < 0)
+		{
+			iCol = nbColonnes -1;
+			iLig--;
+		}
+	}while(iPionsPoses < nbPionsParJoueur);
+}
+#pragma region init
 
 Dames::~Dames(void)
 {

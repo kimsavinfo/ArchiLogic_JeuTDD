@@ -8,6 +8,11 @@ ControleurGrilleDames::ControleurGrilleDames(int _nbColonnes, int _nbLignes)
 	partieFinie = false;
 }
 
+void ControleurGrilleDames::poserPion(long _idPion, long _idCase)
+{
+	grille->poserPion(_idPion, _idCase);
+}
+
 int ControleurGrilleDames::getGrilleLargeur()
 {
 	return grille->getLargeur();
