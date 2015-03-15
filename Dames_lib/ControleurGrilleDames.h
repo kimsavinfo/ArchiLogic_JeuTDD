@@ -10,6 +10,7 @@ class ControleurGrilleDames
 
 		int getGrilleLargeur();
 		map<int, map<int,  map<long, Case*>>> getGrilleCases();
+		void poserPion(long _idPion, int _iLig, int _iCol);
 		void poserPion(long _idPion, long _idCase);
 
 	private :

@@ -15,11 +15,6 @@ Dames::Dames()
 	initGrillePionsBlancs();
 }
 
-void Dames::poserPion()
-{
-	// TODO
-}
-
 /** ============================================================================================== */
 /**	Affichage */
 /** ============================================================================================== */
@@ -197,11 +192,7 @@ void Dames::initGrillePionsNoirs()
 		if( (iCol + iLig) % 2 == 1)
 		{
 			idPionChoisi = joueurA->getNextPionNonSurGrille()->getId();
-			for (auto const& uneCase: cases[iLig][iCol])
-			{
-				idCaseChoisie = uneCase.second->getId();
-			}
-			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			controleur->poserPion(idPionChoisi, iLig, iCol);
 			joueurA->poserPion(idPionChoisi);
 			iPionsPoses++;
 		}
@@ -230,11 +221,7 @@ void Dames::initGrillePionsBlancs()
 		if( (iCol + iLig) % 2 == 1)
 		{
 			idPionChoisi = joueurB->getNextPionNonSurGrille()->getId();
-			for (auto const& uneCase: cases[iLig][iCol])
-			{
-				idCaseChoisie = uneCase.second->getId();
-			}
-			controleur->poserPion(idPionChoisi, idCaseChoisie);
+			controleur->poserPion(idPionChoisi, iLig, iCol);
 			joueurB->poserPion(idPionChoisi);
 			iPionsPoses++;
 		}
