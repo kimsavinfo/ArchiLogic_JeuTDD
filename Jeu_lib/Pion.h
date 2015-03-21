@@ -1,25 +1,18 @@
-#pragma once
-
-#include <iostream>
-#include <ctime>
 #include <string>
 using namespace std;
 
-class Pion
+#include "IRepresentation.h"
+
+class Pion : public IRepresentation
 {
 	public:
-		Pion(string _forme, string _couleurHex);
+		Pion(string _forme);
 		~Pion(void);
-		
-		long getId();
-		string afficher();
-		bool isSurGrille();
-		void setSurGrille(bool _surGrille);
 
-	private:
+		virtual string getRepresentation();
+
+	protected:
 		long idPion;
-		string forme;
-		string couleurHex;
-		bool surGrille;
+		string representation;
 };
 
