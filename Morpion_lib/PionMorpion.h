@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Pion.h"
 
 class PionMorpion : public Pion

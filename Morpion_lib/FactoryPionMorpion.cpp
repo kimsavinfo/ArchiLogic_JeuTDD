@@ -6,7 +6,7 @@ FactoryPionMorpion::FactoryPionMorpion(void)
 {
 }
 
-PionMorpion * FactoryPionMorpion::createPion(string _forme)
+PionMorpion * FactoryPionMorpion::creerPion(string _forme)
 {
 	return new PionMorpion(_forme);
 }

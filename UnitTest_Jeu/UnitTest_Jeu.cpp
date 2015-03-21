@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 
 #include "JoueurMorpion.h"
+#include "Grille.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -32,6 +33,28 @@ namespace UnitTest_Jeu
 			}
 
 			Assert::AreEqual(5, nbTrue);
+		}
+
+		TEST_METHOD(Jeu_GrilleBienImplementee)
+		{
+			int nbLignes = 2;
+			int nbColonnes = 2;
+			Grille * grille = new Grille(nbLignes, nbColonnes);
+			vector< vector<Case *> > cases =  grille->getCases();
+
+			int nbTrue = 0;
+			for(int iLig = 0; iLig < nbLignes; iLig++)
+			{
+				for(int iCol = 0; iCol < nbColonnes; iCol++)
+				{
+					if(cases[iLig][iCol]->getIdOccupant() == 0)
+					{
+						nbTrue++;
+					}
+				}
+			}
+			
+			Assert::AreEqual(4, nbTrue);
 		}
 
 	};

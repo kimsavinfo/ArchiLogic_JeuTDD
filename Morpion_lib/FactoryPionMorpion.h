@@ -1,3 +1,5 @@
+#pragma once
+
 #include "PionMorpion.h"
 
 class FactoryPionMorpion
@@ -6,6 +8,6 @@ class FactoryPionMorpion
 		FactoryPionMorpion(void);
 		~FactoryPionMorpion(void);
 
-		PionMorpion * createPion(string _forme);
+		PionMorpion * creerPion(string _forme);
 };
 

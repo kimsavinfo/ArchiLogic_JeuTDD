@@ -13,7 +13,7 @@ void JoueurMorpion::creerPions(string _forme)
 
 	for (int iPion = 0; iPion < 5; iPion++)
 	{
-		PionMorpion * pionJoueur = factory->createPion(_forme);
+		PionMorpion * pionJoueur = factory->creerPion(_forme);
 		pions[pionJoueur->getId()] = pionJoueur;
 	}
 
