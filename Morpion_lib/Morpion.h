@@ -18,8 +18,5 @@ class Morpion : public Jeu
 
 	private:
 		DriverGrilleMorpion * driverGrille;
-
-		int calculerNbLignesAffichage(Grille * _grille);
-		int calculeNbColonnesAffichage(Grille * _grille);
 };
 

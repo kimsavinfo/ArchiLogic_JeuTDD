@@ -43,37 +43,19 @@ void Morpion::afficherJeu()
 vector< vector<string> > Morpion::creerAffichage()
 { 
 	Grille * grille = driverGrille->getGrille();
-	int nbLignesAffichage = calculerNbLignesAffichage(grille);
-	int nbColonnesAffichage = calculeNbColonnesAffichage(grille);
-	vector< vector<string> > affichage = this->initAffichage(nbLignesAffichage, nbColonnesAffichage);
+	int nbLignes = grille->getNbLignes();
+	int nbColonnes = grille->getNbColonnes();
+	vector< vector<string> > affichage = this->initAffichage(nbLignes, nbColonnes);
 	
-	for(int iLigneGrille = 0; iLigneGrille < grille->getNbLignes(); iLigneGrille++ )
+	for(int iLigneGrille = 0; iLigneGrille < nbLignes; iLigneGrille++ )
 	{
-		for(int iColonneGrille = 0; iColonneGrille < grille->getNbColonnes(); iColonneGrille++ )
+		for(int iColonneGrille = 0; iColonneGrille < nbColonnes; iColonneGrille++ )
 		{
-			affichage[iLigneGrille * 2 + 2][iColonneGrille + 3] =  grille->getCase(iLigneGrille, iColonneGrille)->getRepresentation();
+			affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende] =  grille->getCase(iLigneGrille, iColonneGrille)->getRepresentation();
 		}
 	}
 
-
 	return affichage;
-}
-
-
-int Morpion::calculerNbLignesAffichage(Grille * _grille)
-{
-	// +1 pour la ligne pour les légendes des colonnes
-	// +1 pour la ligne entre les légendes et la grille
-	// *2 pour la ligne pleine de séparation à chaque ligne de la grille
-	return _grille->getNbLignes() * 2 + 2;
-}
-
-int Morpion::calculeNbColonnesAffichage(Grille * _grille)
-{
-	// +1 pour la légende
-	// +1 pour la séparation
-	// +1 pour le trait de séparation
-	return _grille->getNbColonnes() + 3;
 }
 
 Morpion::~Morpion(void)

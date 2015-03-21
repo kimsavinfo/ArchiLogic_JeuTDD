@@ -5,6 +5,8 @@
 Jeu::Jeu(void)
 {
 	espaceVide = "    ";
+	nbLignesLegende = 2; // Numobre de lignes pour les légendes
+	nbColonnesLegende = 3; // Nombre de colonnes pour les légendes
 }
 
 void Jeu::jouer()
@@ -30,12 +32,14 @@ vector< vector<string> > Jeu::creerAffichage()
 vector< vector<string> > Jeu::initAffichage(int _nbLignes, int _nbColonnes)
 {
 	vector< vector<string> > affichage;
+	int nbLignesTotal = calculerNbLignesAffichage(_nbLignes);
+	int nbColonnesTotal = calculeNbColonnesAffichage(_nbColonnes);
 
-	for (int iLigne = 0; iLigne < _nbLignes; iLigne++)
+	for (int iLigne = 0; iLigne < nbLignesTotal; iLigne++)
 	{
 		affichage.push_back( vector<string>() );
 
-		for (int iColonne = 0; iColonne < _nbColonnes; iColonne++)
+		for (int iColonne = 0; iColonne < nbColonnesTotal; iColonne++)
 		{
 			affichage[iLigne].push_back(espaceVide);
 
@@ -45,7 +49,7 @@ vector< vector<string> > Jeu::initAffichage(int _nbLignes, int _nbColonnes)
 				{
 					affichage[iLigne][iColonne] = to_string(iLigne / 2 -1);
 				}
-				else if(iColonne == 2)
+				else if(iColonne == nbColonnesLegende - 1)
 				{
 					affichage[iLigne][iColonne] = "|";
 				}
@@ -63,11 +67,28 @@ vector< vector<string> > Jeu::initAffichage(int _nbLignes, int _nbColonnes)
 	return affichage;
 }
 
+int Jeu::calculerNbLignesAffichage(int _nbLignesInit)
+{
+	// +1 pour la ligne pour les légendes des colonnes
+	// +1 pour la ligne entre les légendes et la grille
+	// *2 pour la ligne pleine de séparation à chaque ligne de la grille
+	return _nbLignesInit * 2 + nbLignesLegende;
+}
+
+int Jeu::calculeNbColonnesAffichage(int _nbColonnesInit)
+{
+	// +1 pour la légende
+	// +1 pour la séparation
+	// +1 pour le trait de séparation
+	return _nbColonnesInit + nbColonnesLegende;
+}
+
+
 void Jeu::setLegendeColonnes(vector< vector<string> > &_affichage)
 {
 	int nbColonnes = _affichage[0].size();
 	
-	for (int icol = 0; icol < 3; icol++)
+	for (int icol = 0; icol < nbColonnesLegende; icol++)
 	{
 		if(icol == 1)
 		{
@@ -79,7 +100,7 @@ void Jeu::setLegendeColonnes(vector< vector<string> > &_affichage)
 		}
 	}
 
-	for(int icol = 3; icol < nbColonnes ; icol++)
+	for(int icol = nbColonnesLegende; icol < nbColonnes ; icol++)
     {
 		_affichage[0][icol] = " "+to_string(icol - 2)+ "  ";
 	}
@@ -99,7 +120,7 @@ void Jeu::setLignePleine(vector< vector<string> > &_affichage, int _iLigne)
 {
 	int nbColonnes = _affichage[0].size();
 	
-	for (int icol = 0; icol < 3; icol++)
+	for (int icol = 0; icol < nbColonnesLegende; icol++)
 	{
 		if(icol == 1)
 		{
@@ -111,7 +132,7 @@ void Jeu::setLignePleine(vector< vector<string> > &_affichage, int _iLigne)
 		}
 	}
 
-	for(int icol = 3; icol < nbColonnes ; icol++)
+	for(int icol = nbColonnesLegende; icol < nbColonnes ; icol++)
     {
 		_affichage[_iLigne][icol] = "____";
 	}

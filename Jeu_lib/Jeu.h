@@ -16,7 +16,8 @@ class Jeu
 		virtual void jouer();
 
 	protected:
-		int nbLignesHeader;
+		int nbLignesLegende;
+		int nbColonnesLegende;
 
 		virtual vector< vector<string> > creerAffichage();
 		vector< vector<string> > initAffichage(int _nbLignes, int _nbColonnes);
@@ -24,6 +25,8 @@ class Jeu
 	private:
 		string espaceVide;
 
+		int calculerNbLignesAffichage(int _nbLignesInit);
+		int calculeNbColonnesAffichage(int _nbColonnesInit);
 		void setLegendeColonnes(vector< vector<string> > &_affichage);
 		void setLigneVide(vector< vector<string> > &_affichage, int _iLigne);
 		void setLignePleine(vector< vector<string> > &_affichage, int _iLigne);
