@@ -10,9 +10,10 @@ class Pion : public IRepresentation
 		~Pion(void);
 
 		virtual string getRepresentation();
+		long getId();
 
 	protected:
-		long idPion;
+		long id;
 		string representation;
 };
 
