@@ -27,3 +27,9 @@ Jeu_lib/Debug/Jeu_lib.lastbuildstate
 *.ldf
 TestResults/ArchiLogic_JeuTDD.TE.Tests.mdf
 *.cache
+Debug/Dames_lib.lib
+Debug/Jeu_lib.lib
+Debug/Morpion_lib.lib
+Debug/UnitTest_Jeu.lib
+Debug/UnitTest_Jeu.exp
+Jeu_lib/Debug/Jeu_lib.res
