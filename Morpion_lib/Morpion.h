@@ -2,6 +2,7 @@
 
 #include "Jeu.h"
 #include "DriverGrilleMorpion.h"
+#include "JoueurMorpion.h"
 
 class Morpion : public Jeu
 {
@@ -18,5 +19,9 @@ class Morpion : public Jeu
 
 	private:
 		DriverGrilleMorpion * driverGrille;
+		vector<JoueurMorpion *> joueurs;
+
+		void ajouterJoueur(string _nom, string _formePions);
+		void afficherJoueurs();
 };
 
