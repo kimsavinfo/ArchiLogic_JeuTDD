@@ -27,6 +27,11 @@ void Grille::creerCases()
 	delete factory;
 }
 
+int Grille::getLargeur()
+{
+	return cases[0][0]->getLargeur() * nbColonnes; 
+}
+
 vector< vector<Case *> > Grille::getCases()
 {
 	return cases;

@@ -11,6 +11,8 @@ class Grille
 		Grille(int _nbLignes, int _nbColonnes);
 		~Grille(void);
 
+		int getLargeur();
+
 		vector< vector<Case *> > getCases();
 
 	private:
