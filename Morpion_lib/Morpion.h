@@ -20,9 +20,13 @@ class Morpion : public Jeu
 	private:
 		DriverGrilleMorpion * driverGrille;
 		vector<JoueurMorpion *> joueurs;
+		int iTour;
 
 		void ajouterJoueur(string _nom, string _formePions);
 		void afficherJoueurs();
+		long askJoueurQuelPionPoser();
+		long askJoueurOuPoserPion();
 		void poserPion();
+		map<long, PionMorpion*> getJoueursPions();
 };
 

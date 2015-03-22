@@ -6,9 +6,9 @@ FactoryCase::FactoryCase(void)
 {
 }
 
-Case * FactoryCase::creerCase()
+Case * FactoryCase::creerCase(string _legende)
 {
-	return new Case();
+	return new Case(_legende);
 }
 
 FactoryCase::~FactoryCase(void)

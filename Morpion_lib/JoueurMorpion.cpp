@@ -20,9 +20,29 @@ void JoueurMorpion::creerPions(string _forme)
 	delete factory;
 }
 
+void JoueurMorpion::poserPion(long _idPion)
+{
+	pions[_idPion]->setSurGrille(true);
+}
+
 string JoueurMorpion::getFormePions()
 {
 	return pions.begin()->second->getRepresentation();
+}
+
+PionMorpion * JoueurMorpion::getPionAPoser()
+{
+	map<long, PionMorpion*>::iterator pionTest = pions.begin();
+
+	while( pionTest != pions.end() && pionTest->second->isSurGrille() );
+	{
+		if(pionTest->second->isSurGrille())
+		{
+			pionTest++;
+		}
+	}
+
+	return pionTest->second;
 }
 
 map<long, PionMorpion*> JoueurMorpion::getPions()

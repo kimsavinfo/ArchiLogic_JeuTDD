@@ -2,10 +2,11 @@
 #include "Case.h"
 
 
-Case::Case(void)
+Case::Case(string _legende)
 {
 	id = reinterpret_cast<int>(this);
 	idOccupant = 0;
+	legende = _legende;
 }
 
 int Case::getLargeur()
@@ -42,6 +43,10 @@ void Case::setIdOccupant(long _idOccupant)
 	idOccupant = _idOccupant;
 }
 
+string Case::getLegende()
+{
+	return legende;
+}
 
 Case::~Case(void)
 {

@@ -8,7 +8,7 @@ using namespace std;
 class Case  : public IRepresentation
 {
 	public:
-		Case(void);
+		Case(string _legende);
 		~Case(void);
 
 		int getLargeur();
@@ -18,9 +18,11 @@ class Case  : public IRepresentation
 		virtual string getRepresentation();
 		long getIdOccupant();
 		void setIdOccupant(long _idOccupant);
+		string getLegende();
 
 	private:
 		long id;
 		long idOccupant;
+		string legende;
 };
 

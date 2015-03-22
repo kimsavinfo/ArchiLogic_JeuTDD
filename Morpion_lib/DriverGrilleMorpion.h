@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DriverGrille.h"
+#include "ChoixCase.h"
 
 class DriverGrilleMorpion : public DriverGrille
 {
@@ -8,6 +9,7 @@ class DriverGrilleMorpion : public DriverGrille
 		DriverGrilleMorpion(int _nbLignes, int _nbColonnes);
 		~DriverGrilleMorpion(void);
 
-
+		vector<ChoixCase *> getChoixCases();
+		void poserPion(long _idPion, long _idCase);
 };
 

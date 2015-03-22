@@ -10,7 +10,7 @@ class DriverGrille
 
 		Grille * getGrille();
 
-	private:
+	protected:
 		Grille * grille;
 		bool partieFinie;
 

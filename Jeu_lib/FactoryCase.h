@@ -8,6 +8,6 @@ class FactoryCase
 		FactoryCase(void);
 		~FactoryCase(void);
 
-		Case * creerCase();
+		Case * creerCase(string _legende);
 };
 

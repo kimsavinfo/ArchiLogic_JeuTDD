@@ -13,6 +13,7 @@ Grille::Grille(int _nbLignes, int _nbColonnes)
 void Grille::creerCases()
 {
 	FactoryCase * factory = new FactoryCase();	
+	string legende;
 
 	for(int iLig = 0; iLig < nbLignes; iLig++)
     {
@@ -20,11 +21,41 @@ void Grille::creerCases()
 
         for(int iCol = 0; iCol < nbColonnes; iCol++)
         {
-			cases[iLig].push_back(factory->creerCase());
+			legende = "[" + to_string(iLig+1) + ";" + to_string(iCol+1) + "]";
+			cases[iLig].push_back(factory->creerCase(legende));
 		}
     }
 
 	delete factory;
+}
+
+void Grille::poserPion(long _idPion, long _idCase)
+{
+	getCase(_idCase)->setIdOccupant(_idPion);
+}
+
+Case * Grille::getCase(long _idCase)
+{
+	Case * laCase = NULL;
+	int iLigne = 0;
+	int iColonne = 0;
+
+	do
+	{
+		if(cases[iLigne][iColonne]->getId() == _idCase)
+		{
+			laCase = cases[iLigne][iColonne];
+		}
+		
+		iColonne++;
+		if(iColonne == nbColonnes)
+		{
+			iColonne = 0;
+			iLigne++;
+		}
+	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
+
+	return laCase;
 }
 
 Case * Grille::getCase(int _iLigne, int _iColonne)
@@ -47,6 +78,23 @@ vector< vector<Case *> > Grille::getCases()
 	return cases;
 }
 
+vector<Case *> Grille::getCasesVides()
+{
+	vector<Case *> casesVides;
+
+	for(int iLig = 0; iLig < nbLignes; iLig++)
+    {
+        for(int iCol = 0; iCol < nbColonnes; iCol++)
+        {
+			if(cases[iLig][iCol]->isVide())
+			{
+				casesVides.push_back( cases[iLig][iCol] );
+			}
+		}
+    }
+
+	return casesVides;
+}
 
 Grille::~Grille(void)
 {

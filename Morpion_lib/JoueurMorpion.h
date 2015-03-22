@@ -12,6 +12,9 @@ class JoueurMorpion : public Joueur
 		~JoueurMorpion(void);
 
 		string getFormePions();
+		PionMorpion * getPionAPoser();
+		void poserPion(long _idPion);
+
 		map<long, PionMorpion*> getPions();
 
 	private:

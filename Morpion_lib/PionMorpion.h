@@ -9,6 +9,7 @@ class PionMorpion : public Pion
 		~PionMorpion(void);
 
 		bool isSurGrille();
+		void setSurGrille(bool _surGrille);
 
 	private:
 		bool surGrille;
