@@ -24,6 +24,11 @@ void Jeu::afficherJeu()
 	cout << "| |";
 }
 
+void Jeu::afficherJoueurs()
+{
+	cout << "Aucun Joueur";
+}
+
 vector< vector<string> > Jeu::creerAffichage()
 {
 	return initAffichage(1,1);

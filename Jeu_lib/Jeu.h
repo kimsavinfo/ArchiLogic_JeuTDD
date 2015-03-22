@@ -11,14 +11,15 @@ class Jeu
 		Jeu(void);
 		~Jeu(void);
 
-		virtual void afficherTitre();
-		virtual void afficherJeu();
 		virtual void jouer();
 
 	protected:
 		int nbLignesLegende;
 		int nbColonnesLegende;
 
+		virtual void afficherTitre();
+		virtual void afficherJeu();
+		virtual void afficherJoueurs();
 		virtual vector< vector<string> > creerAffichage();
 		vector< vector<string> > initAffichage(int _nbLignes, int _nbColonnes);
 
