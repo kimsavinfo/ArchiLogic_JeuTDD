@@ -26,7 +26,7 @@ void Morpion::afficherJoueurs()
 {
 	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
 	{
-		cout << joueurs[iJoueur]->getNom() << " joue avec les pions " << joueurs[iJoueur]->getForme() << endl ;
+		cout << joueurs[iJoueur]->getNom() << " joue avec les pions " << joueurs[iJoueur]->getFormePions() << endl ;
 	}
 	cout << endl;
 }
