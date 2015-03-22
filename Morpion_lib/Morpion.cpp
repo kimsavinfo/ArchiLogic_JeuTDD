@@ -17,6 +17,15 @@ void Morpion::jouer()
 	afficherJeu();
 }
 
+void Morpion::poserPion()
+{
+
+}
+
+/** ============================================================================================== */
+/**	Joueur
+/** ============================================================================================== */
+
 void Morpion::ajouterJoueur(string _nom, string _formePions)
 {
 	joueurs.push_back( new JoueurMorpion(_nom, _formePions) );
@@ -32,7 +41,7 @@ void Morpion::afficherJoueurs()
 }
 
 /** ============================================================================================== */
-/**	Affichage */
+/**	Affichage
 /** ============================================================================================== */
 
 void Morpion::afficherTitre()
@@ -69,7 +78,8 @@ vector< vector<string> > Morpion::creerAffichage()
 	{
 		for(int iColonneGrille = 0; iColonneGrille < nbColonnes; iColonneGrille++ )
 		{
-			affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende] =  grille->getCase(iLigneGrille, iColonneGrille)->getRepresentation();
+			affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende] 
+				= grille->getCase(iLigneGrille, iColonneGrille)->getRepresentation();
 		}
 	}
 

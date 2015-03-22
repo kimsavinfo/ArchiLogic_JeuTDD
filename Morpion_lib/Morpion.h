@@ -23,5 +23,6 @@ class Morpion : public Jeu
 
 		void ajouterJoueur(string _nom, string _formePions);
 		void afficherJoueurs();
+		void poserPion();
 };
 

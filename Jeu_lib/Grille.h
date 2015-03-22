@@ -11,11 +11,12 @@ class Grille
 		Grille(int _nbLignes, int _nbColonnes);
 		~Grille(void);
 
+		
+		Case * getCase(int _iLigne, int _iColonne);
+
 		int getNbLignes();
 		int getNbColonnes();
-
 		vector< vector<Case *> > getCases();
-		Case * getCase(int _iLigne, int _iColonne);
 
 	private:
 		int nbLignes;
