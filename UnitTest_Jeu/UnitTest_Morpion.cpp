@@ -94,7 +94,23 @@ namespace UnitTest_Jeu
 
 			TEST_METHOD(Morpion_Egualie)
 			{
-				// TODO
+				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
+				vector<ChoixCase *> choix = driver->getChoixCases();
+				JoueurMorpion * joueurDeTest2 = new JoueurMorpion("2nd joueur de test", "O");
+
+				poserPion(joueurDeTest, driver, choix, 1);
+				poserPion(joueurDeTest, driver, choix, 3);
+				poserPion(joueurDeTest, driver, choix, 5);
+				poserPion(joueurDeTest, driver, choix, 7);
+				poserPion(joueurDeTest, driver, choix, 8);
+
+				poserPion(joueurDeTest2, driver, choix, 0);
+				poserPion(joueurDeTest2, driver, choix, 2);
+				poserPion(joueurDeTest2, driver, choix, 4);
+				poserPion(joueurDeTest2, driver, choix, 6);
+
+				Assert::IsTrue(driver->isPartieFinie());
+				Assert::IsTrue(driver->isEgalite());
 			}
 		
 		private:
