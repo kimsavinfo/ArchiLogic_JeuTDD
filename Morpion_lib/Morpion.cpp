@@ -24,19 +24,8 @@ void Morpion::jouer()
 		system("cls");
 		afficherJeu();
 
-		// iTour
+		iTour++;
 	}while(!driverGrille->isPartieFinie());
-
-	/*
-	if(driverGrille->isPartieFinie())
-	{
-		cout << " ====> PARTIE FINIE " << endl;
-	}
-	else
-	{
-		cout << " EN COURS " << endl;
-	}
-	*/
 
 	if(driverGrille->isEgalite())
 	{
@@ -75,7 +64,7 @@ long Morpion::askJoueurOuPoserPion()
 
 	do
 	{
-		cout << "Choix possibles : " << endl;
+		cout << "Choix possibles [ligne ; colonne] : " << endl;
 		for (int iChoix = 0; iChoix < choixMax; iChoix++)
 		{
 			cout << choix[iChoix]->getLegende() << endl;

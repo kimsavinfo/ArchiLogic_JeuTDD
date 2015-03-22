@@ -47,7 +47,7 @@ vector< vector<string> > Jeu::initAffichage(int _nbLignes, int _nbColonnes)
 			{
 				if(iColonne == 0)
 				{
-					affichage[iLigne][iColonne] = to_string(iLigne / 2 -1);
+					affichage[iLigne][iColonne] = to_string(iLigne / 2);
 				}
 				else if(iColonne == nbColonnesLegende - 1)
 				{
