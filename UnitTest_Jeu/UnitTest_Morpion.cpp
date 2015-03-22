@@ -40,7 +40,7 @@ namespace UnitTest_Jeu
 				Assert::IsFalse(pion->isSurGrille());
 			}
 
-			TEST_METHOD(Test_LigneGagnante)
+			TEST_METHOD(Morpion_LigneGagnante)
 			{
 				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
 				vector<ChoixCase *> choix = driver->getChoixCases();
@@ -53,7 +53,7 @@ namespace UnitTest_Jeu
 				Assert::IsFalse(driver->isEgalite());
 			}
 
-			TEST_METHOD(Test_ColonneGagnante)
+			TEST_METHOD(Morpion_ColonneGagnante)
 			{
 				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
 				vector<ChoixCase *> choix = driver->getChoixCases();
@@ -64,6 +64,37 @@ namespace UnitTest_Jeu
 
 				Assert::IsTrue(driver->isPartieFinie());
 				Assert::IsFalse(driver->isEgalite());
+			}
+
+			TEST_METHOD(Morpion_DiagoGagnanteNOSE)
+			{
+				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
+				vector<ChoixCase *> choix = driver->getChoixCases();
+
+				poserPion(joueurDeTest, driver, choix, 0);
+				poserPion(joueurDeTest, driver, choix, 4);
+				poserPion(joueurDeTest, driver, choix, 8);
+
+				Assert::IsTrue(driver->isPartieFinie());
+				Assert::IsFalse(driver->isEgalite());
+			}
+
+			TEST_METHOD(Morpion_DiagoGagnanteNESO)
+			{
+				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
+				vector<ChoixCase *> choix = driver->getChoixCases();
+
+				poserPion(joueurDeTest, driver, choix, 2);
+				poserPion(joueurDeTest, driver, choix, 4);
+				poserPion(joueurDeTest, driver, choix, 6);
+
+				Assert::IsTrue(driver->isPartieFinie());
+				Assert::IsFalse(driver->isEgalite());
+			}
+
+			TEST_METHOD(Morpion_Egualie)
+			{
+				// TODO
 			}
 		
 		private:
