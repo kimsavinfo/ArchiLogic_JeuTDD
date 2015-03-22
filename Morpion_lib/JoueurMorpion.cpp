@@ -20,6 +20,11 @@ void JoueurMorpion::creerPions(string _forme)
 	delete factory;
 }
 
+string JoueurMorpion::getForme()
+{
+	return pions.begin()->second->getRepresentation();
+}
+
 map<long, PionMorpion*> JoueurMorpion::getPions()
 {
 	return pions;

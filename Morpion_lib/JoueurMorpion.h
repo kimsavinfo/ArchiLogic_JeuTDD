@@ -11,6 +11,7 @@ class JoueurMorpion : public Joueur
 		JoueurMorpion(string _nom, string _forme);
 		~JoueurMorpion(void);
 
+		string getForme();
 		map<long, PionMorpion*> getPions();
 
 	private:

@@ -5,12 +5,30 @@
 Morpion::Morpion(void) : Jeu()
 {
 	driverGrille = new DriverGrilleMorpion(3, 3);
+
+	ajouterJoueur("Alice", "X");
+	ajouterJoueur("Bob", "O");
 }
 
 void Morpion::jouer()
 {
 	afficherTitre();
+	afficherJoueurs();
 	afficherJeu();
+}
+
+void Morpion::ajouterJoueur(string _nom, string _formePions)
+{
+	joueurs.push_back( new JoueurMorpion(_nom, _formePions) );
+}
+
+void Morpion::afficherJoueurs()
+{
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		cout << joueurs[iJoueur]->getNom() << " joue avec les pions " << joueurs[iJoueur]->getForme() << endl ;
+	}
+	cout << endl;
 }
 
 /** ============================================================================================== */
@@ -61,4 +79,9 @@ vector< vector<string> > Morpion::creerAffichage()
 Morpion::~Morpion(void)
 {
 	delete driverGrille;
+
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		delete joueurs.at(iJoueur);
+	}
 }
