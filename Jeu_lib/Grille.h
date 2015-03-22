@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "FactoryCase.h"
+#include <map>
 
+#include "FactoryCase.h"
 
 class Grille
 {
@@ -14,6 +15,8 @@ class Grille
 		Case * getCase(long _idCase);
 		vector<Case *> getCasesVides();
 		void poserPion(long _idPion, long _idCase);
+		map<string, int> getCaseCoordonnees(long _idCase);
+		bool isGrilleRemplie();
 
 		int getNbLignes();
 		int getNbColonnes();

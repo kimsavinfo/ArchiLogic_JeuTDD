@@ -26,6 +26,147 @@ void DriverGrilleMorpion::poserPion(long _idPion, long _idCase)
 	grille->poserPion(_idPion, _idCase);
 }
 
+/* ======================================================= */
+/* Déterminer si la partie est finie et s'il y a un gagnant ou églaité
+/* Pour éviter de parcour toute la grille à chaque fois,
+/* on ne regarde que les cases voisine qui sont susceptibles d'être impactées
+/* ======================================================= */
+
+void DriverGrilleMorpion::checkPartieFinie(long _idCase, map<long, PionMorpion*> _pionsJoueur)
+{
+	map<string, int> coordonnees = grille->getCaseCoordonnees(_idCase);
+
+	checkLigneGagnante(coordonnees["ligne"], _pionsJoueur);
+	if(!partieFinie) checkColonneGagnante(coordonnees["colonne"], _pionsJoueur);
+	if(!partieFinie) checkDiagonaleNOSEGagnante(_pionsJoueur);
+	if(!partieFinie) checkDiagonaleNESOGagnante(_pionsJoueur);
+	if(!partieFinie) checkEgalite();
+}
+
+void DriverGrilleMorpion::checkEgalite()
+{
+	if(grille->isGrilleRemplie())
+	{
+		setPartieFinieEgalite(true);
+	}
+}
+
+void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, PionMorpion*> _pionsJoueur)
+{
+	int iColonne = 0;
+	int nbColonnes = grille->getNbColonnes();
+	bool isPionAdverse = true;
+	long idOccupant;
+
+	do
+	{
+		isPionAdverse = true;
+
+		idOccupant = grille->getCase(_iLigne, iColonne)->getIdOccupant();
+		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		{
+			isPionAdverse = false;
+			iColonne++;
+		}
+	}while(iColonne < nbColonnes && !isPionAdverse);
+
+	if(iColonne == nbColonnes)
+	{
+		setPartieFinieEgalite(false);
+	}
+}
+
+void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, map<long, PionMorpion*> _pionsJoueur)
+{
+	int iLigne = 0;
+	int nbLignes = grille->getNbLignes();
+	bool isPionAdverse = true;
+	long idOccupant;
+
+	do
+	{
+		isPionAdverse = true;
+
+		idOccupant = grille->getCase(iLigne, _iColonne)->getIdOccupant();
+		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		{
+			isPionAdverse = false;
+			iLigne++;
+		}
+	}while(iLigne < nbLignes && !isPionAdverse);
+
+	if(iLigne == nbLignes)
+	{
+		setPartieFinieEgalite(false);
+	}
+}
+
+/**
+*	Nord Ouest -> Sud Est
+*/
+void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(map<long, PionMorpion*> _pionsJoueur)
+{
+	int iColonne = 0;
+	int iLigne = 0;
+	int nbColonnes = grille->getNbColonnes();
+	bool isPionAdverse = true;
+	long idOccupant;
+
+	do
+	{
+		isPionAdverse = true;
+
+		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
+		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		{
+			isPionAdverse = false;
+			iColonne++;
+			iLigne++;
+		}
+	}while(iColonne < nbColonnes && !isPionAdverse);
+
+	if(iColonne == nbColonnes)
+	{
+		setPartieFinieEgalite(false);
+	}
+}
+
+/**
+*	Nord Est -> Sud Ouest
+*/
+void DriverGrilleMorpion::checkDiagonaleNESOGagnante(map<long, PionMorpion*> _pionsJoueur)
+{
+	int iColonne = grille->getNbColonnes() -1;
+	int iLigne = 0;
+	int nbLignes = grille->getNbLignes();
+	bool isPionAdverse = true;
+	long idOccupant;
+
+	do
+	{
+		isPionAdverse = true;
+
+		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
+		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		{
+			isPionAdverse = false;
+			iColonne--;
+			iLigne++;
+		}
+	}while(iLigne < nbLignes && !isPionAdverse);
+
+	if(iLigne == nbLignes)
+	{
+		setPartieFinieEgalite(false);
+	}
+}
+
+void DriverGrilleMorpion::setPartieFinieEgalite(bool _egalite)
+{
+	partieFinie = true;
+	egalite = _egalite;
+}
+
 DriverGrilleMorpion::~DriverGrilleMorpion(void)
 {
 }

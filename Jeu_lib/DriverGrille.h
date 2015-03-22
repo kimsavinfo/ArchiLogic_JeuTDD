@@ -9,10 +9,12 @@ class DriverGrille
 		~DriverGrille(void);
 
 		Grille * getGrille();
+		bool isPartieFinie();
+		bool isEgalite();
 
 	protected:
 		Grille * grille;
 		bool partieFinie;
-
+		bool egalite;
 };
 

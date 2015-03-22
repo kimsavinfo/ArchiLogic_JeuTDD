@@ -63,19 +63,31 @@ Case * Grille::getCase(int _iLigne, int _iColonne)
 	return cases[_iLigne][_iColonne];
 }
 
-int Grille::getNbLignes()
+map<string, int> Grille::getCaseCoordonnees(long _idCase)
 {
-	return nbLignes;
-}
+	map<string, int> coordonnees;
+	Case * laCase = NULL;
+	int iLigne = 0;
+	int iColonne = 0;
 
-int Grille::getNbColonnes()
-{
-	return nbColonnes;
-}
+	do
+	{
+		if(cases[iLigne][iColonne]->getId() == _idCase)
+		{
+			laCase = cases[iLigne][iColonne];
+			coordonnees["ligne"] = iLigne;
+			coordonnees["colonne"] = iColonne;
+		}
+		
+		iColonne++;
+		if(iColonne == nbColonnes)
+		{
+			iColonne = 0;
+			iLigne++;
+		}
+	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
 
-vector< vector<Case *> > Grille::getCases()
-{
-	return cases;
+	return coordonnees;
 }
 
 vector<Case *> Grille::getCasesVides()
@@ -95,6 +107,41 @@ vector<Case *> Grille::getCasesVides()
 
 	return casesVides;
 }
+
+bool Grille::isGrilleRemplie()
+{
+	int nbCasesOccupees = 0;
+
+	for(int iLig = 0; iLig < nbLignes; iLig++)
+    {
+        for(int iCol = 0; iCol < nbColonnes; iCol++)
+        {
+			if(!cases[iLig][iCol]->isVide())
+			{
+				nbCasesOccupees++;
+			}
+		}
+	}
+
+	return nbCasesOccupees == nbColonnes * nbLignes ? true : false;
+}
+
+
+int Grille::getNbLignes()
+{
+	return nbLignes;
+}
+
+int Grille::getNbColonnes()
+{
+	return nbColonnes;
+}
+
+vector< vector<Case *> > Grille::getCases()
+{
+	return cases;
+}
+
 
 Grille::~Grille(void)
 {

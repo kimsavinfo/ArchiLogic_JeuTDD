@@ -36,10 +36,7 @@ PionMorpion * JoueurMorpion::getPionAPoser()
 
 	while( pionTest != pions.end() && pionTest->second->isSurGrille() );
 	{
-		if(pionTest->second->isSurGrille())
-		{
-			pionTest++;
-		}
+		pionTest++;
 	}
 
 	return pionTest->second;

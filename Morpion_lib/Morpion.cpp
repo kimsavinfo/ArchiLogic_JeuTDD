@@ -16,6 +16,37 @@ void Morpion::jouer()
 	afficherTitre();
 	afficherJoueurs();
 	afficherJeu();
+
+	do
+	{
+		poserPion();
+
+		system("cls");
+		afficherJeu();
+
+		// iTour
+	}while(!driverGrille->isPartieFinie());
+
+	/*
+	if(driverGrille->isPartieFinie())
+	{
+		cout << " ====> PARTIE FINIE " << endl;
+	}
+	else
+	{
+		cout << " EN COURS " << endl;
+	}
+	*/
+
+	if(driverGrille->isEgalite())
+	{
+		cout << " ====> EGALITE " << endl;
+	}
+	else
+	{
+		cout << joueurs[ (iTour -1) % joueurs.size()]->getNom() 
+			<< " a gagne " << endl;
+	}
 }
 
 void Morpion::poserPion()
@@ -26,7 +57,7 @@ void Morpion::poserPion()
 	driverGrille->poserPion(idPionChoisi, idCaseChoisie);
 	joueurs[iTour % joueurs.size()]->poserPion(idPionChoisi);
 
-	// driverGrille->checkPartieFinie(idCaseChoisie, joueurs[iTour % joueurs.size()]->getPions()); TODO
+	driverGrille->checkPartieFinie(idCaseChoisie, joueurs[iTour % joueurs.size()]->getPions());
 }
 
 long Morpion::askJoueurQuelPionPoser()
@@ -51,8 +82,8 @@ long Morpion::askJoueurOuPoserPion()
 		}
 
 		cout << joueurs[iTour % joueurs.size()]->getNom()
-			<< ", où souhaitez-vous poser un pion : " 
-			<< " ? " << endl;
+			<< ", ou souhaitez-vous poser un pion ? " 
+			<< endl;
 		cin >> choixJoueur;
 	}while(choixJoueur < 1 || choixJoueur > choixMax);
 
