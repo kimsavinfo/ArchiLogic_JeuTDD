@@ -52,6 +52,19 @@ namespace UnitTest_Jeu
 				Assert::IsTrue(driver->isPartieFinie());
 				Assert::IsFalse(driver->isEgalite());
 			}
+
+			TEST_METHOD(Test_ColonneGagnante)
+			{
+				DriverGrilleMorpion * driver  = new DriverGrilleMorpion(nbColonnes, nbLignes);
+				vector<ChoixCase *> choix = driver->getChoixCases();
+
+				poserPion(joueurDeTest, driver, choix, 1);
+				poserPion(joueurDeTest, driver, choix, 4);
+				poserPion(joueurDeTest, driver, choix, 7);
+
+				Assert::IsTrue(driver->isPartieFinie());
+				Assert::IsFalse(driver->isEgalite());
+			}
 		
 		private:
 			void poserPion(JoueurMorpion *_joueur, DriverGrilleMorpion * _driver, vector<ChoixCase *> &_choix, int _iChoix)
