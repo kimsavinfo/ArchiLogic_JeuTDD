@@ -19,8 +19,8 @@ namespace UnitTest_Jeu
 		
 			TEST_CLASS_INITIALIZE(ClassInitialize) 
 			{
-				joueurA = new JoueurDames("Alice", "W");
-				joueurB = new JoueurDames("Bob", "B");
+				joueurA = new JoueurDames("Alice", "W", 1);
+				joueurB = new JoueurDames("Bob", "B", -1);
 			}
 
 			TEST_CLASS_CLEANUP(ClassCleanup)
@@ -39,16 +39,14 @@ namespace UnitTest_Jeu
 				Assert::AreEqual(pionsIds[0], driverGrille->getCaseIdOccupant(0,2));
 			}
 
-			TEST_METHOD(Dames_ProposerPions)
+			TEST_METHOD(Dames_ProposerPions_SansPionAutour)
 			{
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 1, 1);
+				driverGrille->poserPion(pionsIds[0], 3, 3);
 
-				driverGrille->poserPion(pionsIds[0], 0, 0);
-				driverGrille->poserPion(pionsIds[1], 1, 1);
-				driverGrille->poserPion(pionsIds[1], 2, 2);
-
-				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(pionsIds);
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
 
 				Assert::AreEqual( 2, (int)choixPions.size() );
 			}

@@ -54,6 +54,11 @@ string Grille::getCaseLegende(long _idCase)
 	return getCase(_idCase)->getLegende();
 }
 
+bool Grille::isCaseVide(int _iLigne, int _iColonne)
+{
+	return getCase(_iLigne, _iColonne)->isVide();
+}
+
 map<string, int> Grille::getCaseCoordonnees(long _idCase)
 {
 	map<string, int> coordonnees;
@@ -182,6 +187,11 @@ Case * Grille::getCase(long _idCase)
 	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
 	
 	return laCase;
+}
+
+bool Grille::isCoordonneesDansGrille(int _iLigne, int _iColonne)
+{
+	return _iLigne > 0 && _iLigne < nbLignes && _iColonne > 0 && _iColonne < nbColonnes;
 }
 
 Grille::~Grille(void)

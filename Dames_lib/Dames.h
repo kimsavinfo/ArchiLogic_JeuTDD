@@ -22,7 +22,7 @@ class Dames : public Jeu
 		DriverGrilleDames * driverGrille;
 		vector<JoueurDames *> joueurs;
 
-		void ajouterJoueur(string _nom, string _couleur);
+		void ajouterJoueur(string _nom, string _couleur, int _sensVertical);
 		void initJeu();
 		string getPionRepresentation(long _idPion);
 };

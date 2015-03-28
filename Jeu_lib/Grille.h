@@ -20,6 +20,8 @@ class Grille
 		void poserPion(long _idPion, long _idCase);
 		void poserPion(long _idPion, int _iLigne, int _iColonne);
 		bool isGrilleRemplie();
+		bool isCaseVide(int _iLigne, int _iColonne);
+		bool isCoordonneesDansGrille(int _iLigne, int _iColonne);
 
 		int getNbLignes();
 		int getNbColonnes();

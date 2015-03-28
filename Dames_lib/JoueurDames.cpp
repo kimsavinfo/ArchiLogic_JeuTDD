@@ -2,8 +2,9 @@
 #include "JoueurDames.h"
 
 
-JoueurDames::JoueurDames(string _nom, string _couleur) : Joueur(_nom)
+JoueurDames::JoueurDames(string _nom, string _couleur, int _sensVertical) : Joueur(_nom)
 {
+	sensVertical = _sensVertical;
 	creerPions(_couleur);
 }
 
@@ -48,6 +49,11 @@ bool JoueurDames::isPionAuJoueur(long _idPion)
 string JoueurDames::getPionRepresentation(long _idPion)
 {
 	return pions.find(_idPion)->second->getRepresentation();
+}
+
+int JoueurDames::getSensVertical()
+{
+	return sensVertical;
 }
 
 JoueurDames::~JoueurDames(void)
