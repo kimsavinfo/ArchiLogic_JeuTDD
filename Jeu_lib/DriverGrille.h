@@ -14,6 +14,7 @@ class DriverGrille
 		long getCaseIdOccupant(int _iLigne, int _iColonne);
 		bool isPartieFinie();
 		bool isEgalite();
+		void poserPion(long _idPion, long _idCase);
 
 	protected:
 		Grille * grille;

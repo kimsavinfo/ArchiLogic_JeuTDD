@@ -38,6 +38,11 @@ bool DriverGrille::isEgalite()
 	return egalite;
 }
 
+void DriverGrille::poserPion(long _idPion, long _idCase)
+{
+	grille->poserPion(_idPion, _idCase);
+}
+
 DriverGrille::~DriverGrille(void)
 {
 	delete grille;

@@ -21,11 +21,6 @@ vector<ChoixCase *> DriverGrilleMorpion::getChoixCases()
 	return choix;
 }
 
-void DriverGrilleMorpion::poserPion(long _idPion, long _idCase)
-{
-	grille->poserPion(_idPion, _idCase);
-}
-
 /* ======================================================= */
 /* Déterminer si la partie est finie et s'il y a un gagnant ou églaité
 /* Pour éviter de parcour toute la grille à chaque fois,

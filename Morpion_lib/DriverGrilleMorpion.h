@@ -13,7 +13,6 @@ class DriverGrilleMorpion : public DriverGrille
 		~DriverGrilleMorpion(void);
 
 		vector<ChoixCase *> getChoixCases();
-		void poserPion(long _idPion, long _idCase);
 		void checkPartieFinie(long _idCase, vector<long> _pionsJoueur);
 
 	private:
