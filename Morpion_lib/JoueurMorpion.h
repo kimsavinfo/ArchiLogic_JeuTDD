@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 
 #include "Joueur.h"
 #include "FactoryPionMorpion.h"
@@ -13,9 +14,10 @@ class JoueurMorpion : public Joueur
 
 		string getFormePions();
 		long getIdPionAPoser();
+		bool isPionAuJoueur(long _idPion);
+		vector<long> getPionsIds();
 		void poserPion(long _idPion);
 
-		map<long, PionMorpion*> getPions();
 
 	private:
 		map<long, PionMorpion*> pions;

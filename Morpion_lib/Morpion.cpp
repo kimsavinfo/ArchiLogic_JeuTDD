@@ -46,7 +46,7 @@ void Morpion::poserPion()
 	driverGrille->poserPion(idPionChoisi, idCaseChoisie);
 	joueurs[iTour % joueurs.size()]->poserPion(idPionChoisi);
 
-	driverGrille->checkPartieFinie(idCaseChoisie, joueurs[iTour % joueurs.size()]->getPions());
+	driverGrille->checkPartieFinie(idCaseChoisie, joueurs[iTour % joueurs.size()]->getPionsIds());
 }
 
 long Morpion::askJoueurQuelPionPoser()
@@ -128,7 +128,6 @@ void Morpion::afficherJeu()
 vector< vector<string> > Morpion::creerAffichage()
 { 
 	Grille * grille = driverGrille->getGrille();
-	map<long, PionMorpion*> pions = getJoueursPions();
 	int nbLignes = grille->getNbLignes();
 	int nbColonnes = grille->getNbColonnes();
 	vector< vector<string> > affichage = this->initAffichage(nbLignes, nbColonnes);
@@ -145,28 +144,20 @@ vector< vector<string> > Morpion::creerAffichage()
 
 			if(caseAAffciher->getIdOccupant() > 0)
 			{
-				affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende].at(1) 
-					= pions[caseAAffciher->getIdOccupant()]->getRepresentation()[0];
+				for(int iJoueur = 0; iJoueur < joueurs.size() ; iJoueur++)
+				{
+					if( joueurs.at(iJoueur)->isPionAuJoueur(caseAAffciher->getIdOccupant()) )
+					{
+						affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende].at(1) 
+						= joueurs.at(0)->getFormePions()[0];
+					}	
+				}
 			}
 		}
 	}
 
 	return affichage;
 }
-
-map<long, PionMorpion *> Morpion::getJoueursPions()
-{
-	map<long, PionMorpion*> pions;
-
-	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
-	{
-		map<long, PionMorpion*> pionsJoueur = joueurs[iJoueur]->getPions();
-		pions.insert(pionsJoueur.begin(), pionsJoueur.end());
-	}
-
-	return pions;
-}
-
 
 Morpion::~Morpion(void)
 {

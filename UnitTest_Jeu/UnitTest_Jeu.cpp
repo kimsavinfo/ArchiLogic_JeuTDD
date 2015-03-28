@@ -21,12 +21,12 @@ namespace UnitTest_Jeu
 		TEST_METHOD(Jeu_FactoryBienImplementee)
 		{
 			JoueurMorpion * joueur = new JoueurMorpion("Alice", "X");
-			map<long, PionMorpion*> pions = joueur->getPions();
+			vector<long> pions = joueur->getPionsIds();
 
 			int nbTrue = 0;
-			for (auto const& pion: pions)
+			for(int iPion = 0; iPion < pions.size(); iPion++)
 			{
-				if( strcmp("X", pion.second->getRepresentation().c_str()) == 0 && !pion.second->isSurGrille())
+				if( pions.at(iPion) != 0 )
 				{
 					nbTrue++;
 				}

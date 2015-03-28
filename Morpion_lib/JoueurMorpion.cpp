@@ -42,9 +42,21 @@ long JoueurMorpion::getIdPionAPoser()
 	return pionTest->second->getId();
 }
 
-map<long, PionMorpion*> JoueurMorpion::getPions()
+vector<long> JoueurMorpion::getPionsIds()
 {
-	return pions;
+	vector<long> pionsIds;
+
+	for (auto const& pion: pions)
+	{
+		pionsIds.push_back(pion.second->getId());
+	}
+
+	return pionsIds;
+}
+
+bool JoueurMorpion::isPionAuJoueur(long _idPion)
+{
+	return pions.find(_idPion) != pions.end() ? true : false;
 }
 
 JoueurMorpion::~JoueurMorpion(void)

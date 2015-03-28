@@ -32,7 +32,7 @@ void DriverGrilleMorpion::poserPion(long _idPion, long _idCase)
 /* on ne regarde que les cases voisine qui sont susceptibles d'être impactées
 /* ======================================================= */
 
-void DriverGrilleMorpion::checkPartieFinie(long _idCase, map<long, PionMorpion*> _pionsJoueur)
+void DriverGrilleMorpion::checkPartieFinie(long _idCase, vector<long> _pionsJoueur)
 {
 	map<string, int> coordonnees = grille->getCaseCoordonnees(_idCase);
 
@@ -51,7 +51,7 @@ void DriverGrilleMorpion::checkEgalite()
 	}
 }
 
-void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, PionMorpion*> _pionsJoueur)
+void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, vector<long> _pionsJoueur)
 {
 	int iColonne = 0;
 	int nbColonnes = grille->getNbColonnes();
@@ -63,7 +63,8 @@ void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, PionMorpion*
 		isPionAdverse = true;
 
 		idOccupant = grille->getCase(_iLigne, iColonne)->getIdOccupant();
-		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		 
+		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
 			isPionAdverse = false;
 			iColonne++;
@@ -76,7 +77,7 @@ void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, map<long, PionMorpion*
 	}
 }
 
-void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, map<long, PionMorpion*> _pionsJoueur)
+void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, vector<long> _pionsJoueur)
 {
 	int iLigne = 0;
 	int nbLignes = grille->getNbLignes();
@@ -88,7 +89,8 @@ void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, map<long, PionMorp
 		isPionAdverse = true;
 
 		idOccupant = grille->getCase(iLigne, _iColonne)->getIdOccupant();
-		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+
+		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
 			isPionAdverse = false;
 			iLigne++;
@@ -104,7 +106,7 @@ void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, map<long, PionMorp
 /**
 *	Nord Ouest -> Sud Est
 */
-void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(map<long, PionMorpion*> _pionsJoueur)
+void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(vector<long> _pionsJoueur)
 {
 	int iColonne = 0;
 	int iLigne = 0;
@@ -117,7 +119,8 @@ void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(map<long, PionMorpion*> _pi
 		isPionAdverse = true;
 
 		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
-		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		
+		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
 			isPionAdverse = false;
 			iColonne++;
@@ -134,7 +137,7 @@ void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(map<long, PionMorpion*> _pi
 /**
 *	Nord Est -> Sud Ouest
 */
-void DriverGrilleMorpion::checkDiagonaleNESOGagnante(map<long, PionMorpion*> _pionsJoueur)
+void DriverGrilleMorpion::checkDiagonaleNESOGagnante(vector<long> _pionsJoueur)
 {
 	int iColonne = grille->getNbColonnes() -1;
 	int iLigne = 0;
@@ -147,7 +150,8 @@ void DriverGrilleMorpion::checkDiagonaleNESOGagnante(map<long, PionMorpion*> _pi
 		isPionAdverse = true;
 
 		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
-		if( !(_pionsJoueur.find(idOccupant) == _pionsJoueur.end()) )
+		
+		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
 			isPionAdverse = false;
 			iColonne--;

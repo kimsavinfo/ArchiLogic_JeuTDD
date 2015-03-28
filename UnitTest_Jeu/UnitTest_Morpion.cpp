@@ -120,7 +120,7 @@ namespace UnitTest_Jeu
 				long idCaseChoisie = _choix[_iChoix]->getIdCase();
 				_driver->poserPion(idPionChoisi, idCaseChoisie);
 				_joueur->poserPion(idPionChoisi);
-				_driver->checkPartieFinie(idCaseChoisie, joueurDeTest->getPions());
+				_driver->checkPartieFinie(idCaseChoisie, joueurDeTest->getPionsIds());
 			};
 
 	};

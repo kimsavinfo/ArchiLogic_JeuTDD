@@ -27,6 +27,6 @@ class Morpion : public Jeu
 		long askJoueurQuelPionPoser();
 		long askJoueurOuPoserPion();
 		void poserPion();
-		map<long, PionMorpion*> getJoueursPions();
+		vector<long> getJoueursPionsIds();
 };
 
