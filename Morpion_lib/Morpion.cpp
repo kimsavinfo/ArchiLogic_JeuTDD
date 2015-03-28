@@ -53,7 +53,7 @@ long Morpion::askJoueurQuelPionPoser()
 {
 	// Pour le morpion, on n'a pas besoin de lui demande
 	// On prend le un pion qui n'est pas encore posé
-	return joueurs[iTour % joueurs.size()]->getPionAPoser()->getId();
+	return joueurs[iTour % joueurs.size()]->getIdPionAPoser();
 }
 
 long Morpion::askJoueurOuPoserPion()

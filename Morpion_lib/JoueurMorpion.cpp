@@ -30,7 +30,7 @@ string JoueurMorpion::getFormePions()
 	return pions.begin()->second->getRepresentation();
 }
 
-PionMorpion * JoueurMorpion::getPionAPoser()
+long JoueurMorpion::getIdPionAPoser()
 {
 	map<long, PionMorpion*>::iterator pionTest = pions.begin();
 
@@ -39,7 +39,7 @@ PionMorpion * JoueurMorpion::getPionAPoser()
 		pionTest++;
 	}
 
-	return pionTest->second;
+	return pionTest->second->getId();
 }
 
 map<long, PionMorpion*> JoueurMorpion::getPions()

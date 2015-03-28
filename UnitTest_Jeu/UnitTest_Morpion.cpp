@@ -116,7 +116,7 @@ namespace UnitTest_Jeu
 		private:
 			void poserPion(JoueurMorpion *_joueur, DriverGrilleMorpion * _driver, vector<ChoixCase *> &_choix, int _iChoix)
 			{
-				long idPionChoisi = _joueur->getPionAPoser()->getId();
+				long idPionChoisi = _joueur->getIdPionAPoser() ;
 				long idCaseChoisie = _choix[_iChoix]->getIdCase();
 				_driver->poserPion(idPionChoisi, idCaseChoisie);
 				_joueur->poserPion(idPionChoisi);
