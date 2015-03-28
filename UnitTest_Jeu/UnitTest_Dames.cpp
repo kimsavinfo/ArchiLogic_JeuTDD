@@ -31,12 +31,26 @@ namespace UnitTest_Jeu
 
 			TEST_METHOD(Dames_PoserPion)
 			{
-				DriverGrilleDames * driver  = new DriverGrilleDames(nbLignes, nbColonnes);
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				vector<long> pionsIds = joueurA->getPionsIds();
 
-				driver->poserPion(pionsIds[0], 0, 2);
+				driverGrille->poserPion(pionsIds[0], 0, 2);
 
-				Assert::AreEqual(pionsIds[0], driver->getCaseIdOccupant(0,2));
+				Assert::AreEqual(pionsIds[0], driverGrille->getCaseIdOccupant(0,2));
+			}
+
+			TEST_METHOD(Dames_ProposerPions)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				vector<long> pionsIds = joueurA->getPionsIds();
+
+				driverGrille->poserPion(pionsIds[0], 0, 0);
+				driverGrille->poserPion(pionsIds[1], 1, 1);
+				driverGrille->poserPion(pionsIds[1], 2, 2);
+
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(pionsIds);
+
+				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
 	};
 }

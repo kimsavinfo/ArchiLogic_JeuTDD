@@ -15,8 +15,16 @@ Dames::Dames(void) : Jeu()
 void Dames::initJeu()
 {
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
+	driverGrille->poserPion(pionsIds[0], 0, 0);
+	driverGrille->poserPion(pionsIds[1], 1, 1);
+	driverGrille->poserPion(pionsIds[1], 2, 2);
 
-	driverGrille->poserPion(pionsIds[0], 0, 2);
+	vector<ChoixPion *> choixPions = driverGrille->getChoixPions(pionsIds);
+
+	for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
+	{
+		cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
+	}
 }
 
 void Dames::jouer()

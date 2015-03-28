@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DriverGrille.h"
+#include "ChoixPion.h"
 
 class DriverGrilleDames : public DriverGrille
 {
@@ -10,5 +11,6 @@ class DriverGrilleDames : public DriverGrille
 
 		void poserPion(long _idPion, int _iLigne, int _iColonne);
 		map<string, int> getCaseCoordonneesOccupant(long _idOccupant);
+		vector<ChoixPion *> getChoixPions(vector<long> _pionsIdsJoueur);
 };
 
