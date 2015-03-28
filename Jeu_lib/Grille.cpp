@@ -34,6 +34,11 @@ void Grille::poserPion(long _idPion, long _idCase)
 	getCase(_idCase)->setIdOccupant(_idPion);
 }
 
+void Grille::poserPion(long _idPion, int _iLigne, int _iColonne)
+{
+	getCase(_iLigne, _iColonne)->setIdOccupant(_idPion);
+}
+
 string Grille::getCaseRepresentation(int _iLigne, int _iColonne)
 {
 	return getCase(_iLigne, _iColonne)->getRepresentation();
@@ -59,6 +64,33 @@ map<string, int> Grille::getCaseCoordonnees(long _idCase)
 	do
 	{
 		if(cases[iLigne][iColonne]->getId() == _idCase)
+		{
+			laCase = cases[iLigne][iColonne];
+			coordonnees["ligne"] = iLigne;
+			coordonnees["colonne"] = iColonne;
+		}
+		
+		iColonne++;
+		if(iColonne == nbColonnes)
+		{
+			iColonne = 0;
+			iLigne++;
+		}
+	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
+
+	return coordonnees;
+}
+
+map<string, int> Grille::getCaseCoordonneesOccupant(long _idOccupant)
+{
+	map<string, int> coordonnees;
+	Case * laCase = NULL;
+	int iLigne = 0;
+	int iColonne = 0;
+
+	do
+	{
+		if(cases[iLigne][iColonne]->getIdOccupant() == _idOccupant)
 		{
 			laCase = cases[iLigne][iColonne];
 			coordonnees["ligne"] = iLigne;

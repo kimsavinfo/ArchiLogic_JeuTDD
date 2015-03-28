@@ -21,7 +21,6 @@ class Morpion : public Jeu
 	private:
 		DriverGrilleMorpion * driverGrille;
 		vector<JoueurMorpion *> joueurs;
-		int iTour;
 		void ajouterJoueur(string _nom, string _formePions);
 		
 		long askJoueurQuelPionPoser();

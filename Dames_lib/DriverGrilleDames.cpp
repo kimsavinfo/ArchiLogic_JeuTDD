@@ -6,6 +6,16 @@ DriverGrilleDames::DriverGrilleDames(int _nbLignes, int _nbColonnes) : DriverGri
 {
 }
 
+void DriverGrilleDames::poserPion(long _idPion, int _iLigne, int _iColonne)
+{
+	grille->poserPion(_idPion, _iLigne, _iColonne);
+}
+
+map<string, int> DriverGrilleDames::getCaseCoordonneesOccupant(long _idOccupant)
+{
+	return grille->getCaseCoordonneesOccupant(_idOccupant);
+}
+
 
 DriverGrilleDames::~DriverGrilleDames(void)
 {

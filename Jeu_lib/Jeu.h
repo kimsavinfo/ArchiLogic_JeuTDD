@@ -16,6 +16,7 @@ class Jeu
 	protected:
 		int nbLignesLegende;
 		int nbColonnesLegende;
+		int iTour;
 
 		virtual void afficherTitre();
 		virtual void afficherJeu();

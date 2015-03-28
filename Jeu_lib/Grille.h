@@ -13,10 +13,12 @@ class Grille
 
 		string getCaseRepresentation(int _iLigne, int _iColonne);
 		map<string, int> getCaseCoordonnees(long _idCase);
+		map<string, int> getCaseCoordonneesOccupant(long _idOccupant);
 		vector<long> getCasesVidesIds();
 		long getCaseIdOccupant(int _iLigne, int _iColonne);
 		string getCaseLegende(long _idCase);
 		void poserPion(long _idPion, long _idCase);
+		void poserPion(long _idPion, int _iLigne, int _iColonne);
 		bool isGrilleRemplie();
 
 		int getNbLignes();

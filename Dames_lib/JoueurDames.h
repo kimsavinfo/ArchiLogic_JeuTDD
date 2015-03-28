@@ -3,9 +3,10 @@
 #include <map>
 #include <vector>
 
+#include "Joueur.h"
 #include "FactoryPionDames.h"
 
-class JoueurDames
+class JoueurDames : public Joueur
 {
 	public:
 		JoueurDames(string _nom, string _couleur);

@@ -2,8 +2,21 @@
 #include "Dames.h"
 
 
-Dames::Dames(void)
+Dames::Dames(void) : Jeu()
 {
+	driverGrille = new DriverGrilleDames(6, 6);
+
+	ajouterJoueur("Alice", "W");
+	ajouterJoueur("Bob", "B");
+
+	initJeu();
+}
+
+void Dames::initJeu()
+{
+	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
+
+	driverGrille->poserPion(pionsIds[0], 0, 2);
 }
 
 void Dames::jouer()
@@ -13,19 +26,83 @@ void Dames::jouer()
 	afficherJeu();
 }
 
-void Dames::afficherJeu()
-{
-
-}
-
-void Dames::afficherJoueurs()
-{
-
-}
 
 /** ============================================================================================== */
 /**	Affichage
 /** ============================================================================================== */
+
+void Dames::afficherJeu()
+{
+	vector< vector<string> > affichage = creerAffichage();
+
+	cout << endl;
+	for(int iLig = 0; iLig < affichage.size(); iLig++)
+    {
+		for(int iCol = 0; iCol < affichage[iLig].size(); iCol++)
+        {
+			cout << affichage[iLig][iCol];
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+vector< vector<string> > Dames::creerAffichage()
+{ 
+	int nbLignes = driverGrille->getGrilleNbLignes();
+	int nbColonnes = driverGrille->getGrilleNbColonnes();
+	vector< vector<string> > affichage = this->initAffichage(nbLignes, nbColonnes);
+	string pionRepresentation;
+	
+	for(int iLigneGrille = 0; iLigneGrille < nbLignes; iLigneGrille++ )
+	{
+		for(int iColonneGrille = 0; iColonneGrille < nbColonnes; iColonneGrille++ )
+		{
+			affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende] 
+				= driverGrille->getCaseRepresentation(iLigneGrille, iColonneGrille);
+
+			if(driverGrille->getCaseIdOccupant(iLigneGrille, iColonneGrille) > 0)
+			{
+				pionRepresentation = getPionRepresentation(driverGrille->getCaseIdOccupant(iLigneGrille, iColonneGrille));
+				for(int iLettre = 0; iLettre < pionRepresentation.size(); iLettre++)
+				{
+					affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende].at(1 + iLettre)
+						= pionRepresentation[iLettre];
+				}
+			}
+		}
+	}
+
+	return affichage;
+}
+
+string Dames::getPionRepresentation(long _idPion)
+{
+	string representation = "";
+
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		if(joueurs[iJoueur]->isPionAuJoueur(_idPion))
+		{
+			representation = joueurs[iJoueur]->getPionRepresentation(_idPion);
+		}
+	}
+
+	return representation;
+}
+
+void Dames::ajouterJoueur(string _nom, string _couleur)
+{
+	joueurs.push_back( new JoueurDames(_nom, _couleur) );
+}
+
+void Dames::afficherJoueurs()
+{
+	for(int iJoueur = 0; iJoueur < joueurs.size(); iJoueur++)
+	{
+		cout << joueurs[iJoueur]->getNom() << " joue avec les pions " << joueurs[iJoueur]->getCouleurPions() << endl ;
+	}
+}
 
 void Dames::afficherTitre()
 {
@@ -33,8 +110,6 @@ void Dames::afficherTitre()
 	cout << "\tDames" << endl;
 	cout << "========================" << endl;
 }
-
-
 
 Dames::~Dames(void)
 {

@@ -7,6 +7,7 @@ Jeu::Jeu(void)
 	espaceVide = "    ";
 	nbLignesLegende = 2; // Numobre de lignes pour les légendes
 	nbColonnesLegende = 3; // Nombre de colonnes pour les légendes
+	iTour = 0;
 }
 
 void Jeu::jouer()

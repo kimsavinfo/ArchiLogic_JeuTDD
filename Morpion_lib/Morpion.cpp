@@ -5,7 +5,6 @@
 Morpion::Morpion(void) : Jeu()
 {
 	driverGrille = new DriverGrilleMorpion(3, 3);
-	iTour = 0;
 
 	ajouterJoueur("Alice", "X");
 	ajouterJoueur("Bob", "O");
