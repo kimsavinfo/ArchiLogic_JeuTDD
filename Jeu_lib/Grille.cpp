@@ -34,33 +34,19 @@ void Grille::poserPion(long _idPion, long _idCase)
 	getCase(_idCase)->setIdOccupant(_idPion);
 }
 
-Case * Grille::getCase(long _idCase)
+string Grille::getCaseRepresentation(int _iLigne, int _iColonne)
 {
-	Case * laCase = NULL;
-	int iLigne = 0;
-	int iColonne = 0;
-
-	do
-	{
-		if(cases[iLigne][iColonne]->getId() == _idCase)
-		{
-			laCase = cases[iLigne][iColonne];
-		}
-		
-		iColonne++;
-		if(iColonne == nbColonnes)
-		{
-			iColonne = 0;
-			iLigne++;
-		}
-	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
-
-	return laCase;
+	return getCase(_iLigne, _iColonne)->getRepresentation();
 }
 
-Case * Grille::getCase(int _iLigne, int _iColonne)
+long Grille::getCaseIdOccupant(int _iLigne, int _iColonne)
 {
-	return cases[_iLigne][_iColonne];
+	return getCase(_iLigne, _iColonne)->getIdOccupant();
+}
+
+string Grille::getCaseLegende(long _idCase)
+{
+	return getCase(_idCase)->getLegende();
 }
 
 map<string, int> Grille::getCaseCoordonnees(long _idCase)
@@ -90,9 +76,9 @@ map<string, int> Grille::getCaseCoordonnees(long _idCase)
 	return coordonnees;
 }
 
-vector<Case *> Grille::getCasesVides()
+vector<long> Grille::getCasesVidesIds()
 {
-	vector<Case *> casesVides;
+	vector<long> casesVides;
 
 	for(int iLig = 0; iLig < nbLignes; iLig++)
     {
@@ -100,7 +86,7 @@ vector<Case *> Grille::getCasesVides()
         {
 			if(cases[iLig][iCol]->isVide())
 			{
-				casesVides.push_back( cases[iLig][iCol] );
+				casesVides.push_back( cases[iLig][iCol]->getId() );
 			}
 		}
     }
@@ -137,11 +123,34 @@ int Grille::getNbColonnes()
 	return nbColonnes;
 }
 
-vector< vector<Case *> > Grille::getCases()
+Case * Grille::getCase(int _iLigne, int _iColonne)
 {
-	return cases;
+	return cases[_iLigne][_iColonne];
 }
 
+Case * Grille::getCase(long _idCase)
+{
+	Case * laCase = NULL;
+	int iLigne = 0;
+	int iColonne = 0;
+
+	do
+	{
+		if(cases[iLigne][iColonne]->getId() == _idCase)
+		{
+			laCase = cases[iLigne][iColonne];
+		}
+		
+		iColonne++;
+		if(iColonne == nbColonnes)
+		{
+			iColonne = 0;
+			iLigne++;
+		}
+	}while( (iLigne < nbLignes && iColonne < nbColonnes) && laCase == NULL );
+	
+	return laCase;
+}
 
 Grille::~Grille(void)
 {

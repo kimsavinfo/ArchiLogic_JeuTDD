@@ -10,14 +10,14 @@ vector<ChoixCase *> DriverGrilleMorpion::getChoixCases()
 {
 	vector<ChoixCase *> choix;
 	string legende;
+	vector<long> casesVides = grille->getCasesVidesIds();
 
-	vector<Case *> casesVides = grille->getCasesVides();
 	for (int iCaseVide = 0; iCaseVide < casesVides.size(); iCaseVide++)
 	{
-		legende = to_string(choix.size() +1) + " - " + casesVides[iCaseVide]->getLegende();
-		choix.push_back( new ChoixCase( legende , casesVides[iCaseVide]->getId()) );
+		legende = to_string(choix.size() +1) + " - " + grille->getCaseLegende( casesVides.at(iCaseVide) ) ;
+		choix.push_back( new ChoixCase( legende , casesVides.at(iCaseVide) ) );
 	}
-	
+
 	return choix;
 }
 
@@ -62,7 +62,7 @@ void DriverGrilleMorpion::checkLigneGagnante(int _iLigne, vector<long> _pionsJou
 	{
 		isPionAdverse = true;
 
-		idOccupant = grille->getCase(_iLigne, iColonne)->getIdOccupant();
+		idOccupant = grille->getCaseIdOccupant(_iLigne, iColonne);
 		 
 		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
@@ -88,7 +88,7 @@ void DriverGrilleMorpion::checkColonneGagnante(int _iColonne, vector<long> _pion
 	{
 		isPionAdverse = true;
 
-		idOccupant = grille->getCase(iLigne, _iColonne)->getIdOccupant();
+		idOccupant = grille->getCaseIdOccupant(iLigne, _iColonne);
 
 		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
@@ -118,7 +118,7 @@ void DriverGrilleMorpion::checkDiagonaleNOSEGagnante(vector<long> _pionsJoueur)
 	{
 		isPionAdverse = true;
 
-		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
+		idOccupant = grille->getCaseIdOccupant(iLigne, iColonne);
 		
 		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{
@@ -149,7 +149,7 @@ void DriverGrilleMorpion::checkDiagonaleNESOGagnante(vector<long> _pionsJoueur)
 	{
 		isPionAdverse = true;
 
-		idOccupant = grille->getCase(iLigne, iColonne)->getIdOccupant();
+		idOccupant = grille->getCaseIdOccupant(iLigne, iColonne);
 		
 		if( find(_pionsJoueur.begin(), _pionsJoueur.end(), idOccupant) != _pionsJoueur.end() )
 		{

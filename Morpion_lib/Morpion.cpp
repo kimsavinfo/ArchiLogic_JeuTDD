@@ -127,29 +127,25 @@ void Morpion::afficherJeu()
 
 vector< vector<string> > Morpion::creerAffichage()
 { 
-	Grille * grille = driverGrille->getGrille();
-	int nbLignes = grille->getNbLignes();
-	int nbColonnes = grille->getNbColonnes();
+	int nbLignes = driverGrille->getGrilleNbLignes();
+	int nbColonnes = driverGrille->getGrilleNbColonnes();
 	vector< vector<string> > affichage = this->initAffichage(nbLignes, nbColonnes);
-	Case * caseAAffciher;
 	
 	for(int iLigneGrille = 0; iLigneGrille < nbLignes; iLigneGrille++ )
 	{
 		for(int iColonneGrille = 0; iColonneGrille < nbColonnes; iColonneGrille++ )
 		{
-			caseAAffciher = grille->getCase(iLigneGrille, iColonneGrille);
-
 			affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende] 
-				= caseAAffciher->getRepresentation();
+				= driverGrille->getCaseRepresentation(iLigneGrille, iColonneGrille);
 
-			if(caseAAffciher->getIdOccupant() > 0)
+			if(driverGrille->getCaseIdOccupant(iLigneGrille, iColonneGrille) > 0)
 			{
 				for(int iJoueur = 0; iJoueur < joueurs.size() ; iJoueur++)
 				{
-					if( joueurs.at(iJoueur)->isPionAuJoueur(caseAAffciher->getIdOccupant()) )
+					if( joueurs.at(iJoueur)->isPionAuJoueur(driverGrille->getCaseIdOccupant(iLigneGrille, iColonneGrille)) )
 					{
 						affichage[iLigneGrille * 2 + nbLignesLegende][iColonneGrille + nbColonnesLegende].at(1) 
-						= joueurs.at(0)->getFormePions()[0];
+						= joueurs.at(iJoueur)->getFormePions()[0];
 					}	
 				}
 			}

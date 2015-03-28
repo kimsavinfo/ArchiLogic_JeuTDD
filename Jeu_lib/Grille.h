@@ -11,16 +11,16 @@ class Grille
 		Grille(int _nbLignes, int _nbColonnes);
 		~Grille(void);
 
-		Case * getCase(int _iLigne, int _iColonne);
-		Case * getCase(long _idCase);
-		vector<Case *> getCasesVides();
-		void poserPion(long _idPion, long _idCase);
+		string getCaseRepresentation(int _iLigne, int _iColonne);
 		map<string, int> getCaseCoordonnees(long _idCase);
+		vector<long> getCasesVidesIds();
+		long getCaseIdOccupant(int _iLigne, int _iColonne);
+		string getCaseLegende(long _idCase);
+		void poserPion(long _idPion, long _idCase);
 		bool isGrilleRemplie();
 
 		int getNbLignes();
 		int getNbColonnes();
-		vector< vector<Case *> > getCases();
 
 	private:
 		int nbLignes;
@@ -28,5 +28,7 @@ class Grille
 		vector< vector<Case *> > cases;
 
 		void creerCases();
+		Case * getCase(int _iLigne, int _iColonne);
+		Case * getCase(long _idCase);
 };
 

@@ -8,7 +8,10 @@ class DriverGrille
 		DriverGrille(int _nbLignes, int _nbColonnes);
 		~DriverGrille(void);
 
-		Grille * getGrille();
+		int getGrilleNbLignes();
+		int getGrilleNbColonnes();
+		string getCaseRepresentation(int _iLigne, int _iColonne);
+		long getCaseIdOccupant(int _iLigne, int _iColonne);
 		bool isPartieFinie();
 		bool isEgalite();
 

@@ -9,9 +9,24 @@ DriverGrille::DriverGrille(int _nbLignes, int _nbColonnes)
 	egalite = false;
 }
 
-Grille * DriverGrille::getGrille()
+int DriverGrille::getGrilleNbLignes()
 {
-	return grille;
+	return grille->getNbLignes();
+}
+
+int DriverGrille::getGrilleNbColonnes()
+{
+	return grille->getNbColonnes();
+}
+
+string DriverGrille::getCaseRepresentation(int _iLigne, int _iColonne)
+{
+	return grille->getCaseRepresentation(_iLigne, _iColonne);
+}
+
+long DriverGrille::getCaseIdOccupant(int _iLigne, int _iColonne)
+{
+	return grille->getCaseIdOccupant(_iLigne, _iColonne);
 }
 
 bool DriverGrille::isPartieFinie()

@@ -40,14 +40,13 @@ namespace UnitTest_Jeu
 			int nbLignes = 2;
 			int nbColonnes = 2;
 			Grille * grille = new Grille(nbLignes, nbColonnes);
-			vector< vector<Case *> > cases =  grille->getCases();
 
 			int nbTrue = 0;
 			for(int iLig = 0; iLig < nbLignes; iLig++)
 			{
 				for(int iCol = 0; iCol < nbColonnes; iCol++)
 				{
-					if(cases[iLig][iCol]->getIdOccupant() == 0)
+					if(grille->getCaseIdOccupant(iLig, iCol) == 0)
 					{
 						nbTrue++;
 					}
