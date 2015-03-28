@@ -44,7 +44,20 @@ namespace UnitTest_Jeu
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				vector<long> pionsIds = joueurA->getPionsIds();
 				driverGrille->poserPion(pionsIds[0], 1, 1);
-				driverGrille->poserPion(pionsIds[0], 3, 3);
+				driverGrille->poserPion(pionsIds[1], 3, 3);
+
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+
+				Assert::AreEqual( 2, (int)choixPions.size() );
+			}
+
+			TEST_METHOD(Dames_ProposerPions_PionsJoueurVoisinsBloquant1)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 1, 1);
+				driverGrille->poserPion(pionsIds[1], 2, 0);
+				driverGrille->poserPion(pionsIds[2], 2, 2);
 
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
 

@@ -17,9 +17,9 @@ void Dames::initJeu()
 	// TODO : positionner tous les pions des 2 joueurs
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
-	driverGrille->poserPion(pionsIds[0], 0, 0);
-	// driverGrille->poserPion(pionsIds[1], 1, 1);
-	// driverGrille->poserPion(pionsIds[1], 2, 2);
+	driverGrille->poserPion(pionsIds[0], 1, 1);
+	driverGrille->poserPion(pionsIds[1], 2, 0);
+	driverGrille->poserPion(pionsIds[2], 2, 2);
 }
 
 void Dames::jouer()
