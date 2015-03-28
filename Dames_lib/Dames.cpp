@@ -17,12 +17,12 @@ void Dames::initJeu()
 	// TODO : positionner tous les pions des 2 joueurs
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
-	driverGrille->poserPion(pionsIds[0], 3, 3);
+	driverGrille->poserPion(pionsIds[0], 4, 3);
 	
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
-	driverGrille->poserPion(pionsIdsAversaire[0], 4, 2);
-	driverGrille->poserPion(pionsIdsAversaire[1], 4, 4);
+	driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
+	driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
 }
 
 void Dames::jouer()

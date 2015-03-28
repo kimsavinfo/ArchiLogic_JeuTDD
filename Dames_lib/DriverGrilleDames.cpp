@@ -54,7 +54,9 @@ bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVert
 		}
 		else
 		{
-			if( isCaseOccupeeParPionAdverse(ligneArrivee,  colonneArrivee, _pionsIdsJoueur) )
+			if( isCaseOccupeeParPionAdverse(ligneArrivee,  colonneArrivee, _pionsIdsJoueur) 
+				&& grille->isCoordonneesDansGrille(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal)
+				)
 			{
 				isDeplacable = grille->isCaseVide(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal);
 			}
