@@ -63,5 +63,21 @@ namespace UnitTest_Jeu
 
 				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
+
+			TEST_METHOD(Dames_ProposerPions_PionsAdversairePeutEtreMange)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				
+				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 3, 3);
+				
+				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
+				driverGrille->poserPion(pionsIdsAversaire[0], 4, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 4, 4);
+
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+
+				Assert::AreEqual( 1, (int)choixPions.size() );
+			}
 	};
 }
