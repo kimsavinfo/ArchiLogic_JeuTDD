@@ -16,7 +16,9 @@ class JoueurDames : public Joueur
 		vector<long> getPionsIds();
 		bool isPionAuJoueur(long _idPion);
 		string getPionRepresentation(long _idPion);
+		map<long, bool> getPionsIdsEtIsDame();
 		int getSensVertical();
+		void setPionDame(long _idPion);
 
 	private:
 		map<long, PionDames*> pions;

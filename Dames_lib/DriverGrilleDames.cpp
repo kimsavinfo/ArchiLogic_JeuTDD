@@ -16,23 +16,32 @@ map<string, int> DriverGrilleDames::getCaseCoordonneesOccupant(long _idOccupant)
 	return grille->getCaseCoordonneesOccupant(_idOccupant);
 }
 
-vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, vector<long> _pionsIdsJoueur)
+vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, map<long, bool> _pionsJoueur)
 {
 	vector<ChoixPion *> choix;
 	map<string, int> coordonnees;
 
-	for (int iPion = 0; iPion < _pionsIdsJoueur.size(); iPion++)
+	for (auto const& pion: _pionsJoueur)
 	{
-		coordonnees = getCaseCoordonneesOccupant(_pionsIdsJoueur.at(iPion));
+		coordonnees = getCaseCoordonneesOccupant(pion.first);
 
 		// Check si le pion est bien présent sur la case pour les tests
-		if( grille->getCaseIdOccupant(coordonnees["ligne"], coordonnees["colonne"]) == _pionsIdsJoueur.at(iPion) )
+		if( grille->getCaseIdOccupant(coordonnees["ligne"], coordonnees["colonne"]) == pion.first )
 		{
-			if( isPionDeplacable(coordonnees["ligne"], coordonnees["colonne"], _sensVertical, -1,  _pionsIdsJoueur) 
-				|| isPionDeplacable(coordonnees["ligne"], coordonnees["colonne"], _sensVertical, 1,  _pionsIdsJoueur) 
+			// Cas pion simple
+			if( !pion.second && 
+				isPionSimpleDeplacable(coordonnees["ligne"], coordonnees["colonne"], _sensVertical, _pionsJoueur) 
 				)
 			{
-				choix.push_back( new ChoixPion(_pionsIdsJoueur.at(iPion), coordonnees["ligne"], coordonnees["colonne"]) );
+				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"]) );
+			}
+
+			// Cas pion dame
+			if( pion.second && 
+				isPionDameDeplacable(coordonnees["ligne"], coordonnees["colonne"], _pionsJoueur)
+				)
+			{
+				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"]) );
 			}
 		}
 	}
@@ -40,7 +49,21 @@ vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, vector<l
 	return choix;
 }
 
-bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVertical, int _sensHorizontal ,vector<long> _pionsIdsJoueur)
+bool DriverGrilleDames::isPionSimpleDeplacable(int _ligne, int _colonne, int _sensVertical, map<long, bool> _pionsJoueur)
+{
+	return isPionDeplacable(_ligne, _colonne, _sensVertical, -1,  _pionsJoueur)
+		|| isPionDeplacable(_ligne, _colonne, _sensVertical, 1,  _pionsJoueur);
+}
+		
+bool DriverGrilleDames::isPionDameDeplacable(int _ligne, int _colonne, map<long, bool> _pionsJoueur )
+{
+	return isPionDeplacable(_ligne, _colonne, -1, -1,  _pionsJoueur)
+		|| isPionDeplacable(_ligne, _colonne, -1, 1,  _pionsJoueur)
+		|| isPionDeplacable(_ligne, _colonne, 1, -1,  _pionsJoueur)
+		|| isPionDeplacable(_ligne, _colonne, 1, 1,  _pionsJoueur);
+}
+
+bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVertical, int _sensHorizontal, map<long, bool> _pionsJoueur)
 {
 	bool isDeplacable = false;
 	int ligneArrivee = _ligne + _sensVertical;
@@ -54,7 +77,7 @@ bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVert
 		}
 		else
 		{
-			if( isCaseOccupeeParPionAdverse(ligneArrivee,  colonneArrivee, _pionsIdsJoueur) 
+			if( isCaseOccupeeParPionAdverse(ligneArrivee,  colonneArrivee, _pionsJoueur) 
 				&& grille->isCoordonneesDansGrille(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal)
 				)
 			{
@@ -63,15 +86,14 @@ bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVert
 		}
 	}
 
-
 	return isDeplacable;
 }
 
-bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, vector<long> _pionsIdsJoueur)
+bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, map<long, bool> _pionsJoueur)
 {
 	long idPionOccupant = grille->getCaseIdOccupant(_ligne, _colonne);
-	vector<long>::iterator it = find(_pionsIdsJoueur.begin(), _pionsIdsJoueur.end(), idPionOccupant);
-	return it == _pionsIdsJoueur.end() ? true : false;
+	auto it =_pionsJoueur.find(idPionOccupant);
+	return it == _pionsJoueur.end() ? true : false;
 }
 
 DriverGrilleDames::~DriverGrilleDames(void)

@@ -17,12 +17,21 @@ void Dames::initJeu()
 	// TODO : positionner tous les pions des 2 joueurs
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
+	joueurs[iTour]->setPionDame(pionsIds[0]);
 	driverGrille->poserPion(pionsIds[0], 4, 3);
-	
+	driverGrille->poserPion(pionsIds[0], 4, 3);
+	driverGrille->poserPion(pionsIds[1], 3, 2);
+	driverGrille->poserPion(pionsIds[2], 3, 4);
+	driverGrille->poserPion(pionsIds[3], 5, 2);
+	driverGrille->poserPion(pionsIds[4], 5, 4);
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
-	driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
-	driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
+	/*
+	driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
+	driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
+	driverGrille->poserPion(pionsIdsAversaire[2], 5, 2);
+	driverGrille->poserPion(pionsIdsAversaire[3], 5, 4);
+	*/
 }
 
 void Dames::jouer()
@@ -32,15 +41,14 @@ void Dames::jouer()
 	afficherJeu();
 
 	// TEMPO : pour les tests
-	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
-	vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurs[iTour]->getSensVertical(), pionsIds);
+	map<long, bool> pionsJoueur = joueurs[iTour]->getPionsIdsEtIsDame();
+	vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurs[iTour]->getSensVertical(), pionsJoueur);
 
 	for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
 	{
 		cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
 	}
 }
-
 
 /** ============================================================================================== */
 /**	Affichage

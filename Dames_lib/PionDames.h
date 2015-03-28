@@ -10,7 +10,8 @@ class PionDames : public Pion
 
 		string getCouleur();
 		virtual string getRepresentation();
-		bool IsDame();
+		bool isDame();
+		void setDame();
 
 	private:
 		bool typeDame;

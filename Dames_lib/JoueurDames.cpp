@@ -56,6 +56,23 @@ int JoueurDames::getSensVertical()
 	return sensVertical;
 }
 
+map<long, bool> JoueurDames::getPionsIdsEtIsDame()
+{
+	map<long, bool> idsEtIsDame;
+
+	for (auto const& pion: pions)
+	{
+		idsEtIsDame[pion.second->getId()] = pion.second->isDame();
+	}
+
+	return idsEtIsDame;
+}
+
+void JoueurDames::setPionDame(long _idPion)
+{
+	pions.find(_idPion)->second->setDame();
+}
+
 JoueurDames::~JoueurDames(void)
 {
 	for (auto const& pion: pions)

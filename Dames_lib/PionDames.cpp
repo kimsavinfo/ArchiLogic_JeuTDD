@@ -17,9 +17,14 @@ string PionDames::getRepresentation()
 	return typeDame ? representation + "D" :  representation;
 }
 
-bool PionDames::IsDame()
+bool PionDames::isDame()
 {
 	return typeDame;
+}
+
+void PionDames::setDame()
+{
+	typeDame = true;
 }
 
 PionDames::~PionDames(void)

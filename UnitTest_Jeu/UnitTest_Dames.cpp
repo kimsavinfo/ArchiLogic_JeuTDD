@@ -45,8 +45,9 @@ namespace UnitTest_Jeu
 				vector<long> pionsIds = joueurA->getPionsIds();
 				driverGrille->poserPion(pionsIds[0], 1, 1);
 				driverGrille->poserPion(pionsIds[1], 3, 3);
-
-				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+				
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
 
 				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
@@ -59,7 +60,8 @@ namespace UnitTest_Jeu
 				driverGrille->poserPion(pionsIds[1], 2, 0);
 				driverGrille->poserPion(pionsIds[2], 2, 2);
 
-				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
 
 				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
@@ -75,7 +77,8 @@ namespace UnitTest_Jeu
 				driverGrille->poserPion(pionsIdsAversaire[0], 4, 2);
 				driverGrille->poserPion(pionsIdsAversaire[1], 4, 4);
 
-				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
 
 				Assert::AreEqual( 1, (int)choixPions.size() );
 			}
@@ -91,9 +94,67 @@ namespace UnitTest_Jeu
 				driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
 				driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
 
-				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsIds);
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
 
 				Assert::AreEqual( 0, (int)choixPions.size() );
+			}
+
+			TEST_METHOD(Dames_ProposerPions_DameOK_NonEntouree)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 4, 3);
+				
+				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
+				driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+
+				Assert::AreEqual( 1, (int)choixPions.size() );
+			}
+
+			TEST_METHOD(Dames_ProposerPions_DameOK_Entouree)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 4, 3);
+				
+				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
+				driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
+				driverGrille->poserPion(pionsIdsAversaire[2], 5, 2);
+				driverGrille->poserPion(pionsIdsAversaire[3], 5, 4);
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+
+				Assert::AreEqual( 1, (int)choixPions.size() );
+			}
+
+			TEST_METHOD(Dames_ProposerPions_DameKO_Entouree)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 4, 3);
+				driverGrille->poserPion(pionsIds[1], 3, 2);
+				driverGrille->poserPion(pionsIds[2], 3, 4);
+				driverGrille->poserPion(pionsIds[3], 5, 2);
+				driverGrille->poserPion(pionsIds[4], 5, 4);
+				
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+
+				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
 	};
 }
