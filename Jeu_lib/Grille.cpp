@@ -191,7 +191,7 @@ Case * Grille::getCase(long _idCase)
 
 bool Grille::isCoordonneesDansGrille(int _iLigne, int _iColonne)
 {
-	return _iLigne > 0 && _iLigne < nbLignes && _iColonne > 0 && _iColonne < nbColonnes;
+	return _iLigne >= 0 && _iLigne < nbLignes && _iColonne >= 0 && _iColonne < nbColonnes;
 }
 
 Grille::~Grille(void)

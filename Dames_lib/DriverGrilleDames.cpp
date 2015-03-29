@@ -183,7 +183,16 @@ void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion,
 			if( grille->isCaseVide(ligneArrivee, colonneArrivee) )
 			{
 				// ============ Cas où le pion peut avancer dans une case vide
-				_choixDeplacement.push_back( new ChoixDeplacement(ligneArrivee, colonneArrivee, _pionsManges) );
+				if(_pionsManges.size() > 0 && !_choixPion->isDame())
+				{
+					// Pion simple a mange des pions adverses et arrive à la fin de la grille
+					_choixDeplacement.push_back( new ChoixDeplacement(
+						_choixPion->getLigneTempo() ,  _choixPion->getColonneTempo(), _pionsManges) );
+				}
+				else
+				{
+					_choixDeplacement.push_back( new ChoixDeplacement(ligneArrivee, colonneArrivee, _pionsManges) );
+				}
 
 				if(_choixPion->isDame())
 				{

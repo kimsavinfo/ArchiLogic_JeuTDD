@@ -30,12 +30,7 @@ void Dames::initJeu()
 	*/
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
-	/*
-	driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
-	driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
-	driverGrille->poserPion(pionsIdsAversaire[2], 5, 2);
-	driverGrille->poserPion(pionsIdsAversaire[3], 5, 4);
-	*/
+	driverGrille->poserPion(pionsIdsAversaire[0], 4, 2);
 }
 
 void Dames::jouer()
