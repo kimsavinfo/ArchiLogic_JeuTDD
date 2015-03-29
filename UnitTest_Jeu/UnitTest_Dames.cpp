@@ -155,5 +155,20 @@ namespace UnitTest_Jeu
 
 				Assert::AreEqual( 2, (int)choixPions.size() );
 			}
+
+			TEST_METHOD(Dames_ProposerCases_PionSimpleSeul)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				
+				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 3, 3);
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = 
+					driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+
+				Assert::AreEqual( 2, (int)choixCases.size() );
+			}
 	};
 }

@@ -15,6 +15,7 @@ class ChoixPion : public IRepresentation
 		void setLigneTempo(int _ligneTempo);
 		int getColonneTempo();
 		void setColonneTempo(int _colonneTempo);
+		void setCoordonneesTempo(int _ligneTempo, int _colonneTempo);
 		virtual string getRepresentation();
 		bool isDame();
 

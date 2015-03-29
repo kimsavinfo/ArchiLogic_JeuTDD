@@ -57,6 +57,12 @@ void ChoixPion::setColonneTempo(int _colonneTempo)
 	colonneTempo = _colonneTempo;
 }
 
+void ChoixPion::setCoordonneesTempo(int _ligneTempo, int _colonneTempo)
+{
+	setLigneTempo(_ligneTempo);
+	setColonneTempo(_colonneTempo);
+}
+
 ChoixPion::~ChoixPion(void)
 {
 }

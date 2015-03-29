@@ -108,14 +108,18 @@ vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPio
 {
 	vector<ChoixDeplacement *> choixDeplacement;
 	
-	construireCHoixCasesInit(_choixPion, _sensVertical, -1, _pionsJoueur), choixDeplacement;
-	construireCHoixCasesInit(_choixPion, _sensVertical, 1, _pionsJoueur), choixDeplacement;
+	construireCHoixCasesInit(_choixPion, _sensVertical, -1, _pionsJoueur, choixDeplacement);
+	construireCHoixCasesInit(_choixPion, _sensVertical, 1, _pionsJoueur, choixDeplacement);
 	
-	if(_choixPion->isDame)
+	if(_choixPion->isDame())
 	{
-		construireCHoixCasesInit(_choixPion, - _sensVertical, -1, _pionsJoueur), choixDeplacement;
-		construireCHoixCasesInit(_choixPion, - _sensVertical, 1, _pionsJoueur), choixDeplacement;
+		construireCHoixCasesInit(_choixPion, - _sensVertical, -1, _pionsJoueur, choixDeplacement);
+		construireCHoixCasesInit(_choixPion, - _sensVertical, 1, _pionsJoueur, choixDeplacement);
 	}
+
+	// Règle du jeu :
+	// On a obligation de manger
+	construireCHoixCasesObligerManger(choixDeplacement);
 
 	return choixDeplacement;
 }
@@ -130,15 +134,14 @@ void DriverGrilleDames::construireCHoixCasesInit(ChoixPion * _choixPion,
 	_choixPion->setLigneTempo(_choixPion->getLigneDepart());
 	_choixPion->setColonneTempo(_choixPion->getColonneDepart());
 	construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, 
-		_pionsJoueur, _choixDeplacement, pionsManges, true);
+		_pionsJoueur, _choixDeplacement, pionsManges);
 }
 
 void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion, 
 											 int _sensVertical, int _sensHorizontal, 
 											 map<long, bool> _pionsJoueur,
 											 vector<ChoixDeplacement *> &_choixDeplacement, 
-											 vector<long> &_pionsManges,
-											 bool peutRetournerArriere = false)
+											 vector<long> &_pionsManges)
 {
 	int ligneArrivee = _choixPion->getLigneTempo() + _sensVertical;
 	int colonneArrivee = _choixPion->getColonneTempo() + _sensHorizontal;
@@ -148,12 +151,52 @@ void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion,
 		if( isCaseOccupeeParPionAdverse(ligneArrivee, colonneArrivee, _pionsJoueur) 
 			&& grille->isCoordonneesDansGrille(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal))
 		{
+			// ============ Cas où le pion choisi peut manger un pion adverse
 			_pionsManges.push_back( grille->getCaseIdOccupant(ligneArrivee,colonneArrivee) );
 
-			_choixPion->setLigneTempo(ligneArrivee + _sensVertical);
-			_choixPion->setColonneTempo(colonneArrivee + _sensHorizontal);
+			// Mettre à jour les cooronnées temporaires
+			_choixPion->setCoordonneesTempo(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal);
+
+			// Possibilité dans la meme direction
 			construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, _pionsJoueur, 
-				_choixDeplacement, _pionsManges, false);
+				_choixDeplacement, _pionsManges);
+			// Possibilité dans le même sens horinzontal mais dans le sens vertical inverse 
+			construireCHoixCasesRecursif(_choixPion, - _sensVertical, _sensHorizontal, _pionsJoueur, 
+				_choixDeplacement, _pionsManges);
+			// Possibilité dans le même sens vertical mais dans le sens horinzontal inverse 
+			construireCHoixCasesRecursif(_choixPion, _sensVertical, - _sensHorizontal, _pionsJoueur, 
+				_choixDeplacement, _pionsManges);
+		}
+		else
+		{
+			if( grille->isCaseVide(ligneArrivee, colonneArrivee) )
+			{
+				// ============ Cas où le pion peut avancer dans une case vide
+				_choixDeplacement.push_back( new ChoixDeplacement(ligneArrivee, colonneArrivee, _pionsManges) );
+
+				if(_choixPion->isDame())
+				{
+					// Mettre à jour les cooronnées temporaires
+					_choixPion->setCoordonneesTempo(ligneArrivee, colonneArrivee);
+
+					// Pour la dame, on doit continuer dans la même direction
+					construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, _pionsJoueur, 
+						_choixDeplacement, _pionsManges);
+
+					// SI la a mangé un pion ALORS
+					//		la dame peut manger un autre sur l'autre diagonale
+					// FIN SI
+					if( _pionsManges.size() > 0 )
+					{
+						// Possibilité dans le même sens horinzontal mais dans le sens vertical inverse 
+						construireCHoixCasesRecursif(_choixPion, - _sensVertical, _sensHorizontal, _pionsJoueur, 
+							_choixDeplacement, _pionsManges);
+						// Possibilité dans le même sens vertical mais dans le sens horinzontal inverse 
+						construireCHoixCasesRecursif(_choixPion, _sensVertical, - _sensHorizontal, _pionsJoueur, 
+							_choixDeplacement, _pionsManges);
+					}
+				}
+			}
 		}
 	}
 }
@@ -161,6 +204,40 @@ void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion,
 // TODO : penser à rendre l'action de manger obligatoire :
 // enlever les pionManges = 0 si d'autres on supérieur à 0
 // Pour une dame, on doit absolument prendre en compte toutes les diago 
+void DriverGrilleDames::construireCHoixCasesObligerManger(vector<ChoixDeplacement *> &_choixDeplacement)
+{
+	if( isObligeManger(_choixDeplacement) )
+	{
+		// Enlever proposition qui ne mangent aucun pion
+		for (int iChoix = 0; iChoix < _choixDeplacement.size(); iChoix++)
+		{
+			if(_choixDeplacement.at(iChoix)->getPionsManges().size() == 0)
+			{
+				_choixDeplacement.erase(_choixDeplacement.begin()+iChoix);
+			}
+		}
+	}
+	
+	// TODO : gérer le cas des dames
+}
+
+bool DriverGrilleDames::isObligeManger(vector<ChoixDeplacement *> &_choixDeplacement)
+{
+	bool obligeManger = false;
+	int iChoix = 0;
+
+	do
+	{
+		if( _choixDeplacement.at(iChoix)->getPionsManges().size() > 0 )
+		{
+			obligeManger = true;
+		}
+
+		iChoix++;
+	}while(iChoix < _choixDeplacement.size() && !obligeManger);
+
+	return obligeManger;
+}
 
 DriverGrilleDames::~DriverGrilleDames(void)
 {

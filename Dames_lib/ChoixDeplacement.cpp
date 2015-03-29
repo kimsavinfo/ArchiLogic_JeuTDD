@@ -24,6 +24,13 @@ vector<long> ChoixDeplacement::getPionsManges()
 	return pionsManges;
 }
 
+string ChoixDeplacement::getRepresentation()
+{
+	return "["+ to_string(ligneArrivee) + ";" + to_string(colonneArrivee) + "] "
+		+ " = " + to_string(pionsManges.size()) + " pion manges.";
+}
+
+
 ChoixDeplacement::~ChoixDeplacement(void)
 {
 }

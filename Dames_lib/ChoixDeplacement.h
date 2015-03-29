@@ -3,7 +3,9 @@
 #include <vector>
 using namespace std;
 
-class ChoixDeplacement
+#include "IRepresentation.h"
+
+class ChoixDeplacement : public IRepresentation
 {
 	public:
 		ChoixDeplacement(int _ligneArrivee, int _colonneArrivee, vector<long> _pionsManges);
@@ -12,6 +14,7 @@ class ChoixDeplacement
 		int getLigneArrivee();
 		int getColonneArrivee();
 		vector<long> getPionsManges();
+		virtual string getRepresentation();
 
 	private:
 		int ligneArrivee;

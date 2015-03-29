@@ -26,5 +26,6 @@ class Dames : public Jeu
 		void initJeu();
 		string getPionRepresentation(long _idPion);
 		ChoixPion * askQuelPionDeplacer();
+		ChoixDeplacement * askOuDeplacerPion(ChoixPion * _pionADeplacer);
 };
 
