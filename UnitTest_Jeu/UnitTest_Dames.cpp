@@ -149,7 +149,6 @@ namespace UnitTest_Jeu
 				driverGrille->poserPion(pionsIds[2], 3, 4);
 				driverGrille->poserPion(pionsIds[3], 5, 2);
 				driverGrille->poserPion(pionsIds[4], 5, 4);
-				
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);

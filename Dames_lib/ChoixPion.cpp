@@ -8,6 +8,8 @@ ChoixPion::ChoixPion(long _idPion, int _ligneDepart, int _colonneDepart,  bool _
 	ligneDepart = _ligneDepart;
 	colonneDepart = _colonneDepart;
 	typeDame = _typeDame;
+	ligneTempo = ligneDepart;
+	colonneTempo = colonneDepart;
 }
 
 long ChoixPion::getIdPion()
@@ -33,6 +35,26 @@ string ChoixPion::getRepresentation()
 bool ChoixPion::isDame()
 {
 	return typeDame;
+}
+
+int ChoixPion::getLigneTempo()
+{
+	return ligneTempo;
+}
+
+void ChoixPion::setLigneTempo(int _ligneTempo)
+{
+	ligneTempo = _ligneTempo;
+}
+
+int ChoixPion::getColonneTempo()
+{
+	return colonneTempo;
+}
+
+void ChoixPion::setColonneTempo(int _colonneTempo)
+{
+	colonneTempo = _colonneTempo;
 }
 
 ChoixPion::~ChoixPion(void)

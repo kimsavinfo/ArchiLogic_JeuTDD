@@ -104,11 +104,58 @@ bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, ma
 /**	Choix de la case : où peut-on déplacer le pion ?
 /** ============================================================================================== */
 
-vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPion)
+vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPion, int _sensVertical, map<long, bool> _pionsJoueur)
 {
 	vector<ChoixDeplacement *> choixDeplacement;
+	
+	construireCHoixCasesInit(_choixPion, _sensVertical, -1, _pionsJoueur), choixDeplacement;
+	construireCHoixCasesInit(_choixPion, _sensVertical, 1, _pionsJoueur), choixDeplacement;
+	
+	if(_choixPion->isDame)
+	{
+		construireCHoixCasesInit(_choixPion, - _sensVertical, -1, _pionsJoueur), choixDeplacement;
+		construireCHoixCasesInit(_choixPion, - _sensVertical, 1, _pionsJoueur), choixDeplacement;
+	}
 
 	return choixDeplacement;
+}
+
+void DriverGrilleDames::construireCHoixCasesInit(ChoixPion * _choixPion, 
+												 int _sensVertical, int _sensHorizontal, 
+												 map<long, bool> _pionsJoueur,
+												vector<ChoixDeplacement *> &_choixDeplacement)
+{
+	vector<long> pionsManges;
+
+	_choixPion->setLigneTempo(_choixPion->getLigneDepart());
+	_choixPion->setColonneTempo(_choixPion->getColonneDepart());
+	construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, 
+		_pionsJoueur, _choixDeplacement, pionsManges, true);
+}
+
+void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion, 
+											 int _sensVertical, int _sensHorizontal, 
+											 map<long, bool> _pionsJoueur,
+											 vector<ChoixDeplacement *> &_choixDeplacement, 
+											 vector<long> &_pionsManges,
+											 bool peutRetournerArriere = false)
+{
+	int ligneArrivee = _choixPion->getLigneTempo() + _sensVertical;
+	int colonneArrivee = _choixPion->getColonneTempo() + _sensHorizontal;
+
+	if( grille->isCoordonneesDansGrille(ligneArrivee, colonneArrivee) )
+	{
+		if( isCaseOccupeeParPionAdverse(ligneArrivee, colonneArrivee, _pionsJoueur) 
+			&& grille->isCoordonneesDansGrille(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal))
+		{
+			_pionsManges.push_back( grille->getCaseIdOccupant(ligneArrivee,colonneArrivee) );
+
+			_choixPion->setLigneTempo(ligneArrivee + _sensVertical);
+			_choixPion->setColonneTempo(colonneArrivee + _sensHorizontal);
+			construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, _pionsJoueur, 
+				_choixDeplacement, _pionsManges, false);
+		}
+	}
 }
 
 // TODO : penser à rendre l'action de manger obligatoire :
