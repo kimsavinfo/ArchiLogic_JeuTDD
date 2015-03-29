@@ -128,8 +128,7 @@ vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPio
 		construireCHoixCasesInit(_choixPion, - _sensVertical, 1, _pionsJoueur, choixDeplacement);
 	}
 
-	// Règle du jeu :
-	// On a obligation de manger
+	// Règle du jeu : on a obligation de manger
 	construireCHoixCasesObligerManger(choixDeplacement);
 
 	return choixDeplacement;
