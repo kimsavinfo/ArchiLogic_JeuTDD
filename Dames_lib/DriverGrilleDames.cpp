@@ -95,9 +95,20 @@ bool DriverGrilleDames::isPionDeplacable(int _ligne, int _colonne, int _sensVert
 
 bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, map<long, bool> _pionsJoueur)
 {
+	bool occupe = true;
 	long idPionOccupant = grille->getCaseIdOccupant(_ligne, _colonne);
-	auto it =_pionsJoueur.find(idPionOccupant);
-	return it == _pionsJoueur.end() ? true : false;
+	
+	if(idPionOccupant > 0)
+	{
+		auto it =_pionsJoueur.find(idPionOccupant);
+		occupe = it == _pionsJoueur.end() ? true : false;
+	}
+	else
+	{
+		occupe = false;
+	}
+
+	return occupe;
 }
 
 /** ============================================================================================== */
@@ -154,7 +165,7 @@ void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion,
 			// ============ Cas où le pion choisi peut manger un pion adverse
 			_pionsManges.push_back( grille->getCaseIdOccupant(ligneArrivee,colonneArrivee) );
 
-			// Mettre à jour les cooronnées temporaires
+			// Mettre à jour les coordonnées temporaires
 			_choixPion->setCoordonneesTempo(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal);
 
 			// Possibilité dans la meme direction

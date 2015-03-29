@@ -65,7 +65,7 @@ ChoixPion * Dames::askQuelPionDeplacer()
 		}
 
 		cout << joueurs[iTour % joueurs.size()]->getNom()
-			<< ", ou souhaitez-vous poser un pion ? " ;
+			<< ", quel pion souhaitez-vous deplacer ? " ;
 		cin >> choixJoueur;
 
 	}while(choixJoueur < 1 || choixJoueur > choixPions.size());
@@ -77,7 +77,6 @@ ChoixDeplacement * Dames::askOuDeplacerPion(ChoixPion * _pionADeplacer)
 {
 	map<long, bool> pionsJoueur = joueurs[iTour]->getPionsIdsEtIsDame();
 	vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(_pionADeplacer, joueurs[iTour]->getSensVertical(), pionsJoueur);
-
 	int choixJoueur;
 
 	do

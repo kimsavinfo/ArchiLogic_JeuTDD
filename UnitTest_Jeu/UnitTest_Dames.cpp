@@ -165,8 +165,10 @@ namespace UnitTest_Jeu
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
-				vector<ChoixDeplacement *> choixCases = 
-					driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+
+ 				string message = "NbCase : " + to_string(choixCases.size());
+				Logger::WriteMessage(message.c_str());
 
 				Assert::AreEqual( 2, (int)choixCases.size() );
 			}
