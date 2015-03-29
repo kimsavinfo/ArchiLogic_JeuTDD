@@ -2,6 +2,7 @@
 
 #include "DriverGrille.h"
 #include "ChoixPion.h"
+#include "ChoixDeplacement.h"
 
 class DriverGrilleDames : public DriverGrille
 {

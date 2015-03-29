@@ -16,6 +16,10 @@ map<string, int> DriverGrilleDames::getCaseCoordonneesOccupant(long _idOccupant)
 	return grille->getCaseCoordonneesOccupant(_idOccupant);
 }
 
+/** ============================================================================================== */
+/**	Choix des pions à déplacer
+/** ============================================================================================== */
+
 vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, map<long, bool> _pionsJoueur)
 {
 	vector<ChoixPion *> choix;
@@ -33,7 +37,7 @@ vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, map<long
 				isPionSimpleDeplacable(coordonnees["ligne"], coordonnees["colonne"], _sensVertical, _pionsJoueur) 
 				)
 			{
-				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"]) );
+				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"], pion.second) );
 			}
 
 			// Cas pion dame
@@ -41,7 +45,7 @@ vector<ChoixPion *> DriverGrilleDames::getChoixPions(int _sensVertical, map<long
 				isPionDameDeplacable(coordonnees["ligne"], coordonnees["colonne"], _pionsJoueur)
 				)
 			{
-				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"]) );
+				choix.push_back( new ChoixPion(pion.first, coordonnees["ligne"], coordonnees["colonne"], pion.second) );
 			}
 		}
 	}
@@ -95,6 +99,21 @@ bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, ma
 	auto it =_pionsJoueur.find(idPionOccupant);
 	return it == _pionsJoueur.end() ? true : false;
 }
+
+/** ============================================================================================== */
+/**	Choix de la case : où peut-on déplacer le pion ?
+/** ============================================================================================== */
+
+vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPion)
+{
+	vector<ChoixDeplacement *> choixDeplacement;
+
+	return choixDeplacement;
+}
+
+// TODO : penser à rendre l'action de manger obligatoire :
+// enlever les pionManges = 0 si d'autres on supérieur à 0
+// Pour une dame, on doit absolument prendre en compte toutes les diago 
 
 DriverGrilleDames::~DriverGrilleDames(void)
 {

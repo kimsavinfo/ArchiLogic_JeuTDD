@@ -2,11 +2,12 @@
 #include "ChoixPion.h"
 
 
-ChoixPion::ChoixPion(long _idPion, int _ligneDepart, int _colonneDepart)
+ChoixPion::ChoixPion(long _idPion, int _ligneDepart, int _colonneDepart,  bool _typeDame)
 {
 	idPion = _idPion;
 	ligneDepart = _ligneDepart;
 	colonneDepart = _colonneDepart;
+	typeDame = _typeDame;
 }
 
 long ChoixPion::getIdPion()
@@ -29,6 +30,10 @@ string ChoixPion::getRepresentation()
 	return "["+ to_string(ligneDepart) + ";" + to_string(colonneDepart) + "]";
 }
 
+bool ChoixPion::isDame()
+{
+	return typeDame;
+}
 
 ChoixPion::~ChoixPion(void)
 {
