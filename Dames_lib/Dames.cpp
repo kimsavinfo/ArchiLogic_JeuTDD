@@ -14,7 +14,9 @@ Dames::Dames(void) : Jeu()
 
 void Dames::initJeu()
 {
-	// TODO : positionner tous les pions des 2 joueurs
+	// TODO : positionner tous les pions des 2 joueurs normalment
+
+
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
 	joueurs[iTour]->setPionDame(pionsIds[0]);
@@ -40,14 +42,30 @@ void Dames::jouer()
 	afficherJoueurs();
 	afficherJeu();
 
-	// TEMPO : pour les tests
+	ChoixPion * pionADeplacer = askQuelPionDeplacer();
+	cout << "Pion a deplacer :" + pionADeplacer->getRepresentation() << endl;
+}
+
+ChoixPion * Dames::askQuelPionDeplacer()
+{
 	map<long, bool> pionsJoueur = joueurs[iTour]->getPionsIdsEtIsDame();
 	vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurs[iTour]->getSensVertical(), pionsJoueur);
+	int choixJoueur;
 
-	for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
+	do
 	{
-		cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
-	}
+		for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
+		{
+			cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
+		}
+
+		cout << joueurs[iTour % joueurs.size()]->getNom()
+			<< ", ou souhaitez-vous poser un pion ? " ;
+		cin >> choixJoueur;
+
+	}while(choixJoueur < 1 || choixJoueur > choixPions.size());
+
+	return choixPions[choixJoueur -1];
 }
 
 /** ============================================================================================== */
