@@ -29,7 +29,7 @@ int ChoixPion::getColonneDepart()
 
 string ChoixPion::getRepresentation()
 {
-	return "["+ to_string(ligneDepart) + ";" + to_string(colonneDepart) + "]";
+	return "["+ to_string(ligneDepart +1) + ";" + to_string(colonneDepart +1) + "]";
 }
 
 bool ChoixPion::isDame()
