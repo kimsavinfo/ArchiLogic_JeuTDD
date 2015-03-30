@@ -45,13 +45,25 @@ class DriverGrilleDames : public DriverGrille
 		void construireChoixCaseDameInit(int _ligne, int _colonne, 
 												map<long, bool> _pionsJoueur, 
 												vector<ChoixDeplacement *> &_choixDeplacement);
+		void construireChoixCaseDameRecursif(int _ligne, int _colonne, 
+												int _sensVertical, int _sensHorizontal,
+												map<long, bool> _pionsJoueur, 
+												vector<long> &_pionsManges,
+												vector<ChoixDeplacement *> &_choixDeplacement);
 		bool isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur);
-		bool isDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
+		bool isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, 
+													int _sensVerticalDepart, int _sensHorizontalDepart,
+												map<long, bool> _pionsJoueur);
+		bool isDiagonaleAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart,
 								int _sensVertical, int _sensHorizontal,
 								map<long, bool> _pionsJoueur);
-		void construireChoixCaseDameDiagonale(int _ligneDepart, int _colonneDepart,
+		void construireChoixCaseDameDiagonaleSansAdversaire(int _ligneDepart, int _colonneDepart,
 												int _sensVertical, int _sensHorizontal,
 												vector<long> &_pionsManges,
 												vector<ChoixDeplacement *> &_choixDeplacement);
+		map<string, int> construireChoixCaseDameDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
+												int _sensVertical, int _sensHorizontal,
+												map<long, bool> _pionsJoueur,
+												vector<long> &_pionsManges);
 };
 

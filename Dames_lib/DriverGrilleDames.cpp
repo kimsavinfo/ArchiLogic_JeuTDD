@@ -157,18 +157,120 @@ void DriverGrilleDames::construireChoixCaseDameInit(int _ligne, int _colonne,
 												map<long, bool> _pionsJoueur, 
 												vector<ChoixDeplacement *> &_choixDeplacement)
 {
+	vector<long> pionsManges;
+
 	if( !isDiagonalesAvecAdversaireMangeable(_ligne, _colonne, _pionsJoueur) )
 	{
-		vector<long> pionsManges;
-		construireChoixCaseDameDiagonale( _ligne, _colonne, 1, 1, pionsManges, _choixDeplacement);
-		construireChoixCaseDameDiagonale( _ligne, _colonne, 1, -1, pionsManges, _choixDeplacement);
-		construireChoixCaseDameDiagonale( _ligne, _colonne, -1, 1, pionsManges, _choixDeplacement);
-		construireChoixCaseDameDiagonale( _ligne, _colonne, -1, -1, pionsManges, _choixDeplacement);
+		construireChoixCaseDameDiagonaleSansAdversaire( _ligne, _colonne, 1, 1, pionsManges, _choixDeplacement);
+		construireChoixCaseDameDiagonaleSansAdversaire( _ligne, _colonne, 1, -1, pionsManges, _choixDeplacement);
+		construireChoixCaseDameDiagonaleSansAdversaire( _ligne, _colonne, -1, 1, pionsManges, _choixDeplacement);
+		construireChoixCaseDameDiagonaleSansAdversaire( _ligne, _colonne, -1, -1, pionsManges, _choixDeplacement);
+	}
+	else
+	{
+		if( isDiagonaleAvecAdversaireMangeable(_ligne, _colonne, 1, 1, _pionsJoueur) )
+		{
+			construireChoixCaseDameRecursif(_ligne, _colonne, 1, 1, _pionsJoueur, pionsManges, _choixDeplacement);
+		}
+
+		if( isDiagonaleAvecAdversaireMangeable(_ligne, _colonne, 1, -1,  _pionsJoueur) )
+		{
+			construireChoixCaseDameRecursif(_ligne, _colonne, 1, -1, _pionsJoueur, pionsManges, _choixDeplacement);
+		}
+
+		if( isDiagonaleAvecAdversaireMangeable(_ligne, _colonne, -1, 1,  _pionsJoueur) )
+		{
+			construireChoixCaseDameRecursif(_ligne, _colonne, -1, 1, _pionsJoueur, pionsManges, _choixDeplacement);
+		}
+
+		if( isDiagonaleAvecAdversaireMangeable(_ligne, _colonne, -1, -1,  _pionsJoueur) )
+		{
+			construireChoixCaseDameRecursif(_ligne, _colonne, -1, -1, _pionsJoueur, pionsManges, _choixDeplacement);
+		}
 	}
 }
 
+void DriverGrilleDames::construireChoixCaseDameRecursif(int _ligne, int _colonne, 
+												int _sensVertical, int _sensHorizontal,
+												map<long, bool> _pionsJoueur, 
+												vector<long> &_pionsManges,
+												vector<ChoixDeplacement *> &_choixDeplacement)
+{
+	if( isDiagonalesAvecAdversaireMangeable(_ligne, _colonne, _sensVertical, _sensHorizontal, _pionsJoueur) )
+	{
+		if( isDiagonaleAvecAdversaireMangeable(_ligne, _colonne, _sensVertical, _sensHorizontal, _pionsJoueur) )
+		{
+			map<string, int> coordonnesArrivee = construireChoixCaseDameDiagonaleAvecAdversaire(
+				_ligne, _colonne,
+				_sensVertical, _sensHorizontal,
+				_pionsJoueur,
+				_pionsManges
+				);
 
-void DriverGrilleDames::construireChoixCaseDameDiagonale(int _ligneDepart, int _colonneDepart,
+			// Même direction
+			construireChoixCaseDameRecursif(
+				coordonnesArrivee["ligne"], coordonnesArrivee["colonne"],
+				_sensVertical, _sensHorizontal, 
+				_pionsJoueur, _pionsManges, _choixDeplacement);
+			
+			// Dans le sens vertical inverse mais dans le même sens horinzontal
+			construireChoixCaseDameRecursif(
+				coordonnesArrivee["ligne"], coordonnesArrivee["colonne"],
+				- _sensVertical, _sensHorizontal, 
+				_pionsJoueur, _pionsManges, _choixDeplacement);
+
+			// Dans le même sens vertical mais dans le sens horinzontal inverse
+			construireChoixCaseDameRecursif(
+				coordonnesArrivee["ligne"], coordonnesArrivee["colonne"],
+				_sensVertical, - _sensHorizontal, 
+				_pionsJoueur, _pionsManges, _choixDeplacement);
+		}
+	}
+	else
+	{
+		_choixDeplacement.push_back( new ChoixDeplacement(_ligne, _colonne, _pionsManges) );
+		construireChoixCaseDameDiagonaleSansAdversaire( _ligne, _colonne, 
+			_sensVertical, _sensHorizontal, 
+			_pionsManges, _choixDeplacement);
+	}
+}
+
+map<string, int> DriverGrilleDames::construireChoixCaseDameDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
+												int _sensVertical, int _sensHorizontal,
+												map<long, bool> _pionsJoueur,
+												vector<long> &_pionsManges)
+{
+	map<string, int> coordonnesArrivee;
+	int ligneLimite = _sensVertical == 1 ? grille->getNbLignes() : -1;
+	int colonneLimite = _sensHorizontal == 1 ? grille->getNbColonnes() : -1;
+	int iLigne = _ligneDepart;
+	int iColonne = _colonneDepart;
+	bool avecPionAdverse = false;
+
+	do
+	{
+		if( isCaseOccupeeParPionAdverse(iLigne, iColonne, _pionsJoueur) 
+			&&  grille->isCoordonneesDansGrille(iLigne+_sensVertical, iColonne+_sensHorizontal)
+			)
+		{
+			if(grille->isCaseVide(iLigne+_sensVertical, iColonne+_sensHorizontal) )
+			{
+				_pionsManges.push_back( grille->getCaseIdOccupant(iLigne, iColonne) );
+				coordonnesArrivee["ligne"] = iLigne+_sensVertical;
+				coordonnesArrivee["colonne"] = iColonne+_sensHorizontal;
+			}
+
+			avecPionAdverse = true;
+		}
+
+		iLigne = iLigne + _sensVertical;
+		iColonne = iColonne + _sensHorizontal;
+	}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecPionAdverse);
+
+	return coordonnesArrivee;
+}
+
+void DriverGrilleDames::construireChoixCaseDameDiagonaleSansAdversaire(int _ligneDepart, int _colonneDepart,
 												int _sensVertical, int _sensHorizontal,
 												vector<long> &_pionsManges,
 												vector<ChoixDeplacement *> &_choixDeplacement)
@@ -179,31 +281,46 @@ void DriverGrilleDames::construireChoixCaseDameDiagonale(int _ligneDepart, int _
 	int iColonne = _colonneDepart + _sensHorizontal;
 	bool avecPion = false;
 
-	do
+	if( grille->isCoordonneesDansGrille(iLigne,iColonne) )
 	{
-		if( grille->isCaseVide(iLigne, iColonne) )
+		do
 		{
-			_choixDeplacement.push_back( new ChoixDeplacement(iLigne, iColonne, _pionsManges) );
-		}
-		else
-		{
-			avecPion = true;
-		}
+			if( grille->isCaseVide(iLigne, iColonne) )
+			{
+				_choixDeplacement.push_back( new ChoixDeplacement(iLigne, iColonne, _pionsManges) );
+			}
+			else
+			{
+				avecPion = true;
+			}
 
-		iLigne = iLigne + _sensVertical;
-		iColonne = iColonne + _sensHorizontal;
-	}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecPion);
+			iLigne = iLigne + _sensVertical;
+			iColonne = iColonne + _sensHorizontal;
+		}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecPion);
+	}
 }
 
-bool DriverGrilleDames::isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur)
+bool DriverGrilleDames::isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, 
+															map<long, bool> _pionsJoueur)
 {
-	return isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, 1, 1, _pionsJoueur)
-		|| isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, 1, -1, _pionsJoueur)
-		|| isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, -1, 1, _pionsJoueur)
-		|| isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, -1, -1, _pionsJoueur)
+	return isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, 1, 1, _pionsJoueur)
+		|| isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, 1, -1, _pionsJoueur)
+		|| isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, -1, 1, _pionsJoueur)
+		|| isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, -1, -1, _pionsJoueur)
 		;
 }
-bool DriverGrilleDames::isDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
+
+bool DriverGrilleDames::isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, 
+										int _sensVerticalDepart, int _sensHorizontalDepart,
+											map<long, bool> _pionsJoueur)
+{
+	 return isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, _sensVerticalDepart, _sensHorizontalDepart, _pionsJoueur)
+		|| isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, _sensVerticalDepart, - _sensHorizontalDepart, _pionsJoueur)
+		|| isDiagonaleAvecAdversaireMangeable(_ligneDepart, _colonneDepart, - _sensVerticalDepart, _sensHorizontalDepart, _pionsJoueur)
+		;
+}
+
+bool DriverGrilleDames::isDiagonaleAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart,
 								int _sensVertical, int _sensHorizontal,
 								map<long, bool> _pionsJoueur)
 {
@@ -212,21 +329,29 @@ bool DriverGrilleDames::isDiagonaleAvecAdversaire(int _ligneDepart, int _colonne
 	int iLigne = _ligneDepart + _sensVertical;
 	int iColonne = _colonneDepart + _sensHorizontal;
 	bool avecAdversaire = false;
+	bool avecAdversaireMangeable = false;
 
-	do
+	if( grille->isCoordonneesDansGrille(iLigne,iColonne) )
 	{
-		if( isCaseOccupeeParPionAdverse(iLigne, iColonne, _pionsJoueur) 
-			&& grille->isCaseVide(iLigne + _sensVertical, iColonne + _sensHorizontal)
-			)
+		do
 		{
-			avecAdversaire = true;
-		}
+			if( isCaseOccupeeParPionAdverse(iLigne, iColonne, _pionsJoueur) 
+				&& grille->isCoordonneesDansGrille(iLigne + _sensVertical, iColonne-1)
+				)
+			{
+				if( grille->isCaseVide(iLigne + _sensVertical, iColonne + _sensHorizontal) )
+				{
+					avecAdversaireMangeable = true;
+				}
+				avecAdversaire = true;
+			}
 
-		iLigne = iLigne + _sensVertical;
-		iColonne = iColonne + _sensHorizontal;
-	}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecAdversaire);
+			iLigne = iLigne + _sensVertical;
+			iColonne = iColonne + _sensHorizontal;
+		}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecAdversaire);
+	}
 
-	return avecAdversaire;
+	return avecAdversaireMangeable;
 }
 
 /** ============================================================================================== */
@@ -345,7 +470,7 @@ void DriverGrilleDames::construireChoixCaseRecursif(int _ligne, int _colonne,
 				);
 			}
 
-			// Sans le même sens vertical mais dans le sens horinzontal inverse
+			// Dans le même sens vertical mais dans le sens horinzontal inverse
 			if( isAdversaireAdjacentNonCompte(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal, _pionsManges, _pionsJoueur) )
 			{
 				construireChoixCaseRecursif(

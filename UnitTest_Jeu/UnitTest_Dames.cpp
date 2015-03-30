@@ -315,13 +315,32 @@ namespace UnitTest_Jeu
 				Assert::IsFalse(joueurA->isPionUneDame(choixPions.at(0)->getIdPion()));
 			}
 
+			TEST_METHOD(Dames_DameMange1Pion)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 6, 2);
+
+				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
+				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
+				driverGrille->poserPion(pionsIdsAversaire[0], 4, 4);
+				
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCaseDame(choixPions.at(0), pionsJoueur);
+
+				Assert::AreEqual( 2, (int)choixCases.size());
+			}
+
 			TEST_METHOD(Dames_DameRafle)
 			{
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
 				joueurA->setPionDame(pionsIds[0]);
-				driverGrille->poserPion(pionsIds[0], 5, 1);
+				driverGrille->poserPion(pionsIds[0], 6, 2);
 
 				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
 				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
