@@ -20,13 +20,12 @@ void Dames::initJeu()
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
 	joueurs[iTour]->setPionDame(pionsIds[0]);
-	driverGrille->poserPion(pionsIds[0], 5, 1);
+	driverGrille->poserPion(pionsIds[0], 6, 2);
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
-	/*
-	driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
-	driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
-	*/
+	driverGrille->poserPion(pionsIdsAversaire[0], 4, 4);
+	driverGrille->poserPion(pionsIdsAversaire[1], 2, 4);
+	driverGrille->poserPion(pionsIdsAversaire[2], 3, 1);
 }
 
 void Dames::jouer()
@@ -77,7 +76,7 @@ ChoixDeplacement * Dames::askOuDeplacerPion(ChoixPion * _pionADeplacer)
 	
 	if(joueurs[iTour]->isPionUneDame(_pionADeplacer->getIdPion()))
 	{
-		choixCases = driverGrille->getChoixCaseDame(_pionADeplacer, pionsJoueur);
+		choixCases = driverGrille->getChoixCaseDame(_pionADeplacer, pionsJoueur); 
 	}
 	else
 	{
