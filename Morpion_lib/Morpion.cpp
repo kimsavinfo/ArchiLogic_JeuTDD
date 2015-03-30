@@ -70,8 +70,7 @@ long Morpion::askJoueurOuPoserPion()
 		}
 
 		cout << joueurs[iTour % joueurs.size()]->getNom()
-			<< ", ou souhaitez-vous poser un pion ? " 
-			<< endl;
+			<< ", ou souhaitez-vous poser un pion ? " ;
 		cin >> choixJoueur;
 	}while(choixJoueur < 1 || choixJoueur > choixMax);
 
