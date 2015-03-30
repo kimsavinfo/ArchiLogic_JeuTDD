@@ -20,12 +20,16 @@ void Dames::initJeu()
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
 	joueurs[iTour]->setPionDame(pionsIds[0]);
-	driverGrille->poserPion(pionsIds[0], 6, 2);
+	// driverGrille->poserPion(pionsIds[0], 6, 2);
+	driverGrille->poserPion(pionsIds[0], 6, 6);
+	driverGrille->poserPion(pionsIds[1], 5, 5);
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
+	/*
 	driverGrille->poserPion(pionsIdsAversaire[0], 4, 4);
 	driverGrille->poserPion(pionsIdsAversaire[1], 2, 4);
 	driverGrille->poserPion(pionsIdsAversaire[2], 3, 1);
+	*/
 }
 
 void Dames::jouer()

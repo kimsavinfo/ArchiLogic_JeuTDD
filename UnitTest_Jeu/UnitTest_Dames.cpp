@@ -298,6 +298,23 @@ namespace UnitTest_Jeu
 				Assert::AreEqual( 8, (int)choixCases.size());
 			}
 
+			TEST_METHOD(Dames_DameBloquee)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 6, 6);
+				driverGrille->poserPion(pionsIds[1], 5, 5);
+				
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				
+				Assert::AreEqual( 1, (int)choixPions.size());
+				Assert::AreEqual(pionsIds[1], choixPions.at(0)->getIdPion());
+				Assert::IsFalse(joueurA->isPionUneDame(choixPions.at(0)->getIdPion()));
+			}
+
 			TEST_METHOD(Dames_DameRafle)
 			{
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);

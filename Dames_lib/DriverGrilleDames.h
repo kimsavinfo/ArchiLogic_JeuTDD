@@ -45,7 +45,7 @@ class DriverGrilleDames : public DriverGrille
 		void construireChoixCaseDameInit(int _ligne, int _colonne, 
 												map<long, bool> _pionsJoueur, 
 												vector<ChoixDeplacement *> &_choixDeplacement);
-		bool isToutesDiagonalesAvecAdversaire(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur);
+		bool isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur);
 		bool isDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
 								int _sensVertical, int _sensHorizontal,
 								map<long, bool> _pionsJoueur);

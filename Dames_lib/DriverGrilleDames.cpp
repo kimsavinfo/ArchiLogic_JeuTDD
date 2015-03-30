@@ -157,7 +157,7 @@ void DriverGrilleDames::construireChoixCaseDameInit(int _ligne, int _colonne,
 												map<long, bool> _pionsJoueur, 
 												vector<ChoixDeplacement *> &_choixDeplacement)
 {
-	if( !isToutesDiagonalesAvecAdversaire(_ligne, _colonne, _pionsJoueur) )
+	if( !isDiagonalesAvecAdversaireMangeable(_ligne, _colonne, _pionsJoueur) )
 	{
 		vector<long> pionsManges;
 		construireChoixCaseDameDiagonale( _ligne, _colonne, 1, 1, pionsManges, _choixDeplacement);
@@ -195,7 +195,7 @@ void DriverGrilleDames::construireChoixCaseDameDiagonale(int _ligneDepart, int _
 	}while( (iLigne != ligneLimite && iColonne != colonneLimite) && !avecPion);
 }
 
-bool DriverGrilleDames::isToutesDiagonalesAvecAdversaire(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur)
+bool DriverGrilleDames::isDiagonalesAvecAdversaireMangeable(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur)
 {
 	return isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, 1, 1, _pionsJoueur)
 		|| isDiagonaleAvecAdversaire(_ligneDepart, _colonneDepart, 1, -1, _pionsJoueur)
@@ -215,7 +215,9 @@ bool DriverGrilleDames::isDiagonaleAvecAdversaire(int _ligneDepart, int _colonne
 
 	do
 	{
-		if( isCaseOccupeeParPionAdverse(iLigne, iColonne, _pionsJoueur) )
+		if( isCaseOccupeeParPionAdverse(iLigne, iColonne, _pionsJoueur) 
+			&& grille->isCaseVide(iLigne + _sensVertical, iColonne + _sensHorizontal)
+			)
 		{
 			avecAdversaire = true;
 		}
