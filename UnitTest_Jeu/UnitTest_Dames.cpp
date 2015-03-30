@@ -221,7 +221,7 @@ namespace UnitTest_Jeu
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
-				driverGrille->poserPion(pionsIds[0], 3, 3);
+				driverGrille->poserPion(pionsIds[0], 2, 1);
 
 				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
 				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
@@ -235,6 +235,7 @@ namespace UnitTest_Jeu
 				Assert::AreEqual( 1, (int)choixCases.size() );
 				Assert::AreEqual( 2, choixCases.at(0)->getLigneArrivee() );
 				Assert::AreEqual( 5, choixCases.at(0)->getColonneArrivee() );
+				Assert::AreEqual( 2, (int)choixCases.at(0)->getPionsManges().size() );
 			}
 	};
 }

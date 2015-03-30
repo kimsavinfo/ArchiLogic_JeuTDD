@@ -97,7 +97,7 @@ bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, ma
 {
 	bool occupe = true;
 	long idPionOccupant = grille->getCaseIdOccupant(_ligne, _colonne);
-	
+
 	if(idPionOccupant > 0)
 	{
 		auto it =_pionsJoueur.find(idPionOccupant);
@@ -115,147 +115,157 @@ bool DriverGrilleDames::isCaseOccupeeParPionAdverse(int _ligne, int _colonne, ma
 /**	Choix de la case : où peut-on déplacer le pion ?
 /** ============================================================================================== */
 
-vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPion, int _sensVertical, map<long, bool> _pionsJoueur)
+vector<ChoixDeplacement *> DriverGrilleDames::getChoixCase(ChoixPion * _choixPion, 
+														   int _sensVertical, 
+														   map<long, bool> _pionsJoueur)
 {
 	vector<ChoixDeplacement *> choixDeplacement;
 	
-	construireCHoixCasesInit(_choixPion, _sensVertical, -1, _pionsJoueur, choixDeplacement);
-	construireCHoixCasesInit(_choixPion, _sensVertical, 1, _pionsJoueur, choixDeplacement);
-	
-	if(_choixPion->isDame())
-	{
-		construireCHoixCasesInit(_choixPion, - _sensVertical, -1, _pionsJoueur, choixDeplacement);
-		construireCHoixCasesInit(_choixPion, - _sensVertical, 1, _pionsJoueur, choixDeplacement);
-	}
-
-	// Règle du jeu : on a obligation de manger
-	construireCHoixCasesObligerManger(choixDeplacement);
+	construireChoixCaseInit(_choixPion->getLigneDepart(), _choixPion->getColonneDepart(),
+			_sensVertical, _pionsJoueur, choixDeplacement
+		);
 
 	return choixDeplacement;
 }
 
-void DriverGrilleDames::construireCHoixCasesInit(ChoixPion * _choixPion, 
-												 int _sensVertical, int _sensHorizontal, 
-												 map<long, bool> _pionsJoueur,
+void DriverGrilleDames::construireChoixCaseInit(int _ligne, int _colonne, 
+												int _sensVertical, 
+												map<long, bool> _pionsJoueur, 
 												vector<ChoixDeplacement *> &_choixDeplacement)
 {
 	vector<long> pionsManges;
+	 
+	if( !isAuMoinsUnAdversaireAdjacentNonCompte(_ligne, _colonne, pionsManges, _pionsJoueur) )
+	{
+		if( grille->isCaseVide(_ligne + _sensVertical, _colonne-1) )
+		{
+			_choixDeplacement.push_back( 
+				new ChoixDeplacement(_ligne + _sensVertical, _colonne-1, pionsManges)
+			);
+		}
 
-	_choixPion->setLigneTempo(_choixPion->getLigneDepart());
-	_choixPion->setColonneTempo(_choixPion->getColonneDepart());
-	construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, 
-		_pionsJoueur, _choixDeplacement, pionsManges);
+		if( grille->isCaseVide(_ligne + _sensVertical, _colonne+1) )
+		{
+			_choixDeplacement.push_back( 
+				new ChoixDeplacement(_ligne + _sensVertical, _colonne+1, pionsManges)
+			);
+		}
+	}
+	else
+	{
+		if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne-1, pionsManges, _pionsJoueur) )
+		{
+			construireChoixCaseRecursif(
+				_ligne,  _colonne,
+				_sensVertical, -1,
+				pionsManges, _pionsJoueur, _choixDeplacement
+			);
+		}
+
+		if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne+1, pionsManges, _pionsJoueur) )
+		{
+			construireChoixCaseRecursif(
+				_ligne,  _colonne,
+				_sensVertical, 1,
+				pionsManges, _pionsJoueur, _choixDeplacement
+			);
+		}
+	}
 }
 
-void DriverGrilleDames::construireCHoixCasesRecursif(ChoixPion * _choixPion, 
-											 int _sensVertical, int _sensHorizontal, 
-											 map<long, bool> _pionsJoueur,
-											 vector<ChoixDeplacement *> &_choixDeplacement, 
-											 vector<long> &_pionsManges)
+void DriverGrilleDames::construireChoixCaseRecursif(int _ligne, int _colonne, 
+												int _sensVertical, int _sensHorizontal,
+												vector<long> &_pionsManges,
+												map<long, bool> _pionsJoueur, 
+												vector<ChoixDeplacement *> &_choixDeplacement)
 {
-	int ligneArrivee = _choixPion->getLigneTempo() + _sensVertical;
-	int colonneArrivee = _choixPion->getColonneTempo() + _sensHorizontal;
+	int lignePionAdv = _ligne + _sensVertical;
+	int colonnePionAdv = _colonne + _sensHorizontal;
 
-	if( grille->isCoordonneesDansGrille(ligneArrivee, colonneArrivee) )
+	if( isAdversaireAdjacentNonCompte(lignePionAdv, colonnePionAdv, _pionsManges, _pionsJoueur) )
 	{
-		if( isCaseOccupeeParPionAdverse(ligneArrivee, colonneArrivee, _pionsJoueur) 
-			&& grille->isCoordonneesDansGrille(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal))
+		int ligneArrivee =  _ligne + _sensVertical * 2;
+		int colonneArrivee = _colonne + _sensHorizontal *2;
+
+		if( grille->isCaseVide(ligneArrivee, colonneArrivee) )
 		{
-			// ============ Cas où le pion choisi peut manger un pion adverse
-			_pionsManges.push_back( grille->getCaseIdOccupant(ligneArrivee,colonneArrivee) );
+			_pionsManges.push_back( grille->getCaseIdOccupant(lignePionAdv, colonnePionAdv) );
+		}
 
-			// Mettre à jour les coordonnées temporaires
-			_choixPion->setCoordonneesTempo(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal);
+		if( isAuMoinsUnAdversaireAdjacentNonCompte(ligneArrivee, colonneArrivee, _pionsManges, _pionsJoueur) )
+		{
+			// Dans la meme direction
+			if( isAdversaireAdjacentNonCompte(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal, _pionsManges, _pionsJoueur) )
+			{
+				construireChoixCaseRecursif(
+					ligneArrivee, colonneArrivee,
+					_sensVertical, _sensHorizontal,
+					_pionsManges, _pionsJoueur, _choixDeplacement
+				);
+			}
 
-			// Possibilité dans la meme direction
-			construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, _pionsJoueur, 
-				_choixDeplacement, _pionsManges);
-			// Possibilité dans le même sens horinzontal mais dans le sens vertical inverse 
-			construireCHoixCasesRecursif(_choixPion, - _sensVertical, _sensHorizontal, _pionsJoueur, 
-				_choixDeplacement, _pionsManges);
-			// Possibilité dans le même sens vertical mais dans le sens horinzontal inverse 
-			construireCHoixCasesRecursif(_choixPion, _sensVertical, - _sensHorizontal, _pionsJoueur, 
-				_choixDeplacement, _pionsManges);
+			// Dans le même sens horinzontal mais dans le sens vertical inverse 
+			if( isAdversaireAdjacentNonCompte(ligneArrivee - _sensVertical, colonneArrivee + _sensHorizontal, _pionsManges, _pionsJoueur) )
+			{
+				construireChoixCaseRecursif(
+					ligneArrivee, colonneArrivee, 
+					- _sensVertical, _sensHorizontal,
+					_pionsManges, _pionsJoueur, _choixDeplacement
+				);
+			}
+
+			// Sans le même sens vertical mais dans le sens horinzontal inverse
+			if( isAdversaireAdjacentNonCompte(ligneArrivee + _sensVertical, colonneArrivee + _sensHorizontal, _pionsManges, _pionsJoueur) )
+			{
+				construireChoixCaseRecursif(
+					ligneArrivee, colonneArrivee, 
+					_sensVertical, - _sensHorizontal,
+					_pionsManges, _pionsJoueur, _choixDeplacement
+				);
+			}
 		}
 		else
 		{
-			if( grille->isCaseVide(ligneArrivee, colonneArrivee) )
-			{
-				// ============ Cas où le pion peut avancer dans une case vide
-				if(_pionsManges.size() > 0 && !_choixPion->isDame())
-				{
-					// Pion simple a mange des pions adverses et arrive à la fin de la grille
-					_choixDeplacement.push_back( new ChoixDeplacement(
-						_choixPion->getLigneTempo() ,  _choixPion->getColonneTempo(), _pionsManges) );
-				}
-				else
-				{
-					_choixDeplacement.push_back( new ChoixDeplacement(ligneArrivee, colonneArrivee, _pionsManges) );
-				}
-
-				if(_choixPion->isDame())
-				{
-					// Mettre à jour les cooronnées temporaires
-					_choixPion->setCoordonneesTempo(ligneArrivee, colonneArrivee);
-
-					// Pour la dame, on doit continuer dans la même direction
-					construireCHoixCasesRecursif(_choixPion, _sensVertical, _sensHorizontal, _pionsJoueur, 
-						_choixDeplacement, _pionsManges);
-
-					// SI la a mangé un pion ALORS
-					//		la dame peut manger un autre sur l'autre diagonale
-					// FIN SI
-					if( _pionsManges.size() > 0 )
-					{
-						// Possibilité dans le même sens horinzontal mais dans le sens vertical inverse 
-						construireCHoixCasesRecursif(_choixPion, - _sensVertical, _sensHorizontal, _pionsJoueur, 
-							_choixDeplacement, _pionsManges);
-						// Possibilité dans le même sens vertical mais dans le sens horinzontal inverse 
-						construireCHoixCasesRecursif(_choixPion, _sensVertical, - _sensHorizontal, _pionsJoueur, 
-							_choixDeplacement, _pionsManges);
-					}
-				}
-			}
+			_choixDeplacement.push_back(new ChoixDeplacement(ligneArrivee, colonneArrivee, _pionsManges));
 		}
 	}
 }
 
-// TODO : penser à rendre l'action de manger obligatoire :
-// enlever les pionManges = 0 si d'autres on supérieur à 0
-// Pour une dame, on doit absolument prendre en compte toutes les diago 
-void DriverGrilleDames::construireCHoixCasesObligerManger(vector<ChoixDeplacement *> &_choixDeplacement)
+bool DriverGrilleDames::isAuMoinsUnAdversaireAdjacentNonCompte(int _ligne, int _colonne,
+												  vector<long> &_pionsManges,
+												  map<long, bool> _pionsJoueur)
 {
-	if( isObligeManger(_choixDeplacement) )
-	{
-		// Enlever proposition qui ne mangent aucun pion
-		for (int iChoix = 0; iChoix < _choixDeplacement.size(); iChoix++)
+
+	return isAdversaireAdjacentNonCompte(_ligne -1, _colonne -1, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne -1, _colonne, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne -1, _colonne +1, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne, _colonne -1, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne, _colonne +1,  _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne +1, _colonne -1, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne +1, _colonne, _pionsManges, _pionsJoueur)
+		|| isAdversaireAdjacentNonCompte(_ligne +1, _colonne +1, _pionsManges, _pionsJoueur)
+ 		;
+}
+
+bool DriverGrilleDames::isAdversaireAdjacentNonCompte(int _ligne, int _colonne, 
+													  vector<long> &_pionsManges, 
+													  map<long, bool> _pionsJoueur)
+{
+	bool adversaireNonCompte = false;
+
+	if( grille->isCoordonneesDansGrille(_ligne, _colonne) )
+	{	
+		if( isCaseOccupeeParPionAdverse(_ligne, _colonne, _pionsJoueur) )
 		{
-			if(_choixDeplacement.at(iChoix)->getPionsManges().size() == 0)
+			long idOccupant = grille->getCaseIdOccupant(_ligne, _colonne);
+			if( find(_pionsManges.begin(), _pionsManges.end(), idOccupant) == _pionsManges.end() )
 			{
-				_choixDeplacement.erase(_choixDeplacement.begin()+iChoix);
+				adversaireNonCompte = true;
 			}
 		}
 	}
-	
-	// TODO : gérer le cas des dames
-}
 
-bool DriverGrilleDames::isObligeManger(vector<ChoixDeplacement *> &_choixDeplacement)
-{
-	bool obligeManger = false;
-	int iChoix = 0;
-
-	do
-	{
-		if( _choixDeplacement.at(iChoix)->getPionsManges().size() > 0 )
-		{
-			obligeManger = true;
-		}
-
-		iChoix++;
-	}while(iChoix < _choixDeplacement.size() && !obligeManger);
-
-	return obligeManger;
+	return adversaireNonCompte;
 }
 
 DriverGrilleDames::~DriverGrilleDames(void)

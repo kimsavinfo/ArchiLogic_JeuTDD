@@ -20,11 +20,21 @@ class DriverGrilleDames : public DriverGrille
 		bool isPionSimpleDeplacable(int _ligne, int _colonne, int _sensVertical, map<long, bool> _pionsJoueur);
 		bool isPionDameDeplacable(int _ligne, int _colonne,map<long, bool> _pionsJoueur );
 		bool isCaseOccupeeParPionAdverse(int _ligne, int _colonne, map<long, bool> _pionsJoueur);
-		void construireCHoixCasesInit(ChoixPion * _choixPion, int _sensVertical, int _sensHorizontal, map<long, bool> _pionsJoueur,
-						  vector<ChoixDeplacement *> &_choixDeplacement);
-		void construireCHoixCasesRecursif(ChoixPion * _choixPion, int _sensVertical, int _sensHorizontal, map<long, bool> _pionsJoueur,
-			vector<ChoixDeplacement *> &_choixDeplacement, vector<long> &_pionsManges);
-		void construireCHoixCasesObligerManger(vector<ChoixDeplacement *> &_choixDeplacement);
-		bool isObligeManger(vector<ChoixDeplacement *> &_choixDeplacement);
+
+		void construireChoixCaseInit(int _ligne, int _colonne, 
+												int _sensVertical, 
+												map<long, bool> _pionsJoueur, 
+												vector<ChoixDeplacement *> &_choixDeplacement);
+		void construireChoixCaseRecursif(int _ligne, int _colonne, 
+												int _sensVertical, int _sensHorizontal,
+												vector<long> &_pionsManges,
+												map<long, bool> _pionsJoueur, 
+												vector<ChoixDeplacement *> &_choixDeplacement);
+		bool isAuMoinsUnAdversaireAdjacentNonCompte(int _ligne, int _colonne,
+												  vector<long> &_pionsManges,
+												  map<long, bool> _pionsJoueur);
+		bool isAdversaireAdjacentNonCompte(int _ligne, int _colonne, 
+													  vector<long> &_pionsManges, 
+													  map<long, bool> _pionsJoueur);
 };
 
