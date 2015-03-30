@@ -293,7 +293,7 @@ namespace UnitTest_Jeu
 				
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
-				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCaseDame(choixPions.at(0), pionsJoueur);
 
 				Assert::AreEqual( 8, (int)choixCases.size());
 			}

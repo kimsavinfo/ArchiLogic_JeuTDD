@@ -16,10 +16,13 @@ class DriverGrilleDames : public DriverGrille
 		map<string, int> getCaseCoordonneesOccupant(long _idOccupant);
 		vector<ChoixPion *> getChoixPions(int _sensVertical, map<long, bool> _pionsJoueur);
 		vector<ChoixDeplacement *> getChoixCase(ChoixPion * _choixPion, int _sensVertical, map<long, bool> _pionsJoueur);
+		vector<ChoixDeplacement *> getChoixCaseDame(ChoixPion * _choixDame, map<long, bool> _pionsJoueur);
 		bool isPionDevientDame(long _idPion, int _sensVertical);
 
 	private:
-		bool isPionDeplacable(int _ligne, int _colonne, int _sensVertical, int _sensHorizontal, map<long, bool> _pionsJoueur);
+		bool isPionDeplacable(int _ligne, int _colonne, 
+			int _sensVertical, int _sensHorizontal, 
+			map<long, bool> _pionsJoueur);
 		bool isPionSimpleDeplacable(int _ligne, int _colonne, int _sensVertical, map<long, bool> _pionsJoueur);
 		bool isPionDameDeplacable(int _ligne, int _colonne,map<long, bool> _pionsJoueur );
 		bool isCaseOccupeeParPionAdverse(int _ligne, int _colonne, map<long, bool> _pionsJoueur);
@@ -39,5 +42,16 @@ class DriverGrilleDames : public DriverGrille
 		bool isAdversaireAdjacentNonCompte(int _ligne, int _colonne, 
 													  vector<long> &_pionsManges, 
 													  map<long, bool> _pionsJoueur);
+		void construireChoixCaseDameInit(int _ligne, int _colonne, 
+												map<long, bool> _pionsJoueur, 
+												vector<ChoixDeplacement *> &_choixDeplacement);
+		bool isToutesDiagonalesAvecAdversaire(int _ligneDepart, int _colonneDepart, map<long, bool> _pionsJoueur);
+		bool isDiagonaleAvecAdversaire(int _ligneDepart, int _colonneDepart,
+								int _sensVertical, int _sensHorizontal,
+								map<long, bool> _pionsJoueur);
+		void construireChoixCaseDameDiagonale(int _ligneDepart, int _colonneDepart,
+												int _sensVertical, int _sensHorizontal,
+												vector<long> &_pionsManges,
+												vector<ChoixDeplacement *> &_choixDeplacement);
 };
 

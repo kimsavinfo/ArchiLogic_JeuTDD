@@ -37,7 +37,7 @@ void Dames::jouer()
 
 	ChoixPion * pionADeplacer = askQuelPionDeplacer();
 	cout << "Deplacer le pion " + pionADeplacer->getRepresentation() << endl;
-
+	
 	ChoixDeplacement * caseFinale = askOuDeplacerPion(pionADeplacer);
 	cout << "Vers la case " << caseFinale->getRepresentation() << endl;
 
@@ -73,7 +73,17 @@ ChoixPion * Dames::askQuelPionDeplacer()
 ChoixDeplacement * Dames::askOuDeplacerPion(ChoixPion * _pionADeplacer)
 {
 	map<long, bool> pionsJoueur = joueurs[iTour]->getPionsIdsEtIsDame();
-	vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(_pionADeplacer, joueurs[iTour]->getSensVertical(), pionsJoueur);
+	vector<ChoixDeplacement *> choixCases;
+	
+	if(joueurs[iTour]->isPionUneDame(_pionADeplacer->getIdPion()))
+	{
+		choixCases = driverGrille->getChoixCaseDame(_pionADeplacer, pionsJoueur);
+	}
+	else
+	{
+		choixCases = driverGrille->getChoixCase(_pionADeplacer, joueurs[iTour]->getSensVertical(), pionsJoueur);
+	}
+
 	int choixJoueur;
 
 	do
