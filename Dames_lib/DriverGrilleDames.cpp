@@ -6,6 +6,64 @@ DriverGrilleDames::DriverGrilleDames(int _nbLignes, int _nbColonnes) : DriverGri
 {
 }
 
+void DriverGrilleDames::initGrillePositionnerPions(vector<long> _pionsJoueur, int _sensVertical)
+{
+	if(_sensVertical == 1) initGrillePartieSupperieure(_pionsJoueur);
+	if(_sensVertical == -1) initGrillePartieInferieure(_pionsJoueur);
+}
+
+void DriverGrilleDames::initGrillePartieSupperieure(vector<long> _pionsJoueur)
+{
+	int nbColonnes = grille->getNbColonnes();
+	int iCol = 0;
+	int iLig = 0;
+	int iPionsPoses = 0;
+	long idPionChoisi;
+	long idCaseChoisie;
+
+	do
+	{
+		if( (iCol + iLig) % 2 == 1)
+		{
+			poserPion(_pionsJoueur.at(iPionsPoses), iLig, iCol);
+			iPionsPoses++;
+		}
+		
+		iCol++;
+		if(iCol == nbColonnes)
+		{
+			iCol = 0;
+			iLig++;
+		}
+	}while(iPionsPoses < _pionsJoueur.size());	
+}
+
+void DriverGrilleDames::initGrillePartieInferieure(vector<long> _pionsJoueur)
+{
+	int nbColonnes = grille->getNbColonnes();
+	int iCol = nbColonnes -1;
+	int iLig = grille->getNbLignes() -1;
+	int iPionsPoses = 0;
+	long idPionChoisi;
+	long idCaseChoisie;
+
+	do
+	{
+		if( (iCol + iLig) % 2 == 1)
+		{
+			poserPion(_pionsJoueur.at(iPionsPoses), iLig, iCol);
+			iPionsPoses++;
+		}
+
+		iCol--;
+		if(iCol < 0)
+		{
+			iCol = nbColonnes -1;
+			iLig--;
+		}
+	}while(iPionsPoses < _pionsJoueur.size());	
+}
+
 void DriverGrilleDames::poserPion(long _idPion, int _iLigne, int _iColonne)
 {
 	grille->poserPion(_idPion, _iLigne, _iColonne);

@@ -10,6 +10,7 @@ class DriverGrilleDames : public DriverGrille
 		DriverGrilleDames(int _nbLignes, int _nbColonnes);
 		~DriverGrilleDames(void);
 
+		void initGrillePositionnerPions(vector<long> _pionsJoueur, int _sensVertical);
 		void poserPion(long _idPion, int _iLigne, int _iColonne);
 		void deplacerPion(ChoixPion * _choixPion, ChoixDeplacement * _choixDeplacement);
 		void mangerPion(long _pionMange);
@@ -20,6 +21,9 @@ class DriverGrilleDames : public DriverGrille
 		bool isPionDevientDame(long _idPion, int _sensVertical);
 
 	private:
+		void initGrillePartieSupperieure(vector<long> _pionsJoueur);
+		void initGrillePartieInferieure(vector<long> _pionsJoueur);
+		void initGrille(map<long, bool> _pionsJoueur, int _sensVertical);
 		bool isPionDeplacable(int _ligne, int _colonne, 
 			int _sensVertical, int _sensHorizontal, 
 			map<long, bool> _pionsJoueur);
