@@ -4,7 +4,7 @@
 
 Dames::Dames(void) : Jeu()
 {
-	driverGrille = new DriverGrilleDames(6, 6);
+	driverGrille = new DriverGrilleDames(7, 7);
 
 	ajouterJoueur("Alice", "W", 1);
 	ajouterJoueur("Bob", "B", -1);
@@ -19,8 +19,8 @@ void Dames::initJeu()
 
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
-	// joueurs[iTour]->setPionDame(pionsIds[0]);
-	driverGrille->poserPion(pionsIds[0], 4, 0);
+	joueurs[iTour]->setPionDame(pionsIds[0]);
+	driverGrille->poserPion(pionsIds[0], 5, 1);
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
 	/*

@@ -8,8 +8,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest_Jeu
 {
-	static int nbColonnes = 6;
-	static int nbLignes = 6;
+	static int nbColonnes = 7;
+	static int nbLignes = 7;
 	/* Ne peut pas à cause du statut Dame des pions
 	JoueurDames * joueurA;
 	JoueurDames * joueurB;
@@ -96,12 +96,12 @@ namespace UnitTest_Jeu
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
-				driverGrille->poserPion(pionsIds[0], 4, 3);
+				driverGrille->poserPion(pionsIds[0], 5, 3);
 				
 				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
 				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
-				driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
-				driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
+				driverGrille->poserPion(pionsIdsAversaire[0], 6, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 6, 4);
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
@@ -115,12 +115,12 @@ namespace UnitTest_Jeu
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
 				joueurA->setPionDame(pionsIds[0]);
-				driverGrille->poserPion(pionsIds[0], 4, 3);
+				driverGrille->poserPion(pionsIds[0], 5, 3);
 				
 				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
 				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
-				driverGrille->poserPion(pionsIdsAversaire[0], 5, 2);
-				driverGrille->poserPion(pionsIdsAversaire[1], 5, 4);
+				driverGrille->poserPion(pionsIdsAversaire[0], 6, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 6, 4);
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
@@ -155,11 +155,11 @@ namespace UnitTest_Jeu
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
 				joueurA->setPionDame(pionsIds[0]);
-				driverGrille->poserPion(pionsIds[0], 4, 3);
-				driverGrille->poserPion(pionsIds[1], 3, 2);
-				driverGrille->poserPion(pionsIds[2], 3, 4);
-				driverGrille->poserPion(pionsIds[3], 5, 2);
-				driverGrille->poserPion(pionsIds[4], 5, 4);
+				driverGrille->poserPion(pionsIds[0], 5, 3);
+				driverGrille->poserPion(pionsIds[1], 4, 2);
+				driverGrille->poserPion(pionsIds[2], 4, 4);
+				driverGrille->poserPion(pionsIds[3], 6, 2);
+				driverGrille->poserPion(pionsIds[4], 6, 4);
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
@@ -273,7 +273,7 @@ namespace UnitTest_Jeu
 				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
 				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
 				vector<long> pionsIds = joueurA->getPionsIds();
-				driverGrille->poserPion(pionsIds[0], 4, 0);
+				driverGrille->poserPion(pionsIds[0], 5, 0);
 
 				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
 				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
@@ -281,6 +281,21 @@ namespace UnitTest_Jeu
 				driverGrille->deplacerPion(choixPions.at(0), choixCases.at(0));
 				
 				Assert::IsTrue(driverGrille->isPionDevientDame(choixPions.at(0)->getIdPion(), joueurA->getSensVertical()));
+			}
+
+			TEST_METHOD(Dames_DameDeplacements)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				joueurA->setPionDame(pionsIds[0]);
+				driverGrille->poserPion(pionsIds[0], 5, 1);
+				
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+
+				Assert::AreEqual( 8, (int)choixCases.size());
 			}
 	};
 }
