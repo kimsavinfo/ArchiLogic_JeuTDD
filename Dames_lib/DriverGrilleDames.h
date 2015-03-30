@@ -16,6 +16,7 @@ class DriverGrilleDames : public DriverGrille
 		map<string, int> getCaseCoordonneesOccupant(long _idOccupant);
 		vector<ChoixPion *> getChoixPions(int _sensVertical, map<long, bool> _pionsJoueur);
 		vector<ChoixDeplacement *> getChoixCase(ChoixPion * _choixPion, int _sensVertical, map<long, bool> _pionsJoueur);
+		bool isPionDevientDame(long _idPion, int _sensVertical);
 
 	private:
 		bool isPionDeplacable(int _ligne, int _colonne, int _sensVertical, int _sensHorizontal, map<long, bool> _pionsJoueur);

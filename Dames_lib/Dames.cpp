@@ -20,11 +20,13 @@ void Dames::initJeu()
 	// TEMPO : pour les tests 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
 	// joueurs[iTour]->setPionDame(pionsIds[0]);
-	driverGrille->poserPion(pionsIds[0], 2, 1);
+	driverGrille->poserPion(pionsIds[0], 4, 0);
 
 	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
+	/*
 	driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
 	driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
+	*/
 }
 
 void Dames::jouer()
@@ -41,6 +43,7 @@ void Dames::jouer()
 
 	driverGrille->deplacerPion(pionADeplacer, caseFinale);
 	mangerPions(caseFinale->getPionsManges());
+	gererTypeDame(pionADeplacer->getIdPion());
 
 	afficherJeu();
 }
@@ -95,6 +98,18 @@ void Dames::mangerPions(vector<long> _pionsManges)
 	{
 		driverGrille->mangerPion(_pionsManges.at(iPionMange));
 		joueurs[iTour + 1 %2]->mangerPion(_pionsManges.at(iPionMange));
+	}
+}
+
+
+void Dames::gererTypeDame(long _idPionDeplace)
+{
+	if(!joueurs[iTour]->isPionUneDame(_idPionDeplace))
+	{
+		if( driverGrille->isPionDevientDame(_idPionDeplace, joueurs[iTour]->getSensVertical()) )
+		{
+			joueurs[iTour]->setPionDame(_idPionDeplace);
+		}
 	}
 }
 

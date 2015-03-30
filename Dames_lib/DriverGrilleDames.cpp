@@ -27,6 +27,24 @@ map<string, int> DriverGrilleDames::getCaseCoordonneesOccupant(long _idOccupant)
 	return grille->getCaseCoordonneesOccupant(_idOccupant);
 }
 
+bool DriverGrilleDames::isPionDevientDame(long _idPion, int _sensVertical)
+{
+	bool devientDame = false;
+	map<string, int> coordonnees = grille->getCaseCoordonneesOccupant(_idPion);
+
+	if(_sensVertical == 1)
+	{
+		devientDame = coordonnees["ligne"] == (grille->getNbLignes() -1) ? true : false;
+	}
+	else if(_sensVertical == -1)
+	{
+		devientDame = coordonnees["ligne"] == 0 ? true : false;
+	}
+
+	return devientDame;
+}
+
+
 /** ============================================================================================== */
 /**	Choix des pions à déplacer
 /** ============================================================================================== */
@@ -148,38 +166,51 @@ void DriverGrilleDames::construireChoixCaseInit(int _ligne, int _colonne,
 	 
 	if( !isAuMoinsUnAdversaireAdjacentNonCompte(_ligne, _colonne, pionsManges, _pionsJoueur) )
 	{
-		if( grille->isCaseVide(_ligne + _sensVertical, _colonne-1) )
+		if( grille->isCoordonneesDansGrille(_ligne + _sensVertical, _colonne-1) )
 		{
-			_choixDeplacement.push_back( 
-				new ChoixDeplacement(_ligne + _sensVertical, _colonne-1, pionsManges)
-			);
+			if( grille->isCaseVide(_ligne + _sensVertical, _colonne-1) )
+			{
+				_choixDeplacement.push_back( 
+					new ChoixDeplacement(_ligne + _sensVertical, _colonne-1, pionsManges)
+				);
+			}
 		}
 
-		if( grille->isCaseVide(_ligne + _sensVertical, _colonne+1) )
+		
+		if( grille->isCoordonneesDansGrille(_ligne + _sensVertical, _colonne+1) )
 		{
-			_choixDeplacement.push_back( 
-				new ChoixDeplacement(_ligne + _sensVertical, _colonne+1, pionsManges)
-			);
+			if( grille->isCaseVide(_ligne + _sensVertical, _colonne+1) )
+			{
+				_choixDeplacement.push_back( 
+					new ChoixDeplacement(_ligne + _sensVertical, _colonne+1, pionsManges)
+				);
+			}
 		}
 	}
 	else
 	{
-		if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne-1, pionsManges, _pionsJoueur) )
+		if( grille->isCoordonneesDansGrille(_ligne + _sensVertical, _colonne-1) )
 		{
-			construireChoixCaseRecursif(
-				_ligne,  _colonne,
-				_sensVertical, -1,
-				pionsManges, _pionsJoueur, _choixDeplacement
-			);
+			if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne-1, pionsManges, _pionsJoueur) )
+			{
+				construireChoixCaseRecursif(
+					_ligne,  _colonne,
+					_sensVertical, -1,
+					pionsManges, _pionsJoueur, _choixDeplacement
+				);
+			}
 		}
 
-		if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne+1, pionsManges, _pionsJoueur) )
+		if( grille->isCoordonneesDansGrille(_ligne + _sensVertical, _colonne+1) )
 		{
-			construireChoixCaseRecursif(
-				_ligne,  _colonne,
-				_sensVertical, 1,
-				pionsManges, _pionsJoueur, _choixDeplacement
-			);
+			if( isAdversaireAdjacentNonCompte(_ligne + _sensVertical, _colonne+1, pionsManges, _pionsJoueur) )
+			{
+				construireChoixCaseRecursif(
+					_ligne,  _colonne,
+					_sensVertical, 1,
+					pionsManges, _pionsJoueur, _choixDeplacement
+				);
+			}
 		}
 	}
 }

@@ -20,6 +20,7 @@ class JoueurDames : public Joueur
 		int getSensVertical();
 		void setPionDame(long _idPion);
 		void mangerPion(long _idPion);
+		bool isPionUneDame(long _idPion);
 
 	private:
 		map<long, PionDames*> pions;

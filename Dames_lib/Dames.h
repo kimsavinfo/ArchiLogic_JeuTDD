@@ -28,5 +28,6 @@ class Dames : public Jeu
 		ChoixPion * askQuelPionDeplacer();
 		ChoixDeplacement * askOuDeplacerPion(ChoixPion * _pionADeplacer);
 		void mangerPions(vector<long> _pionsManges);
+		void gererTypeDame(long _idPionDeplace);
 };
 

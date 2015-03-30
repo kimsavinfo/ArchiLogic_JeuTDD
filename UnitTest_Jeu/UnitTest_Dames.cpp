@@ -267,5 +267,20 @@ namespace UnitTest_Jeu
 				Assert::AreEqual( (long)0, driverGrille->getCaseIdOccupant(2, 1) );
 				Assert::AreEqual( pionsIds[0], driverGrille->getCaseIdOccupant(2, 5) );
 			}
+
+			TEST_METHOD(Dames_SetDame)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 4, 0);
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+				driverGrille->deplacerPion(choixPions.at(0), choixCases.at(0));
+				
+				Assert::IsTrue(driverGrille->isPionDevientDame(choixPions.at(0)->getIdPion(), joueurA->getSensVertical()));
+			}
 	};
 }

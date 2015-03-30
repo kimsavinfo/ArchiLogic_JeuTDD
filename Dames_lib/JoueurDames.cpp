@@ -78,6 +78,11 @@ void JoueurDames::mangerPion(long _idPion)
 	pions.erase(_idPion);
 }
 
+bool JoueurDames::isPionUneDame(long _idPion)
+{
+	return pions.find(_idPion)->second->isDame();
+}
+
 JoueurDames::~JoueurDames(void)
 {
 	for (auto const& pion: pions)
