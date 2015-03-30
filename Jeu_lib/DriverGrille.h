@@ -15,6 +15,7 @@ class DriverGrille
 		bool isPartieFinie();
 		bool isEgalite();
 		void poserPion(long _idPion, long _idCase);
+		void setPartieFinie(bool _partieFinie, bool _egalite);
 
 	protected:
 		Grille * grille;

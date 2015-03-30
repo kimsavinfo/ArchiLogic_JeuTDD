@@ -12,12 +12,16 @@ Dames::Dames(void) : Jeu()
 	initJeu();
 }
 
+/** ============================================================================================== */
+/**	Initialiser le jeu : positionner les pions
+/** ============================================================================================== */
+
 void Dames::initJeu()
 {
 	// TODO : positionner tous les pions des 2 joueurs normalment
 
 
-	// TEMPO : pour les tests 
+	// TEMPO : 
 	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
 	joueurs[iTour]->setPionDame(pionsIds[0]);
 	driverGrille->poserPion(pionsIds[0], 6, 2);
@@ -26,8 +30,25 @@ void Dames::initJeu()
 	driverGrille->poserPion(pionsIdsAversaire[0], 4, 4);
 	driverGrille->poserPion(pionsIdsAversaire[1], 2, 4);
 	driverGrille->poserPion(pionsIdsAversaire[2], 3, 1);
-
 }
+
+/* pour les tests 
+void Dames::initJeu()
+{
+	vector<long> pionsIds = joueurs[iTour]->getPionsIds();
+	joueurs[iTour]->setPionDame(pionsIds[0]);
+	driverGrille->poserPion(pionsIds[0], 6, 2);
+
+	vector<long> pionsIdsAversaire = joueurs[iTour + 1 %2]->getPionsIds();
+	driverGrille->poserPion(pionsIdsAversaire[0], 4, 4);
+	driverGrille->poserPion(pionsIdsAversaire[1], 2, 4);
+	driverGrille->poserPion(pionsIdsAversaire[2], 3, 1);
+}
+*/
+
+/** ============================================================================================== */
+/**	Gestion d'un tour
+/** ============================================================================================== */
 
 void Dames::jouer()
 {
@@ -35,39 +56,62 @@ void Dames::jouer()
 	afficherJoueurs();
 	afficherJeu();
 
-	ChoixPion * pionADeplacer = askQuelPionDeplacer();
-	cout << "Deplacer le pion " + pionADeplacer->getRepresentation() << endl;
+	do
+	{
+		ChoixPion * pionADeplacer = askQuelPionDeplacer();
+		if(!driverGrille->isPartieFinie())
+		{
+			cout << "Deplacer le pion " + pionADeplacer->getRepresentation() << endl;
 	
-	ChoixDeplacement * caseFinale = askOuDeplacerPion(pionADeplacer);
-	cout << "Vers la case " << caseFinale->getRepresentation() << endl;
+			ChoixDeplacement * caseFinale = askOuDeplacerPion(pionADeplacer);
+			cout << "Vers la case " << caseFinale->getRepresentation() << endl;
 
-	driverGrille->deplacerPion(pionADeplacer, caseFinale);
-	mangerPions(caseFinale->getPionsManges());
-	gererTypeDame(pionADeplacer->getIdPion());
+			driverGrille->deplacerPion(pionADeplacer, caseFinale);
+			mangerPions(caseFinale->getPionsManges());
+			gererTypeDame(pionADeplacer->getIdPion());
 
-	afficherJeu();
+			system("cls");
+
+			afficherJeu();
+			iTour++;
+		}
+		
+	}while(!driverGrille->isPartieFinie());
+
+	cout << joueurs[ (iTour-1) % joueurs.size()]->getNom() 
+			<< " a gagne " << endl;
 }
 
 ChoixPion * Dames::askQuelPionDeplacer()
 {
 	map<long, bool> pionsJoueur = joueurs[iTour]->getPionsIdsEtIsDame();
 	vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurs[iTour]->getSensVertical(), pionsJoueur);
-	int choixJoueur;
-
-	do
+	ChoixPion * pionADeplacer = NULL;
+	
+	if(choixPions.size() > 0)
 	{
-		for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
+		int choixJoueur;
+
+		do
 		{
-			cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
-		}
+			for (int iChoixPion = 0; iChoixPion < choixPions.size(); iChoixPion++)
+			{
+				cout << to_string(iChoixPion + 1) + " - " + choixPions.at(iChoixPion)->getRepresentation() << endl;
+			}
 
-		cout << joueurs[iTour % joueurs.size()]->getNom()
-			<< ", quel pion souhaitez-vous deplacer ? " ;
-		cin >> choixJoueur;
+			cout << joueurs[iTour % joueurs.size()]->getNom()
+				<< ", quel pion souhaitez-vous deplacer ? " ;
+			cin >> choixJoueur;
 
-	}while(choixJoueur < 1 || choixJoueur > choixPions.size());
+			pionADeplacer = choixPions[choixJoueur -1];
+		}while(choixJoueur < 1 || choixJoueur > choixPions.size());
+	}
+	else
+	{
+		driverGrille->setPartieFinie(true, false);
+	}
 
-	return choixPions[choixJoueur -1];
+	return pionADeplacer;
 }
 
 ChoixDeplacement * Dames::askOuDeplacerPion(ChoixPion * _pionADeplacer)
@@ -206,6 +250,11 @@ void Dames::afficherTitre()
 	cout << "\tDames" << endl;
 	cout << "========================" << endl;
 }
+
+/** ============================================================================================== */
+/**	Destructeur
+/** ============================================================================================== */
+
 
 Dames::~Dames(void)
 {

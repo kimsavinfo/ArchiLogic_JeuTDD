@@ -43,6 +43,12 @@ void DriverGrille::poserPion(long _idPion, long _idCase)
 	grille->poserPion(_idPion, _idCase);
 }
 
+void DriverGrille::setPartieFinie(bool _partieFinie, bool _egalite)
+{
+	partieFinie = _partieFinie;
+	egalite = _egalite;
+}
+
 DriverGrille::~DriverGrille(void)
 {
 	delete grille;

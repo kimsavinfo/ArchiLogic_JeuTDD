@@ -10,28 +10,10 @@ namespace UnitTest_Jeu
 {
 	static int nbColonnes = 7;
 	static int nbLignes = 7;
-	/* Ne peut pas à cause du statut Dame des pions
-	JoueurDames * joueurA;
-	JoueurDames * joueurB;
-	*/
 
 	TEST_CLASS(UnitTest_Dames)
 	{
 		public:
-		
-			/*
-			TEST_CLASS_INITIALIZE(ClassInitialize) 
-			{
-				joueurA = new JoueurDames("Alice", "W", 1);
-				joueurB = new JoueurDames("Bob", "B", -1);
-			}
-
-			TEST_CLASS_CLEANUP(ClassCleanup)
-			{
-				delete joueurA;
-				delete joueurB;
-			}
-			*/
 
 			TEST_METHOD(Dames_PoserPion)
 			{
