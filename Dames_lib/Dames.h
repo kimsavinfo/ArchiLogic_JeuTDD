@@ -27,5 +27,6 @@ class Dames : public Jeu
 		string getPionRepresentation(long _idPion);
 		ChoixPion * askQuelPionDeplacer();
 		ChoixDeplacement * askOuDeplacerPion(ChoixPion * _pionADeplacer);
+		void mangerPions(vector<long> _pionsManges);
 };
 

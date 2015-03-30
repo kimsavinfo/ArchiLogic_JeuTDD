@@ -34,10 +34,15 @@ void Dames::jouer()
 	afficherJeu();
 
 	ChoixPion * pionADeplacer = askQuelPionDeplacer();
-	cout << "Pion a deplacer :" + pionADeplacer->getRepresentation() << endl;
+	cout << "Deplacer le pion " + pionADeplacer->getRepresentation() << endl;
 
 	ChoixDeplacement * caseFinale = askOuDeplacerPion(pionADeplacer);
-	cout << " Vers la case " << caseFinale->getRepresentation() << endl;
+	cout << "Vers la case " << caseFinale->getRepresentation() << endl;
+
+	driverGrille->deplacerPion(pionADeplacer, caseFinale);
+	mangerPions(caseFinale->getPionsManges());
+
+	afficherJeu();
 }
 
 ChoixPion * Dames::askQuelPionDeplacer()
@@ -82,6 +87,15 @@ ChoixDeplacement * Dames::askOuDeplacerPion(ChoixPion * _pionADeplacer)
 	}while(choixJoueur < 1 || choixJoueur > choixCases.size());
 
 	return choixCases[choixJoueur -1];
+}
+
+void Dames::mangerPions(vector<long> _pionsManges)
+{
+	for (int iPionMange = 0; iPionMange < _pionsManges.size(); iPionMange++)
+	{
+		driverGrille->mangerPion(_pionsManges.at(iPionMange));
+		joueurs[iTour + 1 %2]->mangerPion(_pionsManges.at(iPionMange));
+	}
 }
 
 /** ============================================================================================== */

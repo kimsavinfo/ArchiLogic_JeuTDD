@@ -11,6 +11,17 @@ void DriverGrilleDames::poserPion(long _idPion, int _iLigne, int _iColonne)
 	grille->poserPion(_idPion, _iLigne, _iColonne);
 }
 
+void DriverGrilleDames::deplacerPion(ChoixPion * _choixPion, ChoixDeplacement * _choixDeplacement)
+{
+	grille->enleverOccupant(_choixPion->getIdPion());
+	grille->poserPion(_choixPion->getIdPion(), _choixDeplacement->getLigneArrivee(), _choixDeplacement->getColonneArrivee());
+}
+
+void DriverGrilleDames::mangerPion(long _pionMange)
+{
+	grille->enleverOccupant(_pionMange);
+}
+
 map<string, int> DriverGrilleDames::getCaseCoordonneesOccupant(long _idOccupant)
 {
 	return grille->getCaseCoordonneesOccupant(_idOccupant);

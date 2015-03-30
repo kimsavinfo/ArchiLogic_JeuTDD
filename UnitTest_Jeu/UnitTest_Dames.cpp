@@ -237,5 +237,35 @@ namespace UnitTest_Jeu
 				Assert::AreEqual( 5, choixCases.at(0)->getColonneArrivee() );
 				Assert::AreEqual( 2, (int)choixCases.at(0)->getPionsManges().size() );
 			}
+
+			TEST_METHOD(Dames_MangerPions)
+			{
+				DriverGrilleDames * driverGrille  = new DriverGrilleDames(nbLignes, nbColonnes);
+				JoueurDames * joueurA = new JoueurDames("Alice", "W", 1);
+				vector<long> pionsIds = joueurA->getPionsIds();
+				driverGrille->poserPion(pionsIds[0], 2, 1);
+
+				JoueurDames * joueurB = new JoueurDames("Bob", "B", -1);
+				vector<long> pionsIdsAversaire = joueurB->getPionsIds();
+				driverGrille->poserPion(pionsIdsAversaire[0], 3, 2);
+				driverGrille->poserPion(pionsIdsAversaire[1], 3, 4);
+
+				map<long, bool> pionsJoueur = joueurA->getPionsIdsEtIsDame();
+				vector<ChoixPion *> choixPions = driverGrille->getChoixPions(joueurA->getSensVertical(), pionsJoueur);
+				vector<ChoixDeplacement *> choixCases = driverGrille->getChoixCase(choixPions.at(0), joueurA->getSensVertical(), pionsJoueur);
+
+				driverGrille->deplacerPion(choixPions.at(0), choixCases.at(0));
+				for (int iPionMange = 0; iPionMange < choixCases.at(0)->getPionsManges().size(); iPionMange++)
+				{
+					driverGrille->mangerPion(choixCases.at(0)->getPionsManges().at(iPionMange));
+					joueurB->mangerPion(choixCases.at(0)->getPionsManges().at(iPionMange));
+				}
+
+				Assert::AreEqual( 18, (int)joueurB->getPionsIds().size() );
+				Assert::AreEqual( (long)0, driverGrille->getCaseIdOccupant(3, 2) );
+				Assert::AreEqual( (long)0, driverGrille->getCaseIdOccupant(3, 4) );
+				Assert::AreEqual( (long)0, driverGrille->getCaseIdOccupant(2, 1) );
+				Assert::AreEqual( pionsIds[0], driverGrille->getCaseIdOccupant(2, 5) );
+			}
 	};
 }

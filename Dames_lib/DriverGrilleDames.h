@@ -11,6 +11,8 @@ class DriverGrilleDames : public DriverGrille
 		~DriverGrilleDames(void);
 
 		void poserPion(long _idPion, int _iLigne, int _iColonne);
+		void deplacerPion(ChoixPion * _choixPion, ChoixDeplacement * _choixDeplacement);
+		void mangerPion(long _pionMange);
 		map<string, int> getCaseCoordonneesOccupant(long _idOccupant);
 		vector<ChoixPion *> getChoixPions(int _sensVertical, map<long, bool> _pionsJoueur);
 		vector<ChoixDeplacement *> getChoixCase(ChoixPion * _choixPion, int _sensVertical, map<long, bool> _pionsJoueur);

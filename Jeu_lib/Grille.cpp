@@ -194,6 +194,12 @@ bool Grille::isCoordonneesDansGrille(int _iLigne, int _iColonne)
 	return _iLigne >= 0 && _iLigne < nbLignes && _iColonne >= 0 && _iColonne < nbColonnes;
 }
 
+void Grille::enleverOccupant(long _idOccupant)
+{
+	map<string, int> coordonnees = getCaseCoordonneesOccupant(_idOccupant);
+	getCase(coordonnees["ligne"], coordonnees["colonne"])->setIdOccupant((long)0);
+}
+
 Grille::~Grille(void)
 {
 	for(int iLig = 0; iLig < nbLignes; iLig++)

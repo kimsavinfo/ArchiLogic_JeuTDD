@@ -22,6 +22,7 @@ class Grille
 		bool isGrilleRemplie();
 		bool isCaseVide(int _iLigne, int _iColonne);
 		bool isCoordonneesDansGrille(int _iLigne, int _iColonne);
+		void enleverOccupant(long _idOccupant);
 
 		int getNbLignes();
 		int getNbColonnes();

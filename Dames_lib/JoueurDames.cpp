@@ -73,6 +73,11 @@ void JoueurDames::setPionDame(long _idPion)
 	pions.find(_idPion)->second->setDame();
 }
 
+void JoueurDames::mangerPion(long _idPion)
+{
+	pions.erase(_idPion);
+}
+
 JoueurDames::~JoueurDames(void)
 {
 	for (auto const& pion: pions)
