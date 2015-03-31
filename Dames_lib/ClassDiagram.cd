@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChoixDeplacement">
+    <Position X="0.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAgACCAABgAAAAQAAACAAAAAAAAI=</HashCode>
+      <FileName>ChoixDeplacement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoixPion">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAAAAACAAAAAAAhAAAAAAAAADEgAAIAAgA=</HashCode>
+      <FileName>choixpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dames">
+    <Position X="4.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEEQAAAAAQAAAAAIAAAAIAAFQAAABABAAUAQAADAAA=</HashCode>
+      <FileName>Dames.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DriverGrilleDames">
+    <Position X="0.5" Y="4.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAICCIAAQQQgEJgQAAAAAAckEEgAASQAAAEgQAA=</HashCode>
+      <FileName>DriverGrilleDames.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FactoryPionDames">
+    <Position X="6.5" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAIAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>FactoryPionDames.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JoueurDames">
+    <Position X="7" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAwAACAAAgAAQBAAAAAQAAIAAAIAABAAAAAgAAghAAA=</HashCode>
+      <FileName>JoueurDames.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PionDames">
+    <Position X="7" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAwAAAAAAAAAAQAAAAAAAAAAAAALAAAAAAAAA=</HashCode>
+      <FileName>PionDames.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

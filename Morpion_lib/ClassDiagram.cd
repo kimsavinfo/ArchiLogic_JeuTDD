@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ChoixCase">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAJAAAAAAAAAAAAAAAAgAAAAAAQAgA=</HashCode>
+      <FileName>choixcase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DriverGrilleMorpion">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAEAEACABAAEAAAAQAAAAAQAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>DriverGrilleMorpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FactoryPionMorpion">
+    <Position X="6" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAABAgAAA=</HashCode>
+      <FileName>factorypionmorpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JoueurMorpion">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABwAQCAEAABAAAAAAAAQAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>JoueurMorpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Morpion">
+    <Position X="2.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQQAAAAQAAAAAIAAQAIAAEQAAAQAAAAAAQAARAAg=</HashCode>
+      <FileName>Morpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PionMorpion">
+    <Position X="4.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAgAAABAAAAAIAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>pionmorpion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Case">
+    <Position X="3" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCAAAAAAAAAAAIIAAAAAEAEQIAAAAAAACIAAAAAAgA=</HashCode>
+      <FileName>Case.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DriverGrille">
+    <Position X="1" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAQAAAAAQAAEgAAAAEAoIAIEgAAAIAAA=</HashCode>
+      <FileName>DriverGrille.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FactoryCase">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAEAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>FactoryCase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Grille">
+    <Position X="0.5" Y="5.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AEEAAAAAAIECAAAAAASQAEAAAAAAECAsAAAGQAQBAAA=</HashCode>
+      <FileName>grille.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IRepresentation">
+    <Position X="4.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>IRepresentation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jeu">
+    <Position X="3.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAQAAAAAIgAAIQoACAAIQAAQAIAAQBAAAAQAQAAAA=</HashCode>
+      <FileName>Jeu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Joueur">
+    <Position X="5.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIABAAAAAAgAAIAAAAAAAAAA=</HashCode>
+      <FileName>joueur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pion">
+    <Position X="5.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAIAACAAAAAAAAAAAAACCAAAAAAAgA=</HashCode>
+      <FileName>Pion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
